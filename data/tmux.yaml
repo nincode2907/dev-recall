@@ -1,0 +1,146 @@
+# Dev Recall · tmux · 11 thao tác. Xem docs/data-format.md trước khi thêm item.
+
+- id: "tmux-split-side"
+  title: "Chia pane tmux trái/phải"
+  type: "shortcut"
+  category: "tmux"
+  aliases:
+    - "tmux chia màn hình dọc"
+    - "chia tmux dọc"
+    - "tmux split vertical"
+    - "chia màn hình tmux"
+    - "tmux split left right"
+  content: "Prefix + %"
+  note: "Tạo pane bên trái/phải (split-window -h). Prefix mặc định là Ctrl+B: nhấn Ctrl+B, thả tay rồi nhấn phím sau. Nếu đã đổi prefix trong ~/.tmux.conf, dùng phím của bạn."
+  risk: "safe"
+
+- id: "tmux-split-stack"
+  title: "Chia pane tmux trên/dưới"
+  type: "shortcut"
+  category: "tmux"
+  aliases:
+    - "tmux chia màn hình ngang"
+    - "chia tmux ngang"
+    - "tmux split horizontal"
+    - "tmux split top bottom"
+  content: 'Prefix + "'
+  note: "Tạo pane phía trên/dưới (split-window -v). Prefix mặc định là Ctrl+B: nhấn Ctrl+B, thả tay rồi nhấn phím sau. Nếu đã đổi prefix trong ~/.tmux.conf, dùng phím của bạn."
+  risk: "safe"
+
+- id: "tmux-zoom"
+  title: "Phóng to pane rồi trở lại"
+  type: "shortcut"
+  category: "tmux"
+  aliases:
+    - "tmux zoom pane"
+    - "pane hiện tại full màn hình"
+    - "tmux phóng to pane"
+    - "tmux toàn màn hình"
+  content: "Prefix + z"
+  note: "Nhấn lại để trở về bố cục cũ. Prefix mặc định là Ctrl+B: nhấn Ctrl+B, thả tay rồi nhấn phím sau. Nếu đã đổi prefix trong ~/.tmux.conf, dùng phím của bạn."
+  risk: "safe"
+
+- id: "tmux-copy-mode"
+  title: "Cuộn xem log trong tmux"
+  type: "shortcut"
+  category: "tmux"
+  aliases:
+    - "tmux xem full log"
+    - "tmux scroll"
+    - "tmux cuộn log"
+    - "tmux copy mode"
+  content: "Prefix + ["
+  note: "Vào copy mode để cuộn lịch sử. Phím thoát/phím chọn phụ thuộc mode-keys: emacs dùng Esc, vi dùng q. Prefix mặc định là Ctrl+B: nhấn Ctrl+B, thả tay rồi nhấn phím sau. Nếu đã đổi prefix trong ~/.tmux.conf, dùng phím của bạn."
+  risk: "safe"
+
+- id: "tmux-detach"
+  title: "Rời session, giữ tác vụ chạy"
+  type: "shortcut"
+  category: "tmux"
+  aliases:
+    - "tmux detach"
+    - "tmux thoát không tắt"
+    - "rời tmux giữ process"
+  content: "Prefix + d"
+  note: "Detach khỏi session; các process trong session vẫn chạy. Prefix mặc định là Ctrl+B: nhấn Ctrl+B, thả tay rồi nhấn phím sau. Nếu đã đổi prefix trong ~/.tmux.conf, dùng phím của bạn."
+  risk: "safe"
+
+- id: "tmux-new-window"
+  title: "Tạo window tmux mới"
+  type: "shortcut"
+  category: "tmux"
+  aliases:
+    - "tmux tạo window"
+    - "tmux new window"
+    - "tmux thêm cửa sổ"
+  content: "Prefix + c"
+  note: "Tạo window mới trong session hiện tại. Prefix mặc định là Ctrl+B: nhấn Ctrl+B, thả tay rồi nhấn phím sau. Nếu đã đổi prefix trong ~/.tmux.conf, dùng phím của bạn."
+  risk: "safe"
+
+- id: "tmux-rename-window"
+  title: "Đổi tên window tmux"
+  type: "shortcut"
+  category: "tmux"
+  aliases:
+    - "tmux rename"
+    - "tmux rename window"
+    - "tmux đổi tên window"
+  content: "Prefix + ,"
+  note: "Nhập tên mới tại thanh trạng thái rồi Enter. Prefix mặc định là Ctrl+B: nhấn Ctrl+B, thả tay rồi nhấn phím sau. Nếu đã đổi prefix trong ~/.tmux.conf, dùng phím của bạn."
+  risk: "safe"
+
+- id: "tmux-close-pane"
+  title: "Đóng pane tmux hiện tại"
+  type: "shortcut"
+  category: "tmux"
+  aliases:
+    - "tmux đóng pane"
+    - "tmux kill pane"
+    - "tmux xóa pane"
+  content: "Prefix + x"
+  note: "tmux hỏi xác nhận trước khi đóng. Prefix mặc định là Ctrl+B: nhấn Ctrl+B, thả tay rồi nhấn phím sau. Nếu đã đổi prefix trong ~/.tmux.conf, dùng phím của bạn."
+  risk: "destructive"
+  riskNote: "Đóng pane và kết thúc chương trình đang chạy trong pane. Kiểm tra tác vụ trước khi xác nhận."
+
+- id: "tmux-list-sessions"
+  title: "Liệt kê session tmux"
+  type: "command"
+  category: "tmux"
+  aliases:
+    - "tmux xem session"
+    - "tmux list sessions"
+    - "tmux ls"
+  content: "tmux ls"
+  note: "Chạy từ terminal để xem các session còn tồn tại."
+  risk: "safe"
+
+- id: "tmux-attach"
+  title: "Quay lại session tmux"
+  type: "command"
+  category: "tmux"
+  aliases:
+    - "tmux attach"
+    - "tmux vào session"
+    - "tmux mở lại session"
+  content: "tmux attach -t <session>"
+  note: "Dùng tmux ls để xem tên session trước khi attach."
+  example: "tmux attach -t dev"
+  risk: "safe"
+
+- id: "tmux-pane-border-title"
+  title: "Hiện tên pane trên viền tmux"
+  type: "workflow"
+  category: "tmux"
+  aliases:
+    - "đặt tên pane tmux"
+    - "tmux hiện tên pane trên viền"
+    - "tmux hiện title pane"
+    - "đổi tên pane đang chọn"
+    - "show pane title in border"
+  content: |-
+    set -g pane-border-status top
+    set -g pane-border-format ' #{pane_title} '
+    tmux source-file ~/.tmux.conf
+    tmux select-pane -T "Đặt tên"
+  note: "Hai dòng đầu đặt status trên viền pane và hiển thị pane_title. Chạy dòng source-file trong terminal để nạp lại ~/.tmux.conf; khi session tmux đang hoạt động, chạy dòng cuối để đặt tên cho pane hiện tại."
+  risk: "safe"

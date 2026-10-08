@@ -1,0 +1,131 @@
+# Dev Recall · terminal · 10 thao tác. Xem docs/data-format.md trước khi thêm item.
+
+- id: "terminal-pwd"
+  title: "Xem đường dẫn thư mục hiện tại"
+  type: "command"
+  category: "terminal"
+  aliases:
+    - "folder hiện tại"
+    - "đang ở thư mục nào"
+    - "current directory"
+    - "pwd"
+  content: "pwd"
+  note: "In đường dẫn tuyệt đối của thư mục đang làm việc."
+  risk: "safe"
+
+- id: "terminal-hidden-files"
+  title: "Liệt kê cả file ẩn"
+  type: "command"
+  category: "terminal"
+  aliases:
+    - "terminal xem file ẩn"
+    - "ls hidden files"
+    - "xem tất cả file"
+  content: "ls -la"
+  note: "Hiển thị file ẩn, quyền truy cập, kích thước và thời gian chỉnh sửa."
+  risk: "safe"
+
+- id: "terminal-find-env"
+  title: "Tìm file .env trong project"
+  type: "command"
+  category: "terminal"
+  aliases:
+    - "tìm file env"
+    - "tim env"
+    - "find environment files"
+  content: 'find . -name ".env*"'
+  note: "Tìm từ thư mục hiện tại, gồm cả thư mục con. Kết quả chỉ là đường dẫn, không đọc nội dung file."
+  risk: "safe"
+
+- id: "terminal-mkdir-folders"
+  title: "Tạo nhiều thư mục một lần"
+  type: "command"
+  category: "terminal"
+  aliases:
+    - "tạo nhiều folder"
+    - "tạo nhiều folder một lần"
+    - "mkdir nhiều thư mục"
+    - "create directories"
+  content: "mkdir -p app/{controllers,services,repositories}"
+  note: "Dùng được trong zsh/bash. -p tạo thư mục cha và bỏ qua thư mục đã tồn tại."
+  risk: "safe"
+
+- id: "terminal-port-process"
+  title: "Xem tiến trình đang giữ port"
+  type: "command"
+  category: "terminal"
+  aliases:
+    - "thằng nào giữ port"
+    - "xem port đang chạy"
+    - "xem port 3000 thằng nào giữ"
+    - "find process using port"
+    - "lsof port"
+  content: "lsof -nP -i :<port>"
+  note: "Thay <port> bằng số port. -nP giữ địa chỉ IP và số port, không resolve tên."
+  example: "lsof -nP -i :3000"
+  risk: "safe"
+
+- id: "terminal-previous-directory"
+  title: "Quay lại thư mục vừa rời"
+  type: "command"
+  category: "terminal"
+  aliases:
+    - "quay lại folder trước"
+    - "cd previous directory"
+    - "đổi về thư mục trước"
+  content: "cd -"
+  note: "Quay lại thư mục làm việc trước đó; khác với cd .. là đi lên thư mục cha."
+  risk: "safe"
+
+- id: "terminal-find-file"
+  title: "Tìm file theo tên"
+  type: "command"
+  category: "terminal"
+  aliases:
+    - "tìm file theo tên"
+    - "find file name"
+    - "tìm package json"
+  content: 'find . -name "<name>"'
+  note: "Dùng wildcard trong dấu ngoặc kép để shell không mở rộng trước."
+  example: 'find . -name "package.json"'
+  risk: "safe"
+
+- id: "terminal-search-content"
+  title: "Tìm nội dung trong project"
+  type: "command"
+  category: "terminal"
+  aliases:
+    - "tìm chuỗi trong file"
+    - "tìm text trong project"
+    - "ripgrep search"
+    - "rg search"
+  content: 'rg "<text>" .'
+  note: "Cần cài ripgrep. Mặc định bỏ qua file ẩn và các file được ignore."
+  example: 'rg "TODO" .'
+  risk: "safe"
+
+- id: "terminal-folder-size"
+  title: "Xem dung lượng thư mục"
+  type: "command"
+  category: "terminal"
+  aliases:
+    - "folder nặng bao nhiêu"
+    - "xem kích thước thư mục"
+    - "directory size"
+  content: "du -sh <path>"
+  note: "Tổng dung lượng ở định dạng dễ đọc. Đặt đường dẫn có khoảng trắng trong dấu ngoặc kép."
+  example: "du -sh node_modules"
+  risk: "safe"
+
+- id: "terminal-follow-log"
+  title: "Theo dõi file log trực tiếp"
+  type: "command"
+  category: "terminal"
+  aliases:
+    - "xem log realtime"
+    - "tail log"
+    - "theo dõi log"
+  content: "tail -f <file>"
+  note: "Theo dõi dòng mới được ghi vào file. Ctrl+C để dừng theo dõi."
+  example: "tail -f app.log"
+  risk: "safe"

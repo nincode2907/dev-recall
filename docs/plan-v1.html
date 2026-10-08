@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="source-sha256"
+      content="73a431e6598f07998b0c9c6e63406584664f4a8772f9a63fcc62e81da2e462eb"
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23325ee5'/%3E%3Cpath d='M23 17H15v30h8m18-30h8v30h-8m-20-6 8-8-8-8' stroke='white' stroke-width='4' fill='none'/%3E%3C/svg%3E"
+    />
+    <title>Kế hoạch Dev Recall V0.1</title>
+    <style>
+      :root {
+        font-family: "Avenir Next", "Segoe UI", sans-serif;
+        color: #233650;
+        background: #edf2f8;
+        font-synthesis: none;
+        --blue: #325ee5;
+        --line: #d5dfed;
+        --muted: #62748c;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+      }
+      main {
+        max-width: 1060px;
+        margin: auto;
+        padding: 35px 28px 70px;
+      }
+      a {
+        color: var(--blue);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 22px;
+        font-size: 12px;
+      }
+      header strong {
+        font-size: 18px;
+        letter-spacing: -0.5px;
+      }
+      header span {
+        color: var(--muted);
+      }
+      .hero {
+        padding: 40px 0 28px;
+      }
+      .eyebrow {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1.8px;
+        color: var(--blue);
+      }
+      h1 {
+        font-size: 43px;
+        line-height: 1.18;
+        letter-spacing: -1.2px;
+        max-width: 680px;
+        margin: 13px 0 17px;
+      }
+      h2 {
+        font-size: 23px;
+        letter-spacing: -0.5px;
+        margin: 0 0 17px;
+      }
+      h3 {
+        font-size: 15px;
+        margin: 0 0 10px;
+      }
+      .lead {
+        font-size: 16px;
+        line-height: 1.8;
+        max-width: 690px;
+        color: var(--muted);
+      }
+      .tag {
+        font-size: 11px;
+        border: 1px solid #cbd8ee;
+        border-radius: 5px;
+        padding: 5px 8px;
+        color: #34589b;
+        display: inline-block;
+        margin-right: 6px;
+      }
+      .panel {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 27px;
+        margin: 20px 0;
+      }
+      .flow {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 15px;
+        margin: 27px 0 5px;
+      }
+      .flow > div {
+        position: relative;
+        background: #f2f5fb;
+        border: 1px solid #dde5f0;
+        border-radius: 6px;
+        padding: 19px 13px;
+      }
+      .flow > div:not(:last-child):after {
+        content: "→";
+        position: absolute;
+        right: -13px;
+        top: 35%;
+        color: #7892bb;
+      }
+      .flow strong {
+        display: block;
+        font-size: 13px;
+      }
+      .flow small {
+        font-size: 10px;
+        display: block;
+        margin-top: 7px;
+        line-height: 1.5;
+        color: var(--muted);
+      }
+      .flow .final {
+        background: #eaf0ff;
+        border-color: #cbdafd;
+      }
+      .two {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      .two .panel {
+        margin: 0;
+      }
+      .section {
+        margin-top: 33px;
+      }
+      .checklist {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .checklist li {
+        position: relative;
+        padding-left: 20px;
+        margin: 12px 0;
+        font-size: 13px;
+        line-height: 1.75;
+      }
+      .checklist li:before {
+        content: "·";
+        position: absolute;
+        left: 3px;
+        color: var(--blue);
+        font-size: 22px;
+        line-height: 1;
+      }
+      p,
+      li {
+        font-size: 13px;
+        line-height: 1.85;
+      }
+      code,
+      pre,
+      kbd {
+        font-family: "SFMono-Regular", Consolas, monospace;
+      }
+      code {
+        font-size: 0.92em;
+        overflow-wrap: anywhere;
+      }
+      pre {
+        font-size: 12px;
+        line-height: 1.8;
+        background: #203452;
+        color: #edf3ff;
+        border-radius: 7px;
+        padding: 20px;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        margin: 15px 0;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 12px;
+      }
+      td,
+      th {
+        padding: 13px 12px;
+        text-align: left;
+        border-bottom: 1px solid #e2e8f1;
+        line-height: 1.7;
+        vertical-align: top;
+      }
+      th {
+        font-size: 10px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+        background: #f4f7fb;
+      }
+      kbd {
+        background: #edf2fa;
+        border: 1px solid #d3deed;
+        border-bottom-width: 2px;
+        border-radius: 4px;
+        padding: 3px 5px;
+      }
+      .timeline {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        counter-reset: milestone;
+      }
+      .stage {
+        border: 1px solid var(--line);
+        background: #fff;
+        border-radius: 7px;
+        padding: 19px;
+        counter-increment: milestone;
+      }
+      .stage:before {
+        content: counter(milestone, decimal-leading-zero);
+        font-family: monospace;
+        color: var(--blue);
+        font-size: 12px;
+        display: block;
+        margin-bottom: 16px;
+      }
+      .stage p {
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.75;
+      }
+      .stage strong {
+        font-size: 14px;
+      }
+      .stage small {
+        font-size: 10px;
+        line-height: 1.6;
+        display: block;
+        border-top: 1px solid var(--line);
+        padding-top: 10px;
+        color: #405b83;
+      }
+      .callout {
+        background: #fff6ed;
+        border: 1px solid #edd4b7;
+        border-radius: 7px;
+        padding: 16px 19px;
+        font-size: 12px;
+        line-height: 1.8;
+        color: #845437;
+      }
+      .runtime {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .port {
+        font-family: monospace;
+        font-size: 35px;
+        color: var(--blue);
+        font-weight: 700;
+      }
+      .runtime p {
+        color: var(--muted);
+        margin: 5px 0;
+      }
+      .scope-label {
+        font-size: 10px;
+        letter-spacing: 1px;
+        color: var(--muted);
+      }
+      .architecture {
+        display: flex;
+        gap: 7px;
+        align-items: center;
+        flex-wrap: wrap;
+        font-family: monospace;
+        font-size: 11px;
+        background: #f1f5fc;
+        border-radius: 7px;
+        padding: 16px;
+      }
+      .architecture span {
+        background: #fff;
+        border: 1px solid var(--line);
+        padding: 8px;
+        border-radius: 4px;
+      }
+      .architecture i {
+        font-style: normal;
+        color: #7892bb;
+      }
+      .foot {
+        border-top: 1px solid var(--line);
+        margin-top: 35px;
+        padding-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+      details {
+        border-top: 1px solid var(--line);
+        margin-top: 16px;
+        padding-top: 15px;
+      }
+      summary {
+        cursor: pointer;
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 600;
+      }
+      a:focus-visible,
+      summary:focus-visible {
+        outline: 3px solid #7397fc;
+        outline-offset: 3px;
+      }
+      .scroll {
+        overflow-x: auto;
+      }
+      .risk-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      .risk-card {
+        background: #f3f7fb;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        padding: 17px;
+      }
+      .risk-card.caution {
+        background: #fff8ee;
+        border-color: #ecd6b5;
+      }
+      .risk-card.destructive {
+        background: #fff1ec;
+        border-color: #eccbbb;
+      }
+      .risk-card p {
+        font-size: 12px;
+        margin-bottom: 0;
+      }
+      .compact {
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .nav {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        font-size: 12px;
+        margin: 15px 0;
+      }
+      .system-map {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+      .system-map > div {
+        border-left: 3px solid #b6c8ef;
+        padding: 8px 15px;
+        background: #f5f8fd;
+      }
+      .system-map strong {
+        font-size: 12px;
+      }
+      .system-map p {
+        margin: 5px 0;
+        font-size: 11px;
+        color: var(--muted);
+      }
+      @media (max-width: 740px) {
+        main {
+          padding: 23px 18px 45px;
+        }
+        h1 {
+          font-size: 33px;
+        }
+        .two,
+        .system-map {
+          grid-template-columns: 1fr;
+        }
+        .flow {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+        .flow > div {
+          padding: 12px 15px;
+        }
+        .flow > div:not(:last-child):after {
+          content: "↓";
+          top: auto;
+          bottom: -12px;
+          right: 50%;
+        }
+        .timeline {
+          grid-template-columns: 1fr 1fr;
+        }
+        .panel {
+          padding: 21px;
+        }
+        .risk-grid {
+          grid-template-columns: 1fr;
+        }
+        .foot {
+          flex-direction: column;
+        }
+        .lead {
+          font-size: 14px;
+        }
+        header {
+          gap: 15px;
+        }
+      }
+      @media (max-width: 400px) {
+        .timeline {
+          grid-template-columns: 1fr;
+        }
+        h1 {
+          font-size: 29px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <strong>devrecall.</strong><span>Kế hoạch đã chốt · 07/10/2026</span>
+      </header>
+      <section class="hero">
+        <div class="eyebrow">BỘ NHỚ THAO TÁC CÁ NHÂN</div>
+        <h1>Nhớ việc muốn làm.<br />Tìm lại thao tác cần dùng.</h1>
+        <p class="lead">
+          Bản đầu giúp bạn tra cứu command, shortcut và đường dẫn bằng cách diễn
+          đạt quen thuộc. Một màn hình, một luồng sử dụng, dữ liệu của bạn.
+        </p>
+        <span class="tag">V0.1 — bản đầu</span
+        ><span class="tag">53 item · 5 nhóm</span
+        ><span class="tag">Search + YAML + Copy</span>
+      </section>
+      <nav class="nav" aria-label="Nội dung kế hoạch">
+        <a href="#scope">Phạm vi</a><a href="#milestones">Các mốc</a
+        ><a href="#checks">Nghiệm thu</a><a href="#runtime">Runtime</a
+        ><a href="plan-v1.md">Đọc nguồn Markdown ↗</a>
+      </nav>
+      <section class="panel">
+        <h2>Từ quên lệnh đến dùng được</h2>
+        <div class="flow">
+          <div><strong>Mở app</strong><small>Tự focus ô tìm kiếm</small></div>
+          <div>
+            <strong>Gõ nhu cầu</strong
+            ><small>Tiếng Việt, không dấu hoặc tiếng Anh</small>
+          </div>
+          <div>
+            <strong>Chọn kết quả</strong
+            ><small>Title, aliases và fuzzy search</small>
+          </div>
+          <div>
+            <strong>Xem thao tác</strong
+            ><small>Ví dụ, ghi chú và tác động</small>
+          </div>
+          <div class="final">
+            <strong>Sao chép</strong
+            ><small>Chủ động dùng trong công cụ của bạn</small>
+          </div>
+        </div>
+      </section>
+      <section id="scope" class="two section">
+        <div class="panel">
+          <div class="eyebrow">CÓ TRONG BẢN ĐẦU</div>
+          <h2 style="margin-top: 12px">Một luồng hoàn chỉnh</h2>
+          <ul class="checklist">
+            <li>Tìm nhanh, chọn bằng bàn phím, xem chi tiết.</li>
+            <li>
+              Aliases + category có ngay; command, shortcut và path trong cùng
+              kho.
+            </li>
+            <li>53 item: Terminal, tmux, Git, Docker và macOS.</li>
+            <li>Copy nội dung chính và ví dụ riêng; xử lý lỗi clipboard.</li>
+            <li>YAML có schema, ID duy nhất và nhãn tác động.</li>
+            <li>Thêm kiến thức bằng sửa file YAML.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <div class="eyebrow">CÁC BẢN SAU</div>
+          <h2 style="margin-top: 12px">Chưa triển khai</h2>
+          <ul class="checklist">
+            <li>Add/Edit UI, Favorites, Recent và Related.</li>
+            <li>Global shortcut, cửa sổ native và Tauri.</li>
+            <li>Import Navi, TLDR hoặc Atuin.</li>
+            <li>AI hiểu query và gợi ý theo context.</li>
+          </ul>
+          <p class="compact">
+            V0.1 không cần API, database, auth, cloud hoặc Docker app. “V1”
+            trong yêu cầu là bản đầu V0.1.
+          </p>
+        </div>
+      </section>
+      <section class="panel">
+        <h2>Kiến trúc gọn, nguồn dữ liệu rõ</h2>
+        <div
+          class="architecture"
+          aria-label="YAML qua validator, search index, React UI rồi clipboard"
+        >
+          <span>data/*.yaml</span><i>→</i><span>validator</span><i>→</i
+          ><span>Fuse.js</span><i>→</i><span>React UI</span><i>→</i
+          ><span>clipboard</span>
+        </div>
+        <p>
+          Vite + React + TypeScript + Fuse.js. Search chạy tại máy. Dữ liệu YAML
+          được đóng gói vào app; query không gửi ra ngoài.
+        </p>
+        <div class="system-map">
+          <div>
+            <strong>Operating manual</strong>
+            <p>
+              AGENTS.md: mục đích, ranh giới, lệnh, runtime và definition of
+              done.
+            </p>
+          </div>
+          <div>
+            <strong>Kiến thức đọc khi cần</strong>
+            <p>
+              plan-v1.md: phạm vi và quyết định. data-format.md: schema và cách
+              bổ sung.
+            </p>
+          </div>
+        </div>
+        <p class="compact">
+          Repo ban đầu trống, chưa có Git hay docs cần di chuyển. Tái sử dụng
+          skill toàn cục; không tạo skill trùng.
+        </p>
+        <div class="callout">
+          Search dùng aliases và fuzzy matching, chưa hiểu mọi câu tự nhiên.
+          Prefix tmux mặc định Ctrl+B; không giả định cấu hình cá nhân. App
+          không chạy command.
+        </div>
+      </section>
+      <section id="milestones" class="section">
+        <h2>Triển khai theo 4 mốc</h2>
+        <div class="timeline">
+          <article class="stage">
+            <strong>Nền tảng</strong>
+            <p>Bootstrap, schema, loader YAML và runtime theo registry.</p>
+            <small>App chạy; dữ liệu lỗi và ID trùng được báo.</small>
+          </article>
+          <article class="stage">
+            <strong>Tra cứu</strong>
+            <p>Seed 53 item, chuẩn hóa tiếng Việt và ranking.</p>
+            <small>Query mẫu đưa item mong đợi vào top 3.</small>
+          </article>
+          <article class="stage">
+            <strong>Sử dụng</strong>
+            <p>UI tiếng Việt, keyboard, chi tiết và copy.</p>
+            <small>Hoàn thành luồng chính bằng bàn phím và chuột.</small>
+          </article>
+          <article class="stage">
+            <strong>Bàn giao</strong>
+            <p>Test, build, kiểm browser và đồng bộ tài liệu.</p>
+            <small>Báo kết quả thực tế và phần chưa kiểm.</small>
+          </article>
+        </div>
+      </section>
+      <section id="checks" class="panel">
+        <h2>Thế nào là dùng được?</h2>
+        <div class="two">
+          <div>
+            <ul class="checklist">
+              <li>53 item hợp lệ, ID duy nhất; lỗi dữ liệu chặn build.</li>
+              <li>
+                Query mẫu đúng trong top 3; hỗ trợ không dấu và lỗi gõ nhẹ.
+              </li>
+              <li>Copy đúng mẫu / ví dụ; có hướng dẫn khi clipboard lỗi.</li>
+              <li>
+                Keyboard, focus, responsive, favicon và trạng thái rỗng/lỗi.
+              </li>
+              <li>Typecheck, schema, search tests và production build đạt.</li>
+              <li>
+                Đo search với mục tiêu dưới 100 ms; kiểm proxy IPv4/IPv6 và
+                browser.
+              </li>
+            </ul>
+          </div>
+          <div>
+            <div class="scope-label">QUERY NGHIỆM THU</div>
+            <pre>
+tmux chia màn hình dọc
+tmux chia man hinh doc
+thằng nào giữ port
+tạo nhiều folder
+mac xem file ẩn
+git đổi tên branch</pre>
+            <p class="compact">
+              Đây là tiêu chí kế hoạch, không phải xác nhận các check đã chạy.
+              Kết quả kiểm thực tế được ghi trong README.
+            </p>
+          </div>
+        </div>
+        <details>
+          <summary>Quy ước bàn phím</summary>
+          <table>
+            <tbody>
+              <tr>
+                <td><kbd>↑</kbd> <kbd>↓</kbd></td>
+                <td>Chọn kết quả khi ở search hoặc danh sách</td>
+              </tr>
+              <tr>
+                <td><kbd>Enter</kbd></td>
+                <td>Focus chi tiết</td>
+              </tr>
+              <tr>
+                <td><kbd>⌘ Enter</kbd></td>
+                <td>Sao chép nội dung chính</td>
+              </tr>
+              <tr>
+                <td><kbd>Esc</kbd></td>
+                <td>Quay lại ô tìm kiếm</td>
+              </tr>
+              <tr>
+                <td><kbd>⌘ K</kbd></td>
+                <td>Focus và chọn query</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="compact">
+            Ctrl thay cho ⌘ trên Windows/Linux. ⌘ C giữ thao tác copy văn bản
+            thông thường.
+          </p>
+        </details>
+      </section>
+      <section id="runtime" class="panel">
+        <h2>Runtime theo Dev Hub</h2>
+        <div class="runtime">
+          <div class="port">15300</div>
+          <div>
+            <strong>App · bind 127.0.0.1 · strictPort</strong>
+            <p>Block dự trữ 15300–15399; không tự đổi port.</p>
+            <p>
+              <a href="http://dev-recall.localhost">dev-recall.localhost</a> ·
+              <a href="http://127.0.0.1:15300">URL trực tiếp</a>
+            </p>
+          </div>
+        </div>
+        <p>
+          Allocator kiểm toàn block IPv4/IPv6 và Docker hai lần trước khi
+          reserve. Caddy sinh route từ registry, giữ các entry khác.
+        </p>
+        <div class="callout">
+          Proxy chung đang publish 80:80 trên mọi interface. Task không thay
+          publication. URL chỉ được xác nhận dùng được sau runtime verification.
+        </div>
+        <details>
+          <summary>Rollback onboarding</summary>
+          <p>
+            Dừng riêng process Dev Recall, xóa riêng entry dev-recall trong
+            registry, sinh lại managed routes và tải lại proxy theo quy trình
+            Dev Hub. Giữ allocation project khác.
+          </p>
+        </details>
+      </section>
+      <section class="panel">
+        <h2>Sau khi bản đầu có ích</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Bản</th>
+              <th>Mở rộng</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>V0.2</td>
+              <td>
+                Add/Edit, Favorites, Recent; quyết định lưu bền vững và
+                backup/export trước code.
+              </td>
+            </tr>
+            <tr>
+              <td>V0.3</td>
+              <td>Tauri, global shortcut và mở/ẩn cửa sổ.</td>
+            </tr>
+            <tr>
+              <td>V0.4</td>
+              <td>Related, import Navi/TLDR và đánh giá Atuin.</td>
+            </tr>
+            <tr>
+              <td>V0.5+</td>
+              <td>AI hiểu query và context nếu aliases chưa đủ.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="compact">
+          Các bản sau chưa được duyệt triển khai. Không commit, push hay cài
+          global tools trong task.
+        </p>
+      </section>
+      <footer class="foot">
+        <span>Markdown là nguồn chuẩn. HTML là bản trình bày trực quan.</span
+        ><a href="plan-v1.md">Nguồn đầy đủ và tài liệu tham khảo ↗</a>
+      </footer>
+    </main>
+  </body>
+</html>

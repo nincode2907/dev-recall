@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="source-sha256"
+      content="b3a0b4b7bdd965b255ddc2f8ba81a1666b642d886bffe243a5ee546b7d34c82a"
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23325ee5'/%3E%3Cpath d='M23 17H15v30h8m18-30h8v30h-8m-20-6 8-8-8-8' stroke='white' stroke-width='4' fill='none'/%3E%3C/svg%3E"
+    />
+    <title>Dữ liệu Dev Recall — Hướng dẫn bổ sung</title>
+    <style>
+      :root {
+        font-family: "Avenir Next", "Segoe UI", sans-serif;
+        color: #233650;
+        background: #edf2f8;
+        font-synthesis: none;
+        --blue: #325ee5;
+        --line: #d5dfed;
+        --muted: #62748c;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+      }
+      main {
+        max-width: 1060px;
+        margin: auto;
+        padding: 35px 28px 70px;
+      }
+      a {
+        color: var(--blue);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 22px;
+        font-size: 12px;
+      }
+      header strong {
+        font-size: 18px;
+        letter-spacing: -0.5px;
+      }
+      header span {
+        color: var(--muted);
+      }
+      .hero {
+        padding: 40px 0 28px;
+      }
+      .eyebrow {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1.8px;
+        color: var(--blue);
+      }
+      h1 {
+        font-size: 43px;
+        line-height: 1.18;
+        letter-spacing: -1.2px;
+        max-width: 680px;
+        margin: 13px 0 17px;
+      }
+      h2 {
+        font-size: 23px;
+        letter-spacing: -0.5px;
+        margin: 0 0 17px;
+      }
+      h3 {
+        font-size: 15px;
+        margin: 0 0 10px;
+      }
+      .lead {
+        font-size: 16px;
+        line-height: 1.8;
+        max-width: 690px;
+        color: var(--muted);
+      }
+      .tag {
+        font-size: 11px;
+        border: 1px solid #cbd8ee;
+        border-radius: 5px;
+        padding: 5px 8px;
+        color: #34589b;
+        display: inline-block;
+        margin-right: 6px;
+      }
+      .panel {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 27px;
+        margin: 20px 0;
+      }
+      .flow {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 15px;
+        margin: 27px 0 5px;
+      }
+      .flow > div {
+        position: relative;
+        background: #f2f5fb;
+        border: 1px solid #dde5f0;
+        border-radius: 6px;
+        padding: 19px 13px;
+      }
+      .flow > div:not(:last-child):after {
+        content: "→";
+        position: absolute;
+        right: -13px;
+        top: 35%;
+        color: #7892bb;
+      }
+      .flow strong {
+        display: block;
+        font-size: 13px;
+      }
+      .flow small {
+        font-size: 10px;
+        display: block;
+        margin-top: 7px;
+        line-height: 1.5;
+        color: var(--muted);
+      }
+      .flow .final {
+        background: #eaf0ff;
+        border-color: #cbdafd;
+      }
+      .two {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      .two .panel {
+        margin: 0;
+      }
+      .section {
+        margin-top: 33px;
+      }
+      .checklist {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .checklist li {
+        position: relative;
+        padding-left: 20px;
+        margin: 12px 0;
+        font-size: 13px;
+        line-height: 1.75;
+      }
+      .checklist li:before {
+        content: "·";
+        position: absolute;
+        left: 3px;
+        color: var(--blue);
+        font-size: 22px;
+        line-height: 1;
+      }
+      p,
+      li {
+        font-size: 13px;
+        line-height: 1.85;
+      }
+      code,
+      pre,
+      kbd {
+        font-family: "SFMono-Regular", Consolas, monospace;
+      }
+      code {
+        font-size: 0.92em;
+        overflow-wrap: anywhere;
+      }
+      pre {
+        font-size: 12px;
+        line-height: 1.8;
+        background: #203452;
+        color: #edf3ff;
+        border-radius: 7px;
+        padding: 20px;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        margin: 15px 0;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 12px;
+      }
+      td,
+      th {
+        padding: 13px 12px;
+        text-align: left;
+        border-bottom: 1px solid #e2e8f1;
+        line-height: 1.7;
+        vertical-align: top;
+      }
+      th {
+        font-size: 10px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+        background: #f4f7fb;
+      }
+      kbd {
+        background: #edf2fa;
+        border: 1px solid #d3deed;
+        border-bottom-width: 2px;
+        border-radius: 4px;
+        padding: 3px 5px;
+      }
+      .timeline {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        counter-reset: milestone;
+      }
+      .stage {
+        border: 1px solid var(--line);
+        background: #fff;
+        border-radius: 7px;
+        padding: 19px;
+        counter-increment: milestone;
+      }
+      .stage:before {
+        content: counter(milestone, decimal-leading-zero);
+        font-family: monospace;
+        color: var(--blue);
+        font-size: 12px;
+        display: block;
+        margin-bottom: 16px;
+      }
+      .stage p {
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.75;
+      }
+      .stage strong {
+        font-size: 14px;
+      }
+      .stage small {
+        font-size: 10px;
+        line-height: 1.6;
+        display: block;
+        border-top: 1px solid var(--line);
+        padding-top: 10px;
+        color: #405b83;
+      }
+      .callout {
+        background: #fff6ed;
+        border: 1px solid #edd4b7;
+        border-radius: 7px;
+        padding: 16px 19px;
+        font-size: 12px;
+        line-height: 1.8;
+        color: #845437;
+      }
+      .runtime {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .port {
+        font-family: monospace;
+        font-size: 35px;
+        color: var(--blue);
+        font-weight: 700;
+      }
+      .runtime p {
+        color: var(--muted);
+        margin: 5px 0;
+      }
+      .scope-label {
+        font-size: 10px;
+        letter-spacing: 1px;
+        color: var(--muted);
+      }
+      .architecture {
+        display: flex;
+        gap: 7px;
+        align-items: center;
+        flex-wrap: wrap;
+        font-family: monospace;
+        font-size: 11px;
+        background: #f1f5fc;
+        border-radius: 7px;
+        padding: 16px;
+      }
+      .architecture span {
+        background: #fff;
+        border: 1px solid var(--line);
+        padding: 8px;
+        border-radius: 4px;
+      }
+      .architecture i {
+        font-style: normal;
+        color: #7892bb;
+      }
+      .foot {
+        border-top: 1px solid var(--line);
+        margin-top: 35px;
+        padding-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+      details {
+        border-top: 1px solid var(--line);
+        margin-top: 16px;
+        padding-top: 15px;
+      }
+      summary {
+        cursor: pointer;
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 600;
+      }
+      a:focus-visible,
+      summary:focus-visible {
+        outline: 3px solid #7397fc;
+        outline-offset: 3px;
+      }
+      .scroll {
+        overflow-x: auto;
+      }
+      .risk-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      .risk-card {
+        background: #f3f7fb;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        padding: 17px;
+      }
+      .risk-card.caution {
+        background: #fff8ee;
+        border-color: #ecd6b5;
+      }
+      .risk-card.destructive {
+        background: #fff1ec;
+        border-color: #eccbbb;
+      }
+      .risk-card p {
+        font-size: 12px;
+        margin-bottom: 0;
+      }
+      .compact {
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .nav {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        font-size: 12px;
+        margin: 15px 0;
+      }
+      .system-map {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+      .system-map > div {
+        border-left: 3px solid #b6c8ef;
+        padding: 8px 15px;
+        background: #f5f8fd;
+      }
+      .system-map strong {
+        font-size: 12px;
+      }
+      .system-map p {
+        margin: 5px 0;
+        font-size: 11px;
+        color: var(--muted);
+      }
+      @media (max-width: 740px) {
+        main {
+          padding: 23px 18px 45px;
+        }
+        h1 {
+          font-size: 33px;
+        }
+        .two,
+        .system-map {
+          grid-template-columns: 1fr;
+        }
+        .flow {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+        .flow > div {
+          padding: 12px 15px;
+        }
+        .flow > div:not(:last-child):after {
+          content: "↓";
+          top: auto;
+          bottom: -12px;
+          right: 50%;
+        }
+        .timeline {
+          grid-template-columns: 1fr 1fr;
+        }
+        .panel {
+          padding: 21px;
+        }
+        .risk-grid {
+          grid-template-columns: 1fr;
+        }
+        .foot {
+          flex-direction: column;
+        }
+        .lead {
+          font-size: 14px;
+        }
+        header {
+          gap: 15px;
+        }
+      }
+      @media (max-width: 400px) {
+        .timeline {
+          grid-template-columns: 1fr;
+        }
+        h1 {
+          font-size: 29px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <strong>devrecall.</strong><span>Hướng dẫn dữ liệu · V0.1</span>
+      </header>
+      <section class="hero">
+        <div class="eyebrow">KHO KIẾN THỨC CỦA BẠN</div>
+        <h1>Thêm điều bạn<br />thường quên.</h1>
+        <p class="lead">
+          Mỗi item lưu một thao tác rõ ràng, cách bạn gọi nó, nội dung để copy
+          và điều cần nhớ trước khi dùng.
+        </p>
+        <a href="data-format.md">Đọc nguồn Markdown và tài liệu xác minh ↗</a>
+      </section>
+      <section class="panel">
+        <h2>Một item, đủ để tìm và dùng</h2>
+        <pre>
+- id: terminal-process-on-port
+  title: Xem tiến trình đang giữ port
+  type: command
+  category: terminal
+  aliases:
+    - thằng nào giữ port
+    - find process using port
+  content: "lsof -nP -i :&lt;port&gt;"
+  example: "lsof -nP -i :3000"
+  note: "Thay &lt;port&gt; bằng số port cần kiểm tra."
+  risk: safe</pre>
+        <p>
+          File chuẩn: <code>data/&lt;category&gt;.yaml</code>. Trong dev, lưu
+          YAML sẽ cập nhật module. Production cần build lại. Không lưu item
+          trong localStorage.
+        </p>
+      </section>
+      <section class="panel">
+        <h2>Hợp đồng dữ liệu</h2>
+        <div class="scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Trường</th>
+                <th>Quy tắc</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>id</code></td>
+                <td>
+                  Duy nhất toàn kho, chữ thường / số / gạch ngang; giữ ổn định.
+                </td>
+              </tr>
+              <tr>
+                <td><code>title</code></td>
+                <td>Nhu cầu dễ nhận biết, không rỗng.</td>
+              </tr>
+              <tr>
+                <td><code>type</code></td>
+                <td>
+                  command, shortcut, path, config, snippet, concept, workflow,
+                  routine, fix.
+                </td>
+              </tr>
+              <tr>
+                <td><code>category</code></td>
+                <td>terminal, tmux, git, docker, macos.</td>
+              </tr>
+              <tr>
+                <td><code>aliases</code></td>
+                <td>Danh sách chuỗi không rỗng, cách gọi Việt/Anh.</td>
+              </tr>
+              <tr>
+                <td><code>content</code></td>
+                <td>Nội dung hiển thị và copy, không rỗng.</td>
+              </tr>
+              <tr>
+                <td><code>example</code></td>
+                <td>Tùy chọn; ví dụ cụ thể, có nút copy riêng.</td>
+              </tr>
+              <tr>
+                <td><code>note</code></td>
+                <td>Điều kiện, nền tảng, tác dụng; không rỗng.</td>
+              </tr>
+              <tr>
+                <td><code>risk</code></td>
+                <td>safe, caution hoặc destructive.</td>
+              </tr>
+              <tr>
+                <td><code>riskNote</code></td>
+                <td>Bắt buộc với caution/destructive; giải thích tác động.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="compact">
+          Validator dùng chung ở src/data/schema.ts. Từ chối ID trùng, field
+          không biết, sai type, chuỗi rỗng và collection không phải list không
+          rỗng.
+        </p>
+      </section>
+      <section class="section">
+        <h2>Ghi rõ tác động</h2>
+        <div class="risk-grid">
+          <div class="risk-card">
+            <h3>safe</h3>
+            <p>
+              Tra cứu hoặc thao tác thông thường. Vẫn cần đọc note và thay tham
+              số đúng.
+            </p>
+          </div>
+          <div class="risk-card caution">
+            <h3>caution</h3>
+            <p>
+              Có gián đoạn hoặc điều kiện đáng chú ý. Ví dụ restart service. Bắt
+              buộc riskNote.
+            </p>
+          </div>
+          <div class="risk-card destructive">
+            <h3>destructive</h3>
+            <p>
+              Xóa dữ liệu, mất thay đổi hoặc kết thúc tác vụ. Bắt buộc nêu tác
+              động cụ thể.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="panel">
+        <h2>Quy trình bổ sung</h2>
+        <ol>
+          <li>
+            Chọn đúng category, ID ổn định và duy nhất. Category mới cần cập
+            nhật schema, UI và test.
+          </li>
+          <li>
+            Viết title theo nhu cầu; aliases theo cách người dùng thật sự nhớ.
+          </li>
+          <li>
+            Kiểm command/phím tắt bằng tài liệu chính thức; nêu điều kiện nền
+            tảng và tool cần cài.
+          </li>
+          <li>
+            Dùng &lt;parameter&gt; cho mẫu, example cho ví dụ. Không đưa
+            secret/token hoặc máy chủ cá nhân vào seed.
+          </li>
+          <li>Chọn risk và viết riskNote khi có tác động.</li>
+          <li>Chạy kiểm dữ liệu, test và xem trực tiếp query/nội dung copy.</li>
+        </ol>
+        <pre>
+npm run validate:data
+npm test</pre>
+      </section>
+      <section class="two section">
+        <div class="panel">
+          <h2>Search bằng cách gọi</h2>
+          <p>
+            Chuẩn hóa dấu, chữ đ, chữ hoa và khoảng trắng. Tìm trên title,
+            aliases, category và content; ưu tiên title/alias chính xác và cụm
+            từ khớp.
+          </p>
+          <p>
+            Mọi token còn lại sau khi bỏ từ đệm cần khớp qua fuzzy. Query nhiều
+            token cần ít nhất một nửa token khớp chuỗi trực tiếp để loại kết quả
+            quá xa. Tên công cụ trong query giới hạn category tương ứng.
+          </p>
+          <div class="callout">
+            Chưa có semantic search. Thêm aliases khi cách diễn đạt thường dùng
+            chưa tìm đúng.
+          </div>
+        </div>
+        <div class="panel">
+          <h2>Hai điểm dễ nhầm</h2>
+          <p>
+            <strong>tmux:</strong> Prefix mặc định Ctrl+B, nhấn rồi thả trước
+            phím tiếp. % chia trái/phải; dấu &quot; chia trên/dưới. Không giả
+            định prefix cá nhân.
+          </p>
+          <p>
+            <strong>Git:</strong> restore --staged bỏ stage, giữ working tree.
+            restore -- &lt;file&gt; bỏ thay đổi chưa stage, khôi phục từ index.
+            Không gộp dưới alias “reset file”.
+          </p>
+        </div>
+      </section>
+      <footer class="foot">
+        <a href="plan-v1.html">← Kế hoạch bản đầu</a
+        ><a href="data-format.md">Nguồn chuẩn, schema và tài liệu xác minh ↗</a>
+      </footer>
+    </main>
+  </body>
+</html>
