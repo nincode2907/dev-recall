@@ -10,6 +10,7 @@
     - "tmux split vertical"
     - "chia màn hình tmux"
     - "tmux split left right"
+    - "tmux split-window -h"
   content: "Prefix + %"
   note: "Tạo pane bên trái/phải (split-window -h). Prefix mặc định là Ctrl+B: nhấn Ctrl+B, thả tay rồi nhấn phím sau. Nếu đã đổi prefix trong ~/.tmux.conf, dùng phím của bạn."
   risk: "safe"
@@ -23,6 +24,7 @@
     - "chia tmux ngang"
     - "tmux split horizontal"
     - "tmux split top bottom"
+    - "tmux split-window -v"
   content: 'Prefix + "'
   note: "Tạo pane phía trên/dưới (split-window -v). Prefix mặc định là Ctrl+B: nhấn Ctrl+B, thả tay rồi nhấn phím sau. Nếu đã đổi prefix trong ~/.tmux.conf, dùng phím của bạn."
   risk: "safe"
@@ -138,9 +140,11 @@
     - "đổi tên pane đang chọn"
     - "show pane title in border"
   content: |-
+    tmux set-option -g pane-border-status top
+    tmux set-option -g pane-border-format ' #{pane_title} '
+    tmux select-pane -T "Đặt tên"
+  example: |-
     set -g pane-border-status top
     set -g pane-border-format ' #{pane_title} '
-    tmux source-file ~/.tmux.conf
-    tmux select-pane -T "Đặt tên"
-  note: "Hai dòng đầu đặt status trên viền pane và hiển thị pane_title. Chạy dòng source-file trong terminal để nạp lại ~/.tmux.conf; khi session tmux đang hoạt động, chạy dòng cuối để đặt tên cho pane hiện tại."
+  note: "Nội dung chính chạy trong terminal của pane tmux đang dùng. Để lưu cấu hình, thêm hai dòng ở phần Ví dụ vào ~/.tmux.conf rồi chạy `tmux source-file ~/.tmux.conf`. Tên pane có thể bị chương trình trong pane ghi đè."
   risk: "safe"

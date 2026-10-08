@@ -13,6 +13,8 @@ YAML trong `data/` là nguồn chuẩn. Chạy lệnh từ root, cần Node.js 2
 - Đổi nội dung kiến thức: đọc `docs/data-format.md`; giữ ID ổn định, aliases hữu ích,
   note chính xác và riskNote cho risk caution/destructive. Không tự đổi prefix tmux.
 - Đổi phạm vi sản phẩm: đọc `docs/plan-v1.md`; các bản sau chưa được duyệt.
+- Đổi search/state/runtime: đọc `docs/architecture.md`; metadata và lifecycle chỉ là
+  đề xuất V0.2, chưa có trong runtime. Bằng chứng V0.1: `docs/v0.1-review.md`.
 - Tài liệu Markdown là source; cập nhật HTML tương ứng và source-sha256 cùng thay đổi.
   `npm run docs:sync` phát hiện HTML không khớp nguồn và copy sang public/docs.
 - Port được cấp từ Dev Hub registry ở
@@ -23,7 +25,11 @@ YAML trong `data/` là nguồn chuẩn. Chạy lệnh từ root, cần Node.js 2
 - Giữ server trong terminal tương tác có log; không kill process không rõ chủ sở hữu.
 - Reuse global project-ai-bootstrap cho setup; product-builder cho scope sản phẩm;
   frontend-design cho thiết kế; task-qa-review cho review task khi được yêu cầu.
-- Không commit/push, cài global tools hoặc sửa system services nếu chưa được yêu cầu.
+- Bắt đầu feature bằng nhánh riêng từ branch nền phù hợp; không implement trên main.
+- Trong lúc implement chưa commit/push. Sau khi hoàn tất và checks phù hợp đạt,
+  commit phần thay đổi của feature, push nhánh rồi báo tên nhánh/link để người dùng merge.
+  Không tự merge vào main hoặc force-push.
+- Không cài global tools hoặc sửa system services nếu chưa được yêu cầu.
 
 ## Lệnh
 

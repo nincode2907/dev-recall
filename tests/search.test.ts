@@ -2,29 +2,12 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { performance } from "node:perf_hooks";
 import { readData } from "../scripts/read-data.ts";
+import { searchCases } from "./search-cases.ts";
 import { createSearch, normalize } from "../src/search/engine.ts";
 
 const items = await readData();
 const search = createSearch(items);
-const examples: [string, string][] = [
-  ["tmux chia màn hình dọc", "tmux-split-side"],
-  ["tmux chia man hinh doc", "tmux-split-side"],
-  ["thằng nào giữ port", "terminal-port-process"],
-  ["tạo nhiều folder", "terminal-mkdir-folders"],
-  ["mac xem file ẩn", "macos-hidden-files"],
-  ["git đổi tên branch", "git-rename-branch"],
-  ["  TMUX   ZOOM PANE  ", "tmux-zoom"],
-  ["tmux zom", "tmux-zoom"],
-  ["folder hiện tại", "terminal-pwd"],
-  ["tìm file env", "terminal-find-env"],
-  ["port thằng nào giữ", "terminal-port-process"],
-  ["git bỏ stage", "git-unstage"],
-  ["docker xóa container chết", "docker-prune-containers"],
-  ["git diff staged", "git-staged-diff"],
-  ["mac chụp màn hình vùng", "macos-screenshot-area"],
-  ["lsof", "terminal-port-process"],
-  ["~/.zshrc", "macos-zsh-config"],
-];
+const examples = searchCases;
 
 for (const [query, expected] of examples)
   test(`Top 3: ${query}`, () => {
@@ -49,7 +32,7 @@ test("Query rỗng trả toàn bộ kho, vô nghĩa trả rỗng", () => {
 test("Tên công cụ giới hạn kết quả trong đúng nhóm", () => {
   for (const [category, count] of Object.entries({
     tmux: 11,
-    git: 11,
+    git: 12,
     docker: 10,
     terminal: 10,
   })) {
@@ -78,7 +61,29 @@ test("Đo thời gian search với 53 item", () => {
     uncachedSearch(examples[i % examples.length][0]);
     return performance.now() - start;
   }).sort((a, b) => a - b);
+  assert.ok(timings[94] < 100, "p95 search phải dưới 100 ms");
   console.log(
     `Search 53 item: p95 ${timings[94].toFixed(2)} ms, max ${timings.at(-1)!.toFixed(2)} ms (mục tiêu <100 ms).`,
   );
+});
+
+test("Các title và alias của 53 mục đều tìm được trong top 3", () => {
+  for (const item of items)
+    for (const query of [item.title, ...item.aliases])
+      assert.ok(
+        search(query)
+          .slice(0, 3)
+          .some((result) => result.id === item.id),
+        `${item.id}: ${query}`,
+      );
+});
+test("Query thiếu kiến thức không được ghép từ các fuzzy fragment", () => {
+  for (const query of [
+    "xem process nào ăn ram",
+    "process ram",
+    "terminal ram",
+    "ram",
+    "git recipe pineapple",
+  ])
+    assert.deepEqual(search(query), [], query);
 });

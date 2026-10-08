@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="source-sha256"
+      content="64453f71df5a4001fdd84c6176030c4abe5f4a857141a70f1a0e27dc9a1b522d"
+    />
+    <link rel="icon" href="/favicon.svg" />
+    <title>Kiến trúc Dev Recall V0.1</title>
+    <style>
+      :root {
+        font-family: "Avenir Next", system-ui, sans-serif;
+        color: #20304b;
+        background: #edf2f8;
+        line-height: 1.65;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+      }
+      main {
+        max-width: 1120px;
+        margin: auto;
+        padding: 32px;
+      }
+      .hero {
+        padding: 32px 0;
+      }
+      .eyebrow {
+        color: #325ee5;
+        font-size: 11px;
+        letter-spacing: 2px;
+        font-weight: 700;
+      }
+      h1 {
+        font-size: 38px;
+        line-height: 1.2;
+        letter-spacing: -1px;
+        margin: 16px 0;
+      }
+      h2 {
+        font-size: 23px;
+        margin: 0 0 20px;
+      }
+      h3 {
+        font-size: 18px;
+      }
+      p,
+      li {
+        font-size: 14px;
+      }
+      a {
+        color: #325ee5;
+        text-underline-offset: 3px;
+      }
+      a:focus-visible {
+        outline: 3px solid #7397fc;
+      }
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        padding: 18px 0;
+        margin-bottom: 20px;
+        border-block: 1px solid #d6e0ed;
+        font-size: 13px;
+      }
+      .panel {
+        background: white;
+        border: 1px solid #d6e0ed;
+        border-radius: 12px;
+        padding: 28px;
+        margin: 20px 0;
+        overflow-wrap: anywhere;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+        table-layout: fixed;
+      }
+      th,
+      td {
+        padding: 12px;
+        text-align: left;
+        vertical-align: top;
+        border-bottom: 1px solid #dde5ef;
+      }
+      th {
+        background: #eaf0ff;
+        color: #244dcc;
+      }
+      tbody tr:last-child td {
+        border-bottom: 0;
+      }
+      th:first-child {
+        width: 24%;
+      }
+      pre {
+        background: #203452;
+        color: #edf3ff;
+        border-radius: 8px;
+        padding: 22px;
+        font-size: 13px;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        line-height: 1.7;
+      }
+      code {
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 0.93em;
+      }
+      p code,
+      td code {
+        background: #f0f3f9;
+        border-radius: 3px;
+        padding: 1px 3px;
+      }
+      footer {
+        padding: 24px 0;
+        font-size: 12px;
+        color: #526781;
+      }
+      @media (max-width: 760px) {
+        main {
+          padding: 16px;
+        }
+        h1 {
+          font-size: 29px;
+        }
+        .panel {
+          padding: 18px;
+        }
+        th,
+        td {
+          padding: 8px;
+          font-size: 11px;
+        }
+        pre {
+          padding: 16px;
+          font-size: 11px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header class="hero">
+        <span class="eyebrow">DEV RECALL · V0.1</span>
+        <h1>Kiến trúc Dev Recall V0.1</h1>
+        <p>Kiến thức tại máy. Tìm lại thao tác, tiếp tục làm việc.</p>
+      </header>
+      <nav>
+        <a href="architecture.html">Kiến trúc</a
+        ><a href="v0.1-review.html">Kiểm chứng</a
+        ><a href="plan-v1.html">Phạm vi đã duyệt</a
+        ><a href="data-format.html">Thêm kiến thức</a>
+      </nav>
+      <p>
+        Trạng thái ngày 2026-10-08: kiến trúc đang chạy cho bản đầu đã duyệt.
+        Các phần ghi “Đề xuất V0.2” là thiết kế tương lai, chưa triển khai. Phạm
+        vi chuẩn: <a href="plan-v1.md">kế hoạch V0.1</a>. Cách bổ sung kiến
+        thức: <a href="data-format.md">data-format</a>. Bằng chứng nghiệm thu:
+        <a href="v0.1-review.md">review V0.1</a>.
+      </p>
+      <section class="panel">
+        <h2>Sản phẩm và luồng chính</h2>
+        <p>
+          “Tôi nhớ việc muốn làm, nhưng quên cách làm.” App là bộ nhớ thao tác
+          cá nhân cho developer macOS: mở → gõ intent → chọn kết quả → xem →
+          copy → tiếp tục làm việc. Chỉ 53 mục ở năm nhóm; không phải kho lệnh
+          tổng hợp.
+        </p>
+        <p>
+          Search tự focus khi khởi động. ↑/↓ chọn và cuộn trong list; Enter
+          focus detail; Cmd/Ctrl Enter copy nội dung chính; Esc quay lại search;
+          Cmd/Ctrl K chọn query để thay nhanh. Cmd+C vẫn copy text bình thường.
+          Prefix tmux là chuỗi hai bước, hiển thị bằng mũi tên; shortcut đồng
+          thời dùng dấu cộng. Không tự chạy command.
+        </p>
+      </section>
+      <section class="panel">
+        <h2>Dòng dữ liệu V0.1</h2>
+        <pre><code>data/*.yaml (nguồn chuẩn, 53 mục)
+  → raw imports đồng bộ
+  → parseCollection (schema + ID duy nhất)
+  → thứ tự nhóm + search index
+  → query / selectedId trong React
+  → danh sách + detail
+  → navigator.clipboard.writeText</code></pre>
+        <table>
+          <thead>
+            <tr>
+              <th>Thành phần</th>
+              <th>Trách nhiệm</th>
+              <th>Ranh giới</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>data/*.yaml</td>
+              <td>
+                Kiến thức canonical, ID ổn định, aliases, content/example,
+                note/risk
+              </td>
+              <td>Không query, usage count hay secret</td>
+            </tr>
+            <tr>
+              <td>src/data/schema.ts</td>
+              <td>
+                Parse YAML, validate field/type/riskNote, phát hiện ID trùng
+                toàn kho
+              </td>
+              <td>Dùng chung CLI và browser</td>
+            </tr>
+            <tr>
+              <td>src/data/load.ts</td>
+              <td>Import eager và biến lỗi thành CollectionState</td>
+              <td>Browser không fetch dữ liệu runtime</td>
+            </tr>
+            <tr>
+              <td>src/search/engine.ts</td>
+              <td>Normalization, matching, ranking, cache token có giới hạn</td>
+              <td>Không phụ thuộc React, DOM, storage hay network</td>
+            </tr>
+            <tr>
+              <td>src/app/App.tsx</td>
+              <td>Query, selection, keyboard, focus, clipboard feedback</td>
+              <td>State phiên hiện tại; không lưu history</td>
+            </tr>
+            <tr>
+              <td>src/components/ItemDetail.tsx</td>
+              <td>Hiển thị nội dung, cảnh báo, mẫu/ví dụ và nút copy</td>
+              <td>Không chạy lệnh, không quyết định ranking</td>
+            </tr>
+            <tr>
+              <td>scripts/read-data.ts</td>
+              <td>Đọc YAML từ disk cho CLI và test</td>
+              <td>Qua cùng validator</td>
+            </tr>
+            <tr>
+              <td>scripts/sync-docs.ts</td>
+              <td>Kiểm source-sha256, đóng gói bốn cặp Markdown/HTML</td>
+              <td>
+                Hash chứng minh nguồn tương ứng, không tự chứng minh nội dung
+                HTML đúng
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Không database, localStorage, API, analytics, cloud, auth hay AI trong
+          V0.1. Vite HMR đọc lại YAML trong dev; bản production phải build lại
+          sau khi sửa dữ liệu. Query và nội dung copy không gửi ra ngoài app.
+        </p>
+      </section>
+      <section class="panel">
+        <h2>Search và ranking</h2>
+        <p>
+          Chuẩn hóa chữ thường, NFD, dấu tiếng Việt, đ → d, khoảng trắng; bỏ một
+          số từ đệm. Tìm title, aliases, category, content và example. Thứ tự ưu
+          tiên: exact title/alias/command → phrase → literal token → fuzzy.
+          Category nhận diện được là bộ lọc đúng nhóm.
+        </p>
+        <p>
+          Fuse.js tạo candidate/score; guard từ giới hạn fuzzy ở một lỗi ký tự
+          hoặc đảo hai ký tự liền nhau, không ghép fragment giữa các từ không
+          liên quan. Fuzzy từ từ 3 ký tự; một token ngắn tối đa 3 ký tự cần
+          literal hoặc category. Prefix từ từ 3 ký tự giúp tìm khi đang gõ. Số
+          token fuzzy không vượt max(1, floor(số token intent / 3)); cache tối
+          đa 200 token. Tie-break theo title tiếng Việt. Đây là deterministic
+          retrieval, không hiểu ngữ nghĩa.
+        </p>
+        <p>
+          42 query Việt/Anh, không dấu, category, direct command và typo được
+          dùng chung trong unit/browser tests. Từng title/alias của 53 mục phải
+          trả mục trong top 3. Query “xem process nào ăn ram” trả rỗng vì chưa
+          có kiến thức phù hợp. Không thêm mục RAM trong lượt này.
+        </p>
+      </section>
+      <section class="panel">
+        <h2>State, feedback và lỗi</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Trạng thái</th>
+              <th>Hành vi và cách tiếp tục</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Chờ module khởi động</td>
+              <td>
+                Nội dung HTML “Đang mở Dev Recall…” và link tải lại; React thay
+                fallback rồi focus search
+              </td>
+            </tr>
+            <tr>
+              <td>Query rỗng</td>
+              <td>Toàn bộ kho theo thứ tự nhóm và gợi ý tìm</td>
+            </tr>
+            <tr>
+              <td>Không có kết quả</td>
+              <td>
+                Gợi ý rút gọn/thêm tên công cụ; nút xem lại kho; không còn nút
+                copy
+              </td>
+            </tr>
+            <tr>
+              <td>YAML/schema/ID lỗi</td>
+              <td>
+                Nêu file/item/ID khi có, cách validate và tải lại; không hiện
+                kho thiếu một phần
+              </td>
+            </tr>
+            <tr>
+              <td>Copy pending</td>
+              <td>Khóa copy để tránh ghi lặp; selection/query vẫn dùng được</td>
+            </tr>
+            <tr>
+              <td>Copy thành công/thất bại</td>
+              <td>
+                Status cố định trong viewport có nội dung đã copy hoặc hướng dẫn
+                chọn text rồi Cmd/Ctrl C
+              </td>
+            </tr>
+            <tr>
+              <td>Đổi query/selection khi copy pending</td>
+              <td>
+                Bỏ feedback thuộc context cũ; không tuyên bố đã copy mục mới
+              </td>
+            </tr>
+            <tr>
+              <td>Caution/destructive</td>
+              <td>
+                Cảnh báo cụ thể trước nội dung copy; không tự chạy command hay
+                thêm confirmation flow
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Keyboard bỏ qua keydown khi đang composition. Arrow chỉ cuộn list,
+          không làm search biến khỏi viewport. Focus detail có outline; Esc đưa
+          input vào vùng nhìn thấy. Responsive xếp detail dưới list trên màn
+          hình nhỏ; code wrap không tràn ngang.
+        </p>
+      </section>
+      <section class="panel">
+        <h2>Runtime và vận hành</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Mục</th>
+              <th>Cấu hình</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Registry</td>
+              <td>
+                /Users/buivannin/Desktop/workspace/personal/dev-hub/projects.yml,
+                entry dev-recall
+              </td>
+            </tr>
+            <tr>
+              <td>Allocation</td>
+              <td>15300–15399; app 15300</td>
+            </tr>
+            <tr>
+              <td>Dev / preview</td>
+              <td>host 127.0.0.1, port 15300, strictPort true</td>
+            </tr>
+            <tr>
+              <td>Direct</td>
+              <td>http://127.0.0.1:15300</td>
+            </tr>
+            <tr>
+              <td>Proxy</td>
+              <td>
+                http://dev-recall.localhost, Caddy reverse proxy tới
+                host.docker.internal:15300 trong container hiện tại
+              </td>
+            </tr>
+            <tr>
+              <td>Shared proxy</td>
+              <td>
+                compose.proxy.yml publish 80:80 trên mọi interface; không đổi hạ
+                tầng project khác
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Dev và preview không chạy cùng port một lúc. Giữ server trong terminal
+          tương tác có log; dừng đúng process của Dev Recall trước khi chuyển
+          mode. Không dựng service nền/global shortcut. Bản build gồm
+          JS/CSS/data và public/docs; browser verification chạy riêng dev và
+          production.
+        </p>
+      </section>
+      <section class="panel">
+        <h2>Đề xuất V0.2: usage metadata tách khỏi kiến thức</h2>
+        <p>
+          Chỉ đề xuất, không thêm field vào schema V0.1 hoặc ghi storage. Giữ ID
+          canonical làm khóa; metadata có schemaVersion riêng và repository
+          adapter để sau này chọn storage/backup. Không rewrite YAML mỗi khi
+          người dùng copy.
+        </p>
+        <pre><code>type UsageMetadata = {
+  schemaVersion: 1;
+  byItem: Record&lt;
+    string,
+    {
+      views: number;
+      copies: number;
+      lastUsed: string | null; // UTC ISO timestamp
+    }
+  &gt;;
+  successfulQueries: Record&lt;
+    string,
+    {
+      count: number;
+      lastUsed: string;
+      chosenItemIds: string[];
+    }
+  &gt;;
+  zeroResultQueries: Record&lt;
+    string,
+    {
+      count: number;
+      lastSeen: string;
+    }
+  &gt;;
+};</code></pre>
+        <p>
+          “View” là người dùng chủ động mở detail bằng Enter hoặc click kết quả,
+          không đếm mỗi arrow/re-render. “Copy” chỉ tăng khi clipboard write
+          thành công. lastUsed là lần view/copy gần nhất. Successful query được
+          đếm một lần trong phiên query khi người dùng chủ động mở/copy mục;
+          phân biệt với query chỉ có result. Query rỗng không được ghi. Metadata
+          ID không còn trong kho được giữ riêng để không mất lịch sử khi
+          rename/deprecate; chuyển ID phải có mapping rõ ràng.
+        </p>
+        <p>
+          Trước triển khai cần chốt storage local, opt-in, retention/cap, xóa dữ
+          liệu và export/backup. Query có thể chứa thông tin nhạy cảm; mặc định
+          không có network sink. Metadata lỗi phải có thể reset độc lập, không
+          làm kho kiến thức không mở được.
+        </p>
+      </section>
+      <section class="panel">
+        <h2>Đề xuất V0.2: failed-query design</h2>
+        <p>
+          Không ghi query trong V0.1. Phiên tương lai có thể gom query đã
+          normalize, đếm một lần khi query cuối ổn định và người dùng xác nhận
+          không tìm được (Enter khi zero-result) hoặc rời search. Debounce
+          khoảng 600 ms chỉ tạo candidate trong memory; không ghi mỗi phím. Bỏ
+          query rỗng, chỉ gồm từ đệm hoặc quá ngắn. Query sửa tiếp/hủy candidate
+          không tạo log. Giới hạn số entry và thời gian giữ trước khi code.
+        </p>
+        <pre><code>Missing knowledge (ví dụ minh họa)
+  xem process nào ăn ram ×4
+  kiểm tra dung lượng pin ×3</code></pre>
+        <p>
+          Nhóm có/không dấu về cùng khóa bằng normalization hiện tại; không tự
+          gộp ngữ nghĩa bằng AI. Giữ normalized text tối thiểu, không lưu toàn
+          bộ raw variants mặc định. Cho người dùng xem/xóa/đánh dấu “đã bổ sung”
+          trước khi liên kết tới Add/Edit tương lai. Gợi ý từ usage không tự
+          tạo/verify knowledge và không gửi query ra ngoài.
+        </p>
+      </section>
+      <section class="panel">
+        <h2>Đề xuất V0.2: knowledge lifecycle</h2>
+        <p>
+          Các trạng thái dưới đây thuộc canonical knowledge/provenance tương
+          lai, không thuộc usage metadata. Chưa có trong YAML hoặc UI V0.1.
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Trạng thái</th>
+              <th>Ý nghĩa</th>
+              <th>Điều kiện và provenance đề xuất</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Verified</td>
+              <td>Đã kiểm đúng trong điều kiện được ghi</td>
+              <td>
+                Nguồn chính thức, verifiedAt, phiên bản/tool/nền tảng; không có
+                nghĩa đúng mãi
+              </td>
+            </tr>
+            <tr>
+              <td>Personal</td>
+              <td>Quy ước/cấu hình riêng của người dùng</td>
+              <td>
+                Điều kiện cá nhân rõ ràng, ví dụ custom prefix; không gắn nhãn
+                universal
+              </td>
+            </tr>
+            <tr>
+              <td>Imported</td>
+              <td>Nhận từ nguồn ngoài, chưa tự coi là đúng</td>
+              <td>
+                Source URL, license, importedAt; review trước khi chuyển
+                Verified
+              </td>
+            </tr>
+            <tr>
+              <td>AI Suggested</td>
+              <td>Đề xuất chưa được người dùng kiểm</td>
+              <td>
+                Model/source context và reviewer; không mặc định Verified, không
+                tự chạy
+              </td>
+            </tr>
+            <tr>
+              <td>Deprecated</td>
+              <td>Lỗi thời hoặc được thay thế</td>
+              <td>
+                Lý do, deprecatedAt, replacementId; giữ ID cho metadata, ẩn khỏi
+                search mặc định tương lai
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Personal có thể chuyển Verified khi đủ bằng chứng trong phạm vi cá
+          nhân; Imported/AI Suggested phải qua review. Mục sai/lỗi thời chuyển
+          Deprecated; mục sửa giữ ID nếu vẫn cùng intent, tạo replacement ID khi
+          intent đổi. Lifecycle không thay thế risk/riskNote.
+        </p>
+      </section>
+      <section class="panel">
+        <h2>Nguồn và giới hạn kiểm</h2>
+        <ul>
+          <li>
+            <a href="https://man.openbsd.org/tmux.1">tmux manual</a>: prefix,
+            hướng split, shell/config, pane title.
+          </li>
+          <li>
+            <a href="https://git-scm.com/docs/git-update-index"
+              >Git update-index</a
+            >: skip-worktree và giới hạn.
+          </li>
+          <li>
+            <a
+              href="https://docs.docker.com/reference/cli/docker/compose/restart/"
+              >Docker Compose restart</a
+            >: restart không áp dụng cấu hình mới.
+          </li>
+          <li>
+            <a href="https://support.apple.com/en-us/102650">Apple shortcuts</a
+            >: shortcut macOS và Finder.
+          </li>
+        </ul>
+        <p>
+          Runtime chỉ chứng minh app tra cứu/copy. Không chạy 53 command vào môi
+          trường thật và không xác nhận custom tmux prefix của người dùng. Tính
+          năng V0.2, native global shortcut và OS khác chưa được triển
+          khai/kiểm.
+        </p>
+      </section>
+      <footer>
+        <a href="architecture.md">Đọc nguồn Markdown ↗</a> ·
+        <a href="/">Mở Dev Recall</a>
+      </footer>
+    </main>
+  </body>
+</html>

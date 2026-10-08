@@ -250,10 +250,16 @@ svg {
 }
 .result-list {
   height: 446px;
+  max-height: calc(100dvh - 460px);
+  min-height: 120px;
   overflow-y: auto;
   padding: 8px;
   scrollbar-width: thin;
   scrollbar-color: #cdd8e7 transparent;
+}
+.result-list:empty {
+  height: 0;
+  min-height: 0;
 }
 .result-button {
   display: flex;
@@ -612,6 +618,14 @@ svg {
   color: #5e7494;
 }
 .notice {
+  position: fixed;
+  z-index: 10;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100vw - 28px);
+  box-shadow: 0 4px 16px #20304b18;
   min-height: 37px;
   display: flex;
   align-items: center;
@@ -621,6 +635,9 @@ svg {
   font-size: 12px;
   line-height: 1.6;
   padding: 5px 10px;
+}
+.notice:empty {
+  display: none;
 }
 .notice-success {
   background: #e4f1ec;

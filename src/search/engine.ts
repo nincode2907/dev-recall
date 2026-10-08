@@ -33,20 +33,62 @@ const categoryWords: Record<string, string> = {
   docker: "docker",
 };
 
+// A small typo means one insertion/deletion/substitution or adjacent swap.
+// Do not let short words match arbitrary fragments in unrelated fields.
+function nearWord(a: string, b: string): boolean {
+  if (a.length < 3 || Math.abs(a.length - b.length) > 1) return false;
+  if (a.length === b.length) {
+    const different = [...a].flatMap((char, i) => (char === b[i] ? [] : [i]));
+    if (different.length <= 1) return true;
+    const [i, j] = different;
+    return (
+      different.length === 2 && j === i + 1 && a[i] === b[j] && a[j] === b[i]
+    );
+  }
+  const [short, long] = a.length < b.length ? [a, b] : [b, a];
+  let i = 0;
+  let j = 0;
+  let skipped = false;
+  while (i < short.length && j < long.length) {
+    if (short[i] === long[j]) {
+      i++;
+      j++;
+    } else if (!skipped) {
+      skipped = true;
+      j++;
+    } else return false;
+  }
+  return true;
+}
+
 export function createSearch(items: RecallItem[]) {
-  const indexed = items.map((item) => ({
-    item,
-    title: normalize(item.title),
-    aliases: item.aliases.map(normalize),
-    category: item.category === "macos" ? "mac macos" : item.category,
-    content: normalize(item.content),
-  }));
+  const indexed = items.map((item) => {
+    const title = normalize(item.title);
+    const aliases = item.aliases.map(normalize);
+    const content = normalize(item.content);
+    const example = normalize(item.example ?? "");
+    const category = item.category === "macos" ? "mac macos" : item.category;
+    const searchable = [title, ...aliases, category, content, example].join(
+      " ",
+    );
+    return {
+      item,
+      title,
+      aliases,
+      category,
+      content,
+      example,
+      searchable,
+      words: [...new Set(searchable.split(/[^\p{L}\p{N}]+/u).filter(Boolean))],
+    };
+  });
   const fuse = new Fuse(indexed, {
     keys: [
       { name: "title", weight: 0.35 },
       { name: "aliases", weight: 0.45 },
       { name: "category", weight: 0.15 },
       { name: "content", weight: 0.05 },
+      { name: "example", weight: 0.05 },
     ],
     threshold: 0.36,
     ignoreLocation: true,
@@ -67,6 +109,7 @@ export function createSearch(items: RecallItem[]) {
       .find((value) =>
         categories.includes(value as (typeof categories)[number]),
       );
+    const intentTokens = tokens.filter((token) => !categoryWords[token]);
     const tokenScores = tokens.map((token) => {
       const cached = tokenCache.get(token);
       if (cached) return cached;
@@ -84,30 +127,45 @@ export function createSearch(items: RecallItem[]) {
         if (category && entry.item.category !== category) return [];
         const scores = tokenScores.map((map) => map.get(entry.item.id));
         if (scores.some((score) => score === undefined)) return [];
-        // Multi-word queries need enough literal evidence, rather than every word
-        // matching an unrelated typo in a different field.
-        const searchable = [
-          entry.title,
-          ...entry.aliases,
-          entry.category,
-          entry.content,
-        ].join(" ");
-        if (
-          tokens.length > 1 &&
-          tokens.filter((token) => searchable.includes(token)).length <
-            Math.ceil(tokens.length / 2)
-        )
+        let fuzzyCount = 0;
+        for (const token of intentTokens) {
+          const literal = /^[\p{L}\p{N}]+$/u.test(token)
+            ? entry.words.some(
+                (word) =>
+                  word === token ||
+                  (token.length >= 3 && word.startsWith(token)),
+              )
+            : entry.searchable.includes(token);
+          if (literal) continue;
+          // A bare short acronym is too ambiguous for a fuzzy guess.
+          if (intentTokens.length === 1 && token.length <= 3 && !category)
+            return [];
+          if (!entry.words.some((word) => nearWord(token, word))) return [];
+          fuzzyCount++;
+        }
+        if (fuzzyCount > Math.max(1, Math.floor(intentTokens.length / 3)))
           return [];
         const phrases = [entry.title, ...entry.aliases];
         let score =
           (scores as number[]).reduce((sum, s) => sum + s, 0) / scores.length;
-        if (phrases.some((phrase) => phrase === q)) score -= 3;
-        else if (phrases.some((phrase) => phrase.includes(q))) score -= 1;
-        return [{ item: entry.item, score }];
+        const tier =
+          phrases.some((phrase) => phrase === q) ||
+          entry.content === q ||
+          entry.example === q
+            ? 0
+            : phrases.some((phrase) => phrase.includes(q)) ||
+                entry.content.includes(q)
+              ? 1
+              : fuzzyCount === 0
+                ? 2
+                : 3;
+        return [{ item: entry.item, score, tier }];
       })
       .sort(
         (a, b) =>
-          a.score - b.score || a.item.title.localeCompare(b.item.title, "vi"),
+          a.tier - b.tier ||
+          a.score - b.score ||
+          a.item.title.localeCompare(b.item.title, "vi"),
       )
       .map((result) => result.item);
   };

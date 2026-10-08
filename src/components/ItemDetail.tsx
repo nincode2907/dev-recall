@@ -12,6 +12,7 @@ export const ItemDetail = forwardRef<
   }
 >(function ItemDetail({ item, copying, onCopy }, ref) {
   const isShortcut = item.type === "shortcut";
+  const isSequence = item.content.startsWith("Prefix + ");
   const hasTemplate = /<[^>]+>/.test(item.content);
   return (
     <section
@@ -56,12 +57,19 @@ export const ItemDetail = forwardRef<
           <span aria-hidden="true">{isShortcut ? "↳" : ">_"}</span>
         </div>
         {isShortcut ? (
-          <div className="key-sequence" aria-label={item.content}>
+          <div
+            className="key-sequence"
+            aria-label={
+              isSequence
+                ? item.content.replace(" + ", ", sau đó ")
+                : item.content
+            }
+          >
             {item.content.split(" + ").map((key, i) => (
               <span className="key-part" key={`${i}-${key}`}>
                 {i > 0 && (
                   <span className="key-plus" aria-hidden="true">
-                    +
+                    {isSequence ? "→" : "+"}
                   </span>
                 )}
                 <kbd>{key}</kbd>

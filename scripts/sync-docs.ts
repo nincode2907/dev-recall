@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import { copyFile, mkdir, readFile } from "node:fs/promises";
 
-const names = ["plan-v1", "data-format"];
+const names = ["plan-v1", "data-format", "architecture", "v0.1-review"];
 await mkdir(new URL("../public/docs/", import.meta.url), { recursive: true });
 for (const name of names) {
   const markdown = await readFile(
@@ -28,5 +28,5 @@ for (const name of names) {
     );
 }
 console.log(
-  "Đã kiểm nguồn Markdown và đồng bộ 2 cặp tài liệu vào public/docs.",
+  `Đã kiểm nguồn Markdown và đồng bộ ${names.length} cặp tài liệu vào public/docs.`,
 );

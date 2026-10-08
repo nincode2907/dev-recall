@@ -44,6 +44,7 @@ data/*.yaml → loader + validator → search index → results → detail → c
 - `src/components/`: bảng kết quả và chi tiết.
 - `scripts/validate-data.ts`: kiểm dữ liệu trước build.
 - `docs/data-format.md`: schema, hướng dẫn thêm item, nguồn xác minh.
+- `docs/architecture.md`: kiến trúc hiện tại và đề xuất metadata/lifecycle V0.2; `docs/v0.1-review.md`: bằng chứng nghiệm thu ngày 2026-10-08.
 
 Search ưu tiên title/alias khớp chính xác, sau đó khớp cụm từ và token với Fuse.js; category xuất hiện trong query ưu tiên đúng nhóm. Đây là tìm bằng aliases + fuzzy, chưa phải semantic search. Phân biệt tmux chia trái/phải và trên/dưới.
 
@@ -83,7 +84,7 @@ Rollback onboarding: dừng riêng process Dev Recall, xóa riêng entry `dev-re
 | V0.4  | Related, import Navi/TLDR; đánh giá tích hợp Atuin                               |
 | V0.5+ | AI hiểu query và context khi dữ liệu aliases không đủ                            |
 
-Các bản sau chưa được duyệt triển khai. Không commit, push hay cài global tools trong phạm vi này.
+Các bản sau chưa được duyệt triển khai. Quy trình tạo nhánh, commit/push sau khi hoàn tất và để người dùng merge theo AGENTS.md. Không cài global tools trong phạm vi này.
 
 ## Tài liệu nguồn
 

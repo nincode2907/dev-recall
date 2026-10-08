@@ -23,6 +23,8 @@ export function App() {
   } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const detailRef = useRef<HTMLElement>(null);
+  const copyContextRef = useRef(0);
+  const copyingRef = useRef(false);
   const orderedItems = useMemo(
     () =>
       [...collection.items].sort(
@@ -40,25 +42,37 @@ export function App() {
   const selected = results[selectedIndex];
 
   function updateQuery(value: string) {
+    copyContextRef.current++;
     setQuery(value);
     setSelectedId(null);
     setNotice(null);
   }
+  function selectItem(id: string) {
+    copyContextRef.current++;
+    setSelectedId(id);
+    setNotice(null);
+  }
   async function copy(text: string, label: string) {
-    if (copying) return;
+    if (copyingRef.current) return;
+    copyingRef.current = true;
+    const context = copyContextRef.current;
     setCopying(true);
+    setNotice(null);
     try {
       if (!navigator.clipboard?.writeText)
         throw new Error("Clipboard không khả dụng.");
       await navigator.clipboard.writeText(text);
-      setNotice({ kind: "success", message: `Đã sao chép ${label}.` });
+      if (context === copyContextRef.current)
+        setNotice({ kind: "success", message: `Đã sao chép ${label}.` });
     } catch {
-      setNotice({
-        kind: "error",
-        message:
-          "Chưa sao chép được. Hãy chọn nội dung cần dùng rồi nhấn ⌘ C hoặc Ctrl C.",
-      });
+      if (context === copyContextRef.current)
+        setNotice({
+          kind: "error",
+          message:
+            "Chưa sao chép được. Hãy chọn nội dung cần dùng rồi nhấn ⌘ C hoặc Ctrl C.",
+        });
     } finally {
+      copyingRef.current = false;
       setCopying(false);
     }
   }
@@ -66,12 +80,20 @@ export function App() {
   useEffect(() => {
     const current =
       selected && document.getElementById(`result-${selected.id}`);
-    if (current) current.scrollIntoView({ block: "nearest" });
+    const list = current?.parentElement;
+    if (current && list) {
+      const row = current.getBoundingClientRect();
+      const viewport = list.getBoundingClientRect();
+      if (row.top < viewport.top) list.scrollTop += row.top - viewport.top;
+      else if (row.bottom > viewport.bottom)
+        list.scrollTop += row.bottom - viewport.bottom;
+    }
   }, [selected]);
 
   useEffect(() => {
     function handleKey(event: KeyboardEvent) {
       const target = event.target as HTMLElement;
+      if (event.isComposing) return;
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
         inputRef.current?.focus();
@@ -111,7 +133,7 @@ export function App() {
         const direction = event.key === "ArrowDown" ? 1 : -1;
         const index =
           (selectedIndex + direction + results.length) % results.length;
-        setSelectedId(results[index].id);
+        selectItem(results[index].id);
         if (target.classList.contains("result-button"))
           document.getElementById(`result-${results[index].id}`)?.focus();
       } else if (event.key === "Enter" && selected) {
@@ -239,8 +261,7 @@ export function App() {
                       aria-selected={selected?.id === item.id}
                       tabIndex={selected?.id === item.id ? 0 : -1}
                       onClick={() => {
-                        setSelectedId(item.id);
-                        setNotice(null);
+                        selectItem(item.id);
                       }}
                     >
                       <span className={`result-icon category-${item.category}`}>

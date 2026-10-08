@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="source-sha256"
+      content="acaaafb314ecbfd8aa9546ba5619455ac7652712c90aeaac0ea0041f1c9c1826"
+    />
+    <link rel="icon" href="/favicon.svg" />
+    <title>Kiểm chứng Dev Recall V0.1</title>
+    <style>
+      :root {
+        font-family: "Avenir Next", system-ui, sans-serif;
+        color: #20304b;
+        background: #edf2f8;
+        line-height: 1.65;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+      }
+      main {
+        max-width: 1120px;
+        margin: auto;
+        padding: 32px;
+      }
+      .hero {
+        padding: 32px 0;
+      }
+      .eyebrow {
+        color: #325ee5;
+        font-size: 11px;
+        letter-spacing: 2px;
+        font-weight: 700;
+      }
+      h1 {
+        font-size: 38px;
+        line-height: 1.2;
+        letter-spacing: -1px;
+        margin: 16px 0;
+      }
+      h2 {
+        font-size: 23px;
+        margin: 0 0 20px;
+      }
+      h3 {
+        font-size: 18px;
+      }
+      p,
+      li {
+        font-size: 14px;
+      }
+      a {
+        color: #325ee5;
+        text-underline-offset: 3px;
+      }
+      a:focus-visible {
+        outline: 3px solid #7397fc;
+      }
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        padding: 18px 0;
+        margin-bottom: 20px;
+        border-block: 1px solid #d6e0ed;
+        font-size: 13px;
+      }
+      .panel {
+        background: white;
+        border: 1px solid #d6e0ed;
+        border-radius: 12px;
+        padding: 28px;
+        margin: 20px 0;
+        overflow-wrap: anywhere;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+        table-layout: fixed;
+      }
+      th,
+      td {
+        padding: 12px;
+        text-align: left;
+        vertical-align: top;
+        border-bottom: 1px solid #dde5ef;
+      }
+      th {
+        background: #eaf0ff;
+        color: #244dcc;
+      }
+      tbody tr:last-child td {
+        border-bottom: 0;
+      }
+      th:first-child {
+        width: 24%;
+      }
+      pre {
+        background: #203452;
+        color: #edf3ff;
+        border-radius: 8px;
+        padding: 22px;
+        font-size: 13px;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        line-height: 1.7;
+      }
+      code {
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 0.93em;
+      }
+      p code,
+      td code {
+        background: #f0f3f9;
+        border-radius: 3px;
+        padding: 1px 3px;
+      }
+      footer {
+        padding: 24px 0;
+        font-size: 12px;
+        color: #526781;
+      }
+      @media (max-width: 760px) {
+        main {
+          padding: 16px;
+        }
+        h1 {
+          font-size: 29px;
+        }
+        .panel {
+          padding: 18px;
+        }
+        th,
+        td {
+          padding: 8px;
+          font-size: 11px;
+        }
+        pre {
+          padding: 16px;
+          font-size: 11px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header class="hero">
+        <span class="eyebrow">DEV RECALL · V0.1</span>
+        <h1>Kiểm chứng Dev Recall V0.1</h1>
+        <p>Kiến thức tại máy. Tìm lại thao tác, tiếp tục làm việc.</p>
+      </header>
+      <nav>
+        <a href="architecture.html">Kiến trúc</a
+        ><a href="v0.1-review.html">Kiểm chứng</a
+        ><a href="plan-v1.html">Phạm vi đã duyệt</a
+        ><a href="data-format.html">Thêm kiến thức</a>
+      </nav>
+      <p>
+        Ngày kiểm: 2026-10-08. Phạm vi: hoàn thiện bản đã duyệt, 53 mục; không
+        triển khai V0.2. Người dùng là developer macOS đang cần nhớ lại một thao
+        tác trong vài giây. Môi trường local; app chỉ tra cứu và copy, không
+        chạy command, không có quyền người dùng hay ghi dữ liệu nghiệp vụ.
+      </p>
+      <section class="panel">
+        <h2>Gap analysis trước khi sửa</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Trạng thái</th>
+              <th>Bằng chứng và hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Implemented and verified</td>
+              <td>
+                53 mục/5 nhóm/ID duy nhất; typecheck, production build và format
+                đạt. Sáu query nghiệm thu đều top 3. UI mở với focus search;
+                clipboard thật cho lệnh/ví dụ đạt trước khi browser suite dừng.
+                HTTP direct, proxy IPv4 và IPv6 đều 200. strictPort từ chối
+                instance thứ hai.
+              </td>
+            </tr>
+            <tr>
+              <td>Implemented but not verified</td>
+              <td>
+                Toàn bộ focus/keyboard, Ctrl tương đương Cmd, copy văn bản bình
+                thường, duplicate ID trong UI, phản hồi copy khi đổi query,
+                viewport laptop/mobile và bản production cần kiểm lại trong lượt
+                này.
+              </td>
+            </tr>
+            <tr>
+              <td>Incomplete</td>
+              <td>
+                Thiếu architecture.md/html; chưa có thiết kế runtime metadata,
+                failed queries và knowledge lifecycle tách khỏi YAML.
+              </td>
+            </tr>
+            <tr>
+              <td>Incorrect</td>
+              <td>
+                Unit test đếm Git 11 thay vì 12 (26/28 pass); browser test đếm
+                tmux 10 thay vì 11. “git đổi tên nhánh hiện tại”, “create
+                multiple folders”, “show hidden files in Finder” trả rỗng; “git
+                doi ten nhanh” trả tạo nhánh; “xem process nào ăn ram” trả nhầm
+                mục giữ port. Workflow pane title trộn config và shell trong một
+                nội dung copy.
+              </td>
+            </tr>
+            <tr>
+              <td>Unnecessary / out of scope</td>
+              <td>
+                Không phát hiện tính năng V0.2 trong runtime. Không cần
+                redesign, thêm dataset, API, database, tracking query hay AI.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section class="panel">
+        <h2>Bản đồ rủi ro và kế hoạch kiểm</h2>
+        <p>
+          Rủi ro chính: fuzzy false positive; lỗi thao tác do nội dung copy sai
+          ngữ cảnh; focus/scroll; feedback copy của query trước; dữ liệu sai bị
+          che bởi test đếm cũ; tài liệu không khớp nguồn. Không chạy seed
+          command phá dữ liệu. Clipboard và dữ liệu lỗi dùng browser context
+          kiểm riêng.
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Case</th>
+              <th>Expected</th>
+              <th>Kế hoạch bằng chứng</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Search</td>
+              <td>
+                Sáu query nghiệm thu và biến thể Việt/Anh/typo top 3; query chưa
+                có kiến thức trả rỗng
+              </td>
+              <td>Unit + browser</td>
+            </tr>
+            <tr>
+              <td>Primary flow</td>
+              <td>
+                Mở → gõ → ↑/↓ → Enter → Cmd/Ctrl Enter → Esc/K không cần chuột
+              </td>
+              <td>Browser + Computer Use</td>
+            </tr>
+            <tr>
+              <td>Normal copy</td>
+              <td>Cmd/Ctrl C chỉ copy phần text đang chọn</td>
+              <td>Clipboard thật</td>
+            </tr>
+            <tr>
+              <td>Errors</td>
+              <td>
+                Malformed YAML, duplicate ID có file/ID và cách sửa; clipboard
+                lỗi có fallback
+              </td>
+              <td>Schema + interception browser</td>
+            </tr>
+            <tr>
+              <td>States</td>
+              <td>
+                Empty query, no results, destructive warning, loading/startup rõ
+                ràng
+              </td>
+              <td>Browser</td>
+            </tr>
+            <tr>
+              <td>Responsive</td>
+              <td>
+                Desktop/laptop/mobile không tràn ngang, detail/copy dùng được
+              </td>
+              <td>Browser + screenshot</td>
+            </tr>
+            <tr>
+              <td>Runtime</td>
+              <td>
+                Direct/proxy IPv4/IPv6, route Caddy, strictPort, block không
+                trùng
+              </td>
+              <td>HTTP + config + process</td>
+            </tr>
+            <tr>
+              <td>Quality</td>
+              <td>
+                Validate/typecheck/tests/build/format đạt; search &lt;100 ms
+              </td>
+              <td>CLI</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section class="panel">
+        <h2>Kết quả sau hoàn thiện</h2>
+        <p>
+          Release verdict: <strong>READY</strong> cho sử dụng cá nhân trên
+          Chrome/macOS trong phạm vi V0.1. Không còn finding P0/P1 hay lỗi test.
+          Kiểm có hệ thống theo rủi ro trong phạm vi này, không phải kiểm mọi
+          browser/mọi cấu hình máy.
+        </p>
+        <h3>Đã có và thay đổi</h3>
+        <p>
+          Search + YAML + detail/copy, validator dùng chung, focus ban đầu, nhãn
+          risk, allocation và phần lớn seed đã có. Hoàn thiện tier ranking,
+          search example, guard typo theo từ, aliases Việt/Anh; sửa test đếm cũ;
+          tách workflow tmux; sửa feedback copy cũ, chống double copy, scroll
+          list/viewport laptop, toast nhìn thấy, prefix → phím sau và startup
+          fallback. Giữ 53 mục và không triển khai V0.2.
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Nhóm</th>
+              <th>Đã rà từng mục</th>
+              <th>Kết quả product/data review</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Terminal</td>
+              <td>10/10</td>
+              <td>
+                Command/note/example phù hợp macOS zsh/bash. Bổ sung English
+                alias tạo folder và cách hỏi process giữ port.
+              </td>
+            </tr>
+            <tr>
+              <td>tmux</td>
+              <td>11/11</td>
+              <td>
+                Hướng split và prefix đúng; thêm aliases split-window -h/-v. Sửa
+                workflow pane title: primary là lệnh terminal, example riêng cho
+                ~/.tmux.conf.
+              </td>
+            </tr>
+            <tr>
+              <td>Git</td>
+              <td>12/12</td>
+              <td>
+                Phân biệt working tree/index, branch local/remote,
+                stash/untracked. Thêm “đổi tên nhánh”; sửa title/alias/cảnh báo
+                skip-worktree tránh ngụ ý ignore bền vững. .DS_Store là ví dụ cụ
+                thể có chủ đích của restore, giữ theo yêu cầu.
+              </td>
+            </tr>
+            <tr>
+              <td>Docker</td>
+              <td>10/10</td>
+              <td>
+                Giữ nguyên. Build/restart khác recreate; prune có cảnh báo ảnh
+                hưởng toàn bộ stopped containers và writable layer, không chỉ
+                project hiện tại.
+              </td>
+            </tr>
+            <tr>
+              <td>macOS</td>
+              <td>10/10</td>
+              <td>
+                Shortcut/điều kiện Finder và macOS rõ; thêm English alias show
+                hidden files.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Tổng: 47 safe, 2 caution, 4 destructive. Rà title, aliases,
+          command/shortcut, note, example, risk và duplication cả 53 mục; test
+          bảo vệ discoverability của từng title/alias trong top 3. Tra thêm
+          <a href="https://man.openbsd.org/tmux.1">tmux manual</a> và
+          <a href="https://git-scm.com/docs/git-update-index"
+            >Git update-index</a
+          >
+          cho hai nội dung sửa kỹ thuật. Nguồn toàn kho ở data-format. Không
+          bulk import và không chạy 53 command vào môi trường thật.
+        </p>
+        <h3>VERIFIED</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Case</th>
+              <th>Result</th>
+              <th>Evidence</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Dữ liệu 53 mục/ID/category/schema</td>
+              <td>PASS</td>
+              <td>
+                validate:data + schema tests; 10 Terminal/11 tmux/12 Git/10
+                Docker/10 macOS
+              </td>
+            </tr>
+            <tr>
+              <td>Sáu query nghiệm thu và biến thể</td>
+              <td>PASS</td>
+              <td>
+                42 shared cases top 3 trong unit, Chrome dev và production; tất
+                cả title/alias top 3
+              </td>
+            </tr>
+            <tr>
+              <td>False positive “xem process nào ăn ram”</td>
+              <td>PASS</td>
+              <td>Unit + Computer Use Chrome: 0 result; không ghi query</td>
+            </tr>
+            <tr>
+              <td>Primary flow bàn phím</td>
+              <td>PASS</td>
+              <td>
+                Auto-focus, arrows/wrap/scroll, Enter detail, Tab/Enter copy,
+                Esc, Cmd/Ctrl K và Enter; Computer Use kiểm lại Git rename và
+                tmux
+              </td>
+            </tr>
+            <tr>
+              <td>Clipboard thật và copy text bình thường</td>
+              <td>PASS</td>
+              <td>
+                Primary/example trên direct/proxy; Cmd+C copy query được chọn;
+                Cmd/Ctrl Enter copy command
+              </td>
+            </tr>
+            <tr>
+              <td>Clipboard failure/pending</td>
+              <td>PASS</td>
+              <td>
+                Rejected write có fallback; pending khóa button; double shortcut
+                chỉ một write; đổi query không hiện notice cũ
+              </td>
+            </tr>
+            <tr>
+              <td>Malformed YAML/wrong shape/duplicate ID</td>
+              <td>PASS</td>
+              <td>
+                Schema + dev browser interception nêu file/lý do/cách sửa; build
+                clone riêng từ chối malformed và duplicate, không sửa seed repo
+                thật
+              </td>
+            </tr>
+            <tr>
+              <td>Empty query/no results/risk</td>
+              <td>PASS</td>
+              <td>
+                Dev + production browser: no-result không có copy, recover về
+                kho/focus, destructive warning đúng
+              </td>
+            </tr>
+            <tr>
+              <td>Loading/startup</td>
+              <td>PASS</td>
+              <td>
+                Chặn module: thấy fallback/reload link; thả module → tự focus
+                input và bỏ fallback
+              </td>
+            </tr>
+            <tr>
+              <td>Responsive</td>
+              <td>PASS</td>
+              <td>
+                Chrome 1440×1100, 1280×800, 390×844; không tràn ngang;
+                copy/detail dùng được; kết quả cuối nhìn thấy trên laptop
+              </td>
+            </tr>
+            <tr>
+              <td>Docs/favicon/lang/browser errors</td>
+              <td>PASS</td>
+              <td>
+                Bốn cặp docs HTTP 200/heading/favicon/lang vi, mobile không tràn
+                ngang; không pageerror
+              </td>
+            </tr>
+            <tr>
+              <td>Runtime dev + production</td>
+              <td>PASS</td>
+              <td>
+                Direct IPv4 + proxy IPv4/IPv6 HTTP 200; Computer Use xác nhận
+                production trên hostname
+              </td>
+            </tr>
+            <tr>
+              <td>Caddy/registry/strictPort</td>
+              <td>PASS</td>
+              <td>
+                Caddy validate valid; block/service allocation không trùng; chỉ
+                app lắng nghe 15300 trong block; dev và preview instance thứ hai
+                đều từ chối port đã dùng
+              </td>
+            </tr>
+            <tr>
+              <td>Quality gates</td>
+              <td>PASS</td>
+              <td>
+                TypeScript, validate:data, 55/55 tests, production build,
+                format, docs hash sync
+              </td>
+            </tr>
+            <tr>
+              <td>Search performance</td>
+              <td>PASS</td>
+              <td>
+                100 lượt với index mới, 53 seed: p95 1,66 ms, max 2,27 ms;
+                assert p95 &lt;100 ms; không phải end-to-end typing latency
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Ảnh và log: artifacts/app-desktop.png, app-laptop.png, app-mobile.png,
+          các docs screenshots;
+          build-guard-malformed.log/build-guard-duplicate.log ghi rejection thực
+          tế. Artifacts không được Git theo dõi. Production không injection YAML
+          đã bundle; negative build và dev error path dùng cùng validator.
+        </p>
+        <h3>Product review cuối</h3>
+        <p>
+          Luồng chính không cần chuột. Exact alias/command lên trước fuzzy;
+          query thiếu kiến thức không trả nhầm port; prefix sequence dễ hiểu;
+          cảnh báo trước copy. Input giữ vị trí khi cuộn kết quả, list vừa
+          viewport laptop, feedback copy luôn nhìn thấy. Friction V0.1 tìm được
+          đã sửa/retest; không redesign.
+        </p>
+        <p>
+          Must fix: không còn. Should fix: không còn trong phạm vi kiểm. Can
+          defer: aliases theo sử dụng thực, metadata/lifecycle ở V0.2.
+          Acceptable: .DS_Store là restore cụ thể theo yêu cầu; Caddyfile có
+          warning format nhưng cấu hình valid và route hoạt động, không sửa hạ
+          tầng ngoài project.
+        </p>
+        <h3>NOT VERIFIED và giới hạn</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Case</th>
+              <th>Result</th>
+              <th>Lý do</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Chạy toàn bộ 53 command/shortcut</td>
+              <td>NOT TESTED</td>
+              <td>
+                App chỉ tra cứu/copy; không chạy lệnh thay đổi dữ liệu/cấu hình
+                thật để kiểm seed
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Windows/Linux native, Safari/Firefox, screen reader, IME thực tế
+              </td>
+              <td>NOT TESTED</td>
+              <td>
+                Kiểm Chrome/macOS; Ctrl handler trong Chrome không chứng minh OS
+                khác. Composition guard đã có từ code, chưa kiểm bộ gõ thực tế.
+              </td>
+            </tr>
+            <tr>
+              <td>Direct ::1:15300</td>
+              <td>NOT APPLICABLE</td>
+              <td>App cố ý bind 127.0.0.1; IPv6 đã kiểm qua proxy</td>
+            </tr>
+            <tr>
+              <td>Prefix tmux cá nhân, Tauri/global shortcut</td>
+              <td>NOT TESTED</td>
+              <td>
+                Không đọc/đổi config cá nhân; native runtime thuộc bản sau
+              </td>
+            </tr>
+            <tr>
+              <td>Dataset lớn/semantic search</td>
+              <td>NOT TESTED</td>
+              <td>
+                Không suy rộng benchmark 53 mục; deterministic search trong V0.1
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Search vẫn cần aliases, không hiểu mọi câu tự nhiên. Typo ngắn đơn lẻ
+          có thể không được trả về; thêm tên công cụ hoặc gõ rõ intent. Không có
+          blocker hạ tầng ngoài project trong lượt này.
+        </p>
+        <h3>V0.2 chỉ đề xuất</h3>
+        <p>
+          <a href="architecture.md">architecture.md</a> tách canonical knowledge
+          khỏi views/copies/lastUsed, successful queries và zero-result queries;
+          định nghĩa đếm theo hành động có chủ đích. Storage/retention/backup
+          cần chốt trước code. Failed-query aggregation chỉ ở local, không ghi
+          từng phím/không gửi ra ngoài. Verified/Personal/Imported/AI
+          Suggested/Deprecated là lifecycle tương lai, chưa thêm vào
+          schema/runtime.
+        </p>
+        <p>
+          Lượt audit/implement không commit/push, cài global tool, đổi
+          allocation project khác hay triển khai V0.2. Sau khi nghiệm thu, người
+          dùng yêu cầu commit/push feature đã hoàn tất và để người dùng merge;
+          quy ước này đã được ghi vào AGENTS.md.
+        </p>
+      </section>
+      <footer>
+        <a href="v0.1-review.md">Đọc nguồn Markdown ↗</a> ·
+        <a href="/">Mở Dev Recall</a>
+      </footer>
+    </main>
+  </body>
+</html>

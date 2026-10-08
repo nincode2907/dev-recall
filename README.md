@@ -15,6 +15,8 @@ npm run dev
 - [Mở Dev Recall](http://dev-recall.localhost)
 - [URL trực tiếp](http://127.0.0.1:15300)
 - [Kế hoạch Markdown](docs/plan-v1.md) · [Bản trực quan](docs/plan-v1.html)
+- [Kiến trúc và đề xuất V0.2](docs/architecture.md) · [Bản trực quan](docs/architecture.html)
+- [Báo cáo kiểm chứng V0.1](docs/v0.1-review.md) · [Bản trực quan](docs/v0.1-review.html)
 - [Hướng dẫn dữ liệu](docs/data-format.md) · [Bản trực quan](docs/data-format.html)
 
 Dev Hub đã cấp block 15300–15399; app bind 127.0.0.1:15300, strictPort.
@@ -39,16 +41,25 @@ Sau build, dừng dev trước khi chạy `npm run preview` vì hai lệnh dùng
 Tài liệu HTML được kiểm hash Markdown và đóng gói vào production build.
 Chưa có Add/Edit UI, Favorites, Recent, Tauri, AI hay import history.
 
-## Đã kiểm tra · 2026-10-07
+## VERIFIED · 2026-10-08
 
-- `npm ci`, typecheck, validate dữ liệu, production build và Prettier đạt.
-- 28 test search/schema đạt; các query nghiệm thu nằm trong top 3.
-- Search trên 53 item tại máy. Baseline 50 item ban đầu có p95 khoảng 1,5 ms.
-- Browser dev và production: query, keyboard/focus, clipboard thật và lỗi,
-  nhãn tác động, empty, mobile 390px, favicon và hai cặp tài liệu đạt.
-- Lỗi dữ liệu được kiểm bằng interception module trong dev; production chặn dữ liệu
-  sai tại build. Proxy phản hồi đúng qua IPv4/IPv6 và Chrome.
-- App khởi chạy trong phiên terminal tương tác của công cụ, giữ log. Điều khiển app
-  Terminal native không khả dụng trong phiên này; không cài hoặc đổi system service.
+- Dữ liệu 53 mục/5 nhóm/ID duy nhất, TypeScript, 55/55 tests, format và build đạt.
+- 42 query Việt có/không dấu, English, category, command, typo top 3 trong unit và
+  Chrome dev/production. Từng title/alias của 53 mục đều tìm được trong top 3.
+- Search với index mới, 100 lượt trên 53 mục: p95 1,66 ms, max 2,27 ms (<100 ms).
+- Browser kiểm bàn phím Cmd/Ctrl, focus, Cmd+C thường, clipboard thật/lỗi/pending,
+  warning, empty/no-result, startup, desktop/laptop/mobile và bốn cặp docs.
+- Malformed YAML và duplicate ID hiện lỗi hữu ích trong dev; build clone riêng
+  xác nhận production từ chối hai lỗi này mà không sửa seed của repo thật.
+- Direct URL, proxy IPv4/IPv6 đều HTTP 200 ở dev và preview production. Caddy valid,
+  allocation không trùng; strictPort từ chối instance dev/preview thứ hai.
+- Server giữ trong terminal tương tác có log; không cài global tool/system service.
+
+## NOT VERIFIED / giới hạn
+
+Chưa kiểm Safari/Firefox, Windows/Linux native, screen reader hay IME thực tế.
+Không chạy toàn bộ seed command hoặc đọc/đổi tmux prefix cá nhân. App bind IPv4;
+IPv6 dùng qua proxy. Search cần aliases, không hiểu mọi câu tự nhiên. Metadata,
+failed-query logging và lifecycle chỉ được thiết kế trong kiến trúc, chưa triển khai.
 
 Ảnh kiểm tra nằm trong `artifacts/` (không theo dõi Git).

@@ -13,7 +13,7 @@ test("53 item, mỗi category đủ seed dự kiến", () => {
   for (const [category, count] of Object.entries({
     terminal: 10,
     tmux: 11,
-    git: 11,
+    git: 12,
     docker: 10,
     macos: 10,
   }))

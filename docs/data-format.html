@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta
       name="source-sha256"
-      content="b3a0b4b7bdd965b255ddc2f8ba81a1666b642d886bffe243a5ee546b7d34c82a"
+      content="48470ad79bd4f10700d6f51de135bc3e0876ee2d4706c6ea4fdc006642492d14"
     />
     <link
       rel="icon"
@@ -602,13 +602,15 @@ npm test</pre>
           <h2>Search bằng cách gọi</h2>
           <p>
             Chuẩn hóa dấu, chữ đ, chữ hoa và khoảng trắng. Tìm trên title,
-            aliases, category và content; ưu tiên title/alias chính xác và cụm
-            từ khớp.
+            aliases, category, content và example. Ưu tiên title/alias hoặc
+            command chính xác → cụm từ → token literal → fuzzy.
           </p>
           <p>
-            Mọi token còn lại sau khi bỏ từ đệm cần khớp qua fuzzy. Query nhiều
-            token cần ít nhất một nửa token khớp chuỗi trực tiếp để loại kết quả
-            quá xa. Tên công cụ trong query giới hạn category tương ứng.
+            Fuzzy nhận một lỗi ký tự hoặc đảo hai ký tự liền nhau trong từ từ 3
+            ký tự. Số token fuzzy không quá max(1, floor(số token intent / 3)).
+            Một token tối đa 3 ký tự không có category chỉ khớp literal; prefix
+            từ từ 3 ký tự được hỗ trợ. Cache tối đa 200 token, không lưu query
+            bền vững. Tên công cụ trong query giới hạn category tương ứng.
           </p>
           <div class="callout">
             Chưa có semantic search. Thêm aliases khi cách diễn đạt thường dùng
@@ -620,12 +622,17 @@ npm test</pre>
           <p>
             <strong>tmux:</strong> Prefix mặc định Ctrl+B, nhấn rồi thả trước
             phím tiếp. % chia trái/phải; dấu &quot; chia trên/dưới. Không giả
-            định prefix cá nhân.
+            định prefix cá nhân. UI dùng mũi tên cho hai bước, dấu cộng cho
+            chord đồng thời. Workflow tên pane tách lệnh terminal và example lưu
+            trong ~/.tmux.conf.
           </p>
           <p>
             <strong>Git:</strong> restore --staged bỏ stage, giữ working tree.
             restore -- &lt;file&gt; bỏ thay đổi chưa stage, khôi phục từ index.
-            Không gộp dưới alias “reset file”.
+            update-index --skip-worktree đặt cờ trong index local cho file
+            tracked, phục vụ sparse checkout; không phải cơ chế ignore bền vững
+            cho thay đổi local. Bỏ cờ bằng --no-skip-worktree. Không gộp dưới
+            alias “reset file”.
           </p>
         </div>
       </section>

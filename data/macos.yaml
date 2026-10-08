@@ -8,6 +8,7 @@
     - "mac xem file ẩn"
     - "macos hiện file ẩn"
     - "finder hidden files"
+    - "show hidden files in Finder"
   content: "⌘ + Shift + ."
   note: "Nhấn trong cửa sổ Finder; nhấn lại để ẩn file ẩn."
   risk: "safe"

@@ -12,7 +12,23 @@
     <title>Dev Recall — Nhớ lại thao tác</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div
+        class="startup"
+        role="status"
+        style="
+          margin: 48px auto;
+          max-width: 640px;
+          padding: 24px;
+          font-family: system-ui, sans-serif;
+          line-height: 1.7;
+        "
+      >
+        <p>Đang mở Dev Recall…</p>
+        <a href="/">Tải lại trang nếu chờ quá lâu</a>
+      </div>
+    </div>
+    <noscript>Bật JavaScript trong trình duyệt để tra cứu Dev Recall.</noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
