@@ -6,7 +6,7 @@
     <link rel="icon" href="/favicon.svg" />
     <meta
       name="source-sha256"
-      content="200816b7b3870ae9439b11c4834cd8898ea4dbda5cb497c0631c99d4fbf728cf"
+      content="765ebd772c488a33eca2b983e9b8eefd0fc3b31156ce0a8ffbe8d683b75da26c"
     />
     <meta
       name="description"
@@ -394,12 +394,12 @@
           Từ bộ nhớ thao tác V0.1 đến V1: từng phase nhỏ, điểm dừng rõ và quyết
           định dựa trên cách bạn dùng thật.
         </p>
-        <span class="badge">DRAFT · 08 OCT 2026</span>
+        <span class="badge">DRAFT · PHASE 1 IN PROGRESS</span>
       </header>
       <div class="metrics">
         <div class="metric"><strong>7</strong><span>Milestones</span></div>
         <div class="metric">
-          <strong>27</strong><span>Phases · tất cả PLANNED</span>
+          <strong>27</strong><span>Phases · 1 đang chạy</span>
         </div>
         <div class="metric"><strong>9</strong><span>Decision gates</span></div>
       </div>
@@ -438,19 +438,18 @@
         </aside>
         <div class="content">
           <p>
-            Ngày lập: 2026-10-08. Trạng thái:
-            <strong>DRAFT — chờ người dùng chốt từng phase</strong>. Đây là kế
-            hoạch, không phải danh sách tính năng đã triển khai. 7 milestone, 27
-            phase; không bắt buộc làm hết các nhánh conditional/experimental để
-            đạt V1.
+            Ngày lập: 2026-10-08. Trạng thái: roadmap
+            <strong>DRAFT theo phase</strong>; Phase 1 đang chờ người dùng chốt
+            ADR. Đây là kế hoạch, không phải danh sách tính năng đã triển khai.
+            7 milestone, 27 phase; không bắt buộc làm hết các nhánh
+            conditional/experimental để đạt V1.
           </p>
           <p>
-            Nguồn baseline: commit <code>8a3a22c</code> (package 0.1.0), nhánh
-            <code>feat/polish-v0.1</code>. Tài liệu lượt này ở nhánh
-            <code>docs/master-roadmap</code>, dựa trên commit đó. Local main
-            đang ở <code>e38c0bd</code>; chưa xác nhận người dùng merge nhánh
-            polish hoặc phát hành tag. Không commit/push trong lượt lập kế hoạch
-            này; không bắt đầu Phase 1.
+            Baseline tính năng V0.1.0: commit
+            <code>8a3a22c</code> (<code>feat/polish-v0.1</code>). Roadmap và thư
+            viện docs đã được nhập/push vào <code>main</code> tại commit
+            <code>09466a8</code>; đó là base cho Phase 1. Chưa có product
+            version/release mới.
           </p>
           <section class="panel" id="section-3151b661">
             <h2>Execution baseline — current phase and next step</h2>
@@ -469,43 +468,40 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Bản sản phẩm gần nhất đã kiểm</td>
+                    <td>Bản tính năng V0.1</td>
                     <td>
-                      V0.1.0 · commit <code>8a3a22c</code> trên
-                      <code>feat/polish-v0.1</code>; chưa xác nhận
-                      merge/release.
+                      Commit <code>8a3a22c</code> trên
+                      <code>feat/polish-v0.1</code>; docs library ở
+                      <code>main</code> commit <code>09466a8</code>. Chưa có
+                      version/release mới.
                     </td>
                   </tr>
                   <tr>
                     <td>Phase đang implement</td>
                     <td>
-                      <strong>Không có.</strong> Roadmap mới được lập; chưa
-                      phase nào bắt đầu hoặc hoàn tất.
+                      <strong>Phase 1 — IN PROGRESS.</strong> ADR-001 đã có bản
+                      đề xuất; chờ người dùng chốt quyết định lưu trữ.
                     </td>
                   </tr>
                   <tr>
-                    <td>Phase kế tiếp đề xuất</td>
+                    <td>Phase kế tiếp</td>
                     <td>
-                      <strong
-                        >Phase 1 — Chốt hợp đồng lưu trữ và quyền sở hữu dữ
-                        liệu</strong
-                      >
-                      · <code>PLANNED</code>, chưa phải <code>READY</code> hay
-                      đang chạy.
+                      <strong>Phase 2 — chưa mở.</strong> Chờ ADR-001 được chốt;
+                      sau đó kiểm tra lại dependency và giao phase riêng.
                     </td>
                   </tr>
                   <tr>
-                    <td>Cần làm để bắt đầu</td>
+                    <td>Cần làm tiếp</td>
                     <td>
-                      Người dùng chốt/giao Phase 1. Phiên implement kiểm tra lại
-                      code, base branch và dependency trước khi làm.
+                      Người dùng chốt hoặc sửa ADR-001; khi được chốt, cập nhật
+                      status/evidence tại đây trước khi sang Phase 2.
                     </td>
                   </tr>
                   <tr>
                     <td>Tiến độ roadmap</td>
                     <td>
-                      0 phase <code>DONE</code> · 0 <code>IN PROGRESS</code> ·
-                      27 <code>PLANNED</code>. Các gate/nhánh tùy chọn chưa được
+                      0 phase <code>DONE</code> · 1 <code>IN PROGRESS</code> ·
+                      26 <code>PLANNED</code>. Các gate/nhánh tùy chọn chưa được
                       mở.
                     </td>
                   </tr>
@@ -513,10 +509,9 @@
               </table>
             </div>
             <p>
-              Đây là snapshot tiến độ tại ngày lập roadmap, không tự cập nhật
-              theo Git. Cuối mỗi phase được giao, cập nhật bảng này cùng status
-              phase, commit/evidence hoàn tất và phase đủ điều kiện tiếp theo;
-              nếu chưa đủ dependency/gate, để <code>BLOCKED</code> hoặc
+              Cuối mỗi phase được giao, cập nhật bảng này cùng status phase,
+              commit/evidence hoàn tất và phase đủ điều kiện tiếp theo; nếu chưa
+              đủ dependency/gate, để <code>BLOCKED</code> hoặc
               <code>PLANNED</code> và nêu lý do. Chỉ implement phase mà người
               dùng giao, không tự chuyển sang phase kế tiếp.
             </p>
@@ -966,9 +961,16 @@
               <div class="phase-body">
                 <p>
                   Priority: <strong>P0</strong> · Size: <strong>S</strong> ·
-                  Status: <strong>PLANNED</strong>
+                  Status: <strong>IN PROGRESS</strong>
                 </p>
                 <p>Dependencies: Baseline V0.1; không có phase mới trước đó.</p>
+                <p>
+                  Decision record:
+                  <a href="decisions/ADR-001-storage.md"
+                    >ADR-001 — Lưu trữ knowledge và quyền sở hữu dữ liệu</a
+                  >
+                  · <strong>PROPOSED, chờ người dùng chốt</strong>.
+                </p>
                 <div
                   class="table-scroll"
                   tabindex="0"
@@ -4401,8 +4403,8 @@ Follow AGENTS.md for branch, final commit/push, and user merge.</code></pre>
                     <td>PLANNED</td>
                     <td>
                       Có scope đề xuất; chưa được giao/bắt đầu,
-                      dependencies/gates có thể chưa đủ. Tất cả 27 phase hiện ở
-                      trạng thái này.
+                      dependencies/gates có thể chưa đủ. Hiện 26 phase ở trạng
+                      thái này.
                     </td>
                   </tr>
                   <tr>

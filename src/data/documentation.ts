@@ -44,6 +44,11 @@ export const documentationSections: DocumentationSection[] = [
         description: "Baseline hiện tại, phase kế tiếp và định nghĩa V1.",
       },
       {
+        source: "decisions/ADR-001-storage.md",
+        title: "ADR-001 — Lưu trữ và quyền sở hữu dữ liệu",
+        description: "Đề xuất IndexedDB browser-first; chờ người dùng chốt.",
+      },
+      {
         source: "release-notes.md",
         title: "Quy ước Có gì mới",
         description: "Quy tắc ghi thay đổi cho mọi version, kể cả patch.",

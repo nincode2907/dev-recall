@@ -1,20 +1,20 @@
 # Dev Recall Master Roadmap
 
-Ngày lập: 2026-10-08. Trạng thái: **DRAFT — chờ người dùng chốt từng phase**. Đây là kế hoạch, không phải danh sách tính năng đã triển khai. 7 milestone, 27 phase; không bắt buộc làm hết các nhánh conditional/experimental để đạt V1.
+Ngày lập: 2026-10-08. Trạng thái: roadmap **DRAFT theo phase**; Phase 1 đang chờ người dùng chốt ADR. Đây là kế hoạch, không phải danh sách tính năng đã triển khai. 7 milestone, 27 phase; không bắt buộc làm hết các nhánh conditional/experimental để đạt V1.
 
-Nguồn baseline: commit `8a3a22c` (package 0.1.0), nhánh `feat/polish-v0.1`. Tài liệu lượt này ở nhánh `docs/master-roadmap`, dựa trên commit đó. Local main đang ở `e38c0bd`; chưa xác nhận người dùng merge nhánh polish hoặc phát hành tag. Không commit/push trong lượt lập kế hoạch này; không bắt đầu Phase 1.
+Baseline tính năng V0.1.0: commit `8a3a22c` (`feat/polish-v0.1`). Roadmap và thư viện docs đã được nhập/push vào `main` tại commit `09466a8`; đó là base cho Phase 1. Chưa có product version/release mới.
 
 ## Execution baseline — current phase and next step
 
-| Trạng thái thực thi tại baseline | Giá trị                                                                                                   |
-| -------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| Bản sản phẩm gần nhất đã kiểm    | V0.1.0 · commit `8a3a22c` trên `feat/polish-v0.1`; chưa xác nhận merge/release.                           |
-| Phase đang implement             | **Không có.** Roadmap mới được lập; chưa phase nào bắt đầu hoặc hoàn tất.                                 |
-| Phase kế tiếp đề xuất            | **Phase 1 — Chốt hợp đồng lưu trữ và quyền sở hữu dữ liệu** · `PLANNED`, chưa phải `READY` hay đang chạy. |
-| Cần làm để bắt đầu               | Người dùng chốt/giao Phase 1. Phiên implement kiểm tra lại code, base branch và dependency trước khi làm. |
-| Tiến độ roadmap                  | 0 phase `DONE` · 0 `IN PROGRESS` · 27 `PLANNED`. Các gate/nhánh tùy chọn chưa được mở.                    |
+| Trạng thái thực thi tại baseline | Giá trị                                                                                                        |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Bản tính năng V0.1               | Commit `8a3a22c` trên `feat/polish-v0.1`; docs library ở `main` commit `09466a8`. Chưa có version/release mới. |
+| Phase đang implement             | **Phase 1 — IN PROGRESS.** ADR-001 đã có bản đề xuất; chờ người dùng chốt quyết định lưu trữ.                  |
+| Phase kế tiếp                    | **Phase 2 — chưa mở.** Chờ ADR-001 được chốt; sau đó kiểm tra lại dependency và giao phase riêng.              |
+| Cần làm tiếp                     | Người dùng chốt hoặc sửa ADR-001; khi được chốt, cập nhật status/evidence tại đây trước khi sang Phase 2.      |
+| Tiến độ roadmap                  | 0 phase `DONE` · 1 `IN PROGRESS` · 26 `PLANNED`. Các gate/nhánh tùy chọn chưa được mở.                         |
 
-Đây là snapshot tiến độ tại ngày lập roadmap, không tự cập nhật theo Git. Cuối mỗi phase được giao, cập nhật bảng này cùng status phase, commit/evidence hoàn tất và phase đủ điều kiện tiếp theo; nếu chưa đủ dependency/gate, để `BLOCKED` hoặc `PLANNED` và nêu lý do. Chỉ implement phase mà người dùng giao, không tự chuyển sang phase kế tiếp.
+Cuối mỗi phase được giao, cập nhật bảng này cùng status phase, commit/evidence hoàn tất và phase đủ điều kiện tiếp theo; nếu chưa đủ dependency/gate, để `BLOCKED` hoặc `PLANNED` và nêu lý do. Chỉ implement phase mà người dùng giao, không tự chuyển sang phase kế tiếp.
 
 ## Product North Star
 
@@ -98,9 +98,11 @@ Kho local có một nguồn chuẩn, export/restore/migration có bằng chứng
 
 ### Phase 1 — Chốt hợp đồng lưu trữ và quyền sở hữu dữ liệu
 
-Priority: **P0** · Size: **S** · Status: **PLANNED**
+Priority: **P0** · Size: **S** · Status: **IN PROGRESS**
 
 Dependencies: Baseline V0.1; không có phase mới trước đó.
+
+Decision record: [ADR-001 — Lưu trữ knowledge và quyền sở hữu dữ liệu](decisions/ADR-001-storage.md) · **PROPOSED, chờ người dùng chốt**.
 
 | Field                            | Kế hoạch thực hiện                                                                                                                                                              |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -728,7 +730,7 @@ Follow AGENTS.md for branch, final commit/push, and user merge.
 
 | Status      | Ý nghĩa                                                                                                                          |
 | ----------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| PLANNED     | Có scope đề xuất; chưa được giao/bắt đầu, dependencies/gates có thể chưa đủ. Tất cả 27 phase hiện ở trạng thái này.              |
+| PLANNED     | Có scope đề xuất; chưa được giao/bắt đầu, dependencies/gates có thể chưa đủ. Hiện 26 phase ở trạng thái này.                     |
 | READY       | Dependencies/evidence/gate decisions đủ, scope được chốt để người dùng có thể giao. Không tự động là authorization chạy.         |
 | IN PROGRESS | Đang trong phase đã giao; implemented-but-unverified vẫn thuộc trạng thái này.                                                   |
 | BLOCKED     | Không tiến được trong scope vì prerequisite/tool/credentials/decision; nêu blocker và hành động cần, không giả claim completion. |

@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" />
+    <meta
+      name="source-sha256"
+      content="4f1ecb45a5a20d45e66d4dabfb1d0b46b216712dff5407a92929e1b03d7282ad"
+    />
+    <meta
+      name="description"
+      content="Quyết định kho dữ liệu, origin sở hữu và cách bảo vệ knowledge cá nhân trước khi thêm Capture/Edit."
+    />
+    <title>ADR-001 — Lưu trữ knowledge và quyền sở hữu dữ liệu</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: "Avenir Next", system-ui, sans-serif;
+        color: #243a35;
+        background: #f5f7f3;
+        line-height: 1.7;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+      }
+      a {
+        color: #146a53;
+        text-underline-offset: 4px;
+      }
+      a:hover {
+        color: #084932;
+      }
+      a:focus-visible,
+      summary:focus-visible,
+      .table-scroll:focus-visible {
+        outline: 3px solid #27866b;
+        outline-offset: 4px;
+      }
+      .topbar {
+        border-bottom: 1px solid #d8e3dc;
+        background: #fff;
+        padding: 16px max(24px, calc((100vw - 1200px) / 2));
+        display: flex;
+        gap: 24px;
+        align-items: center;
+        flex-wrap: wrap;
+        font-size: 13px;
+      }
+      .brand {
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: #1a4235;
+        text-decoration: none;
+        font-size: 18px;
+      }
+      .topbar a:last-child {
+        margin-left: auto;
+      }
+      main {
+        max-width: 1200px;
+        margin: auto;
+        padding: 36px 28px;
+      }
+      .hero {
+        padding: 26px 0 34px;
+        max-width: 900px;
+      }
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 2px;
+        color: #276e55;
+        font-weight: 800;
+      }
+      h1 {
+        font-size: clamp(30px, 4.4vw, 54px);
+        line-height: 1.15;
+        letter-spacing: -1.7px;
+        margin: 18px 0;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.3;
+        margin: 0 0 22px;
+        letter-spacing: -0.5px;
+      }
+      h3 {
+        font-size: 18px;
+      }
+      .hero p {
+        font-size: 17px;
+        max-width: 750px;
+        color: #52675e;
+      }
+      .badge {
+        display: inline-block;
+        border: 1px solid #cadad0;
+        border-radius: 30px;
+        padding: 5px 12px;
+        font-size: 12px;
+        font-weight: 700;
+        margin: 6px 8px 0 0;
+        color: #286149;
+        background: #edf5ee;
+      }
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin: 4px 0 28px;
+      }
+      .metric {
+        background: #e5eee1;
+        border-radius: 14px;
+        padding: 20px;
+      }
+      .metric strong {
+        display: block;
+        font-size: 30px;
+        line-height: 1.3;
+      }
+      .metric span {
+        font-size: 13px;
+        color: #456350;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: 230px minmax(0, 1fr);
+        gap: 26px;
+        align-items: start;
+      }
+      .toc {
+        position: sticky;
+        top: 16px;
+        max-height: calc(100vh - 32px);
+        overflow: auto;
+        padding: 18px;
+        background: #fff;
+        border: 1px solid #d8e3dc;
+        border-radius: 12px;
+        font-size: 12px;
+      }
+      .toc strong {
+        display: block;
+        margin-bottom: 12px;
+      }
+      .toc a {
+        display: block;
+        padding: 5px 0;
+        text-decoration: none;
+        color: #50635a;
+      }
+      .toc a:hover {
+        color: #146a53;
+        text-decoration: underline;
+      }
+      .content {
+        min-width: 0;
+      }
+      .panel {
+        background: #fff;
+        border: 1px solid #d8e3dc;
+        border-radius: 16px;
+        padding: 28px;
+        margin: 0 0 24px;
+        overflow-wrap: anywhere;
+        scroll-margin-top: 24px;
+      }
+      p,
+      li {
+        font-size: 14px;
+      }
+      li {
+        margin: 8px 0;
+      }
+      ul,
+      ol {
+        padding-left: 23px;
+      }
+      strong {
+        color: #203e32;
+      }
+      .table-scroll {
+        overflow-x: auto;
+        border: 1px solid #e1e8e0;
+        border-radius: 10px;
+        margin: 18px 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+        min-width: 580px;
+      }
+      th,
+      td {
+        padding: 13px;
+        text-align: left;
+        vertical-align: top;
+        border-bottom: 1px solid #e1e8e0;
+      }
+      th {
+        background: #eef4ea;
+        color: #35513c;
+      }
+      th:first-child {
+        width: 24%;
+      }
+      tr:last-child td {
+        border-bottom: 0;
+      }
+      details {
+        border: 1px solid #d5e1d5;
+        border-radius: 12px;
+        margin: 16px 0;
+        background: #fff;
+        scroll-margin-top: 24px;
+      }
+      summary {
+        cursor: pointer;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 18px 20px;
+        background: #f0f5ec;
+        border-radius: 12px;
+        line-height: 1.4;
+        font-size: 15px;
+        font-weight: 700;
+      }
+      summary:before {
+        content: "+";
+        font-size: 22px;
+        color: #347554;
+      }
+      details[open] > summary:before {
+        content: "−";
+      }
+      summary small {
+        font-size: 9px;
+        letter-spacing: 1px;
+        margin-left: auto;
+        color: #57744d;
+      }
+      details[open] > summary {
+        border-radius: 12px 12px 0 0;
+        border-bottom: 1px solid #d5e1d5;
+      }
+      .phase-body {
+        padding: 4px 18px 14px;
+      }
+      .phase-body table {
+        min-width: 540px;
+      }
+      .phase-body td:first-child {
+        font-weight: 700;
+        color: #43624b;
+      }
+      code {
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 0.9em;
+        background: #edf2eb;
+        border-radius: 3px;
+        padding: 2px 4px;
+      }
+      pre {
+        background: #1c362d;
+        color: #f1f6ef;
+        padding: 22px;
+        border-radius: 12px;
+        overflow-x: auto;
+        font-size: 12px;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      pre code {
+        background: none;
+        padding: 0;
+      }
+      .release main {
+        max-width: 980px;
+      }
+      .release .layout {
+        grid-template-columns: 190px minmax(0, 1fr);
+      }
+      .release .hero {
+        border-bottom: 1px solid #d8e3dc;
+        margin-bottom: 28px;
+      }
+      footer {
+        font-size: 12px;
+        color: #68796e;
+        padding: 22px 0 40px;
+      }
+      @media (max-width: 850px) {
+        .layout,
+        .release .layout {
+          display: block;
+        }
+        .toc {
+          position: static;
+          max-height: 240px;
+          margin-bottom: 24px;
+        }
+        .metrics {
+          gap: 8px;
+        }
+        .metric {
+          padding: 14px;
+        }
+        .metric strong {
+          font-size: 24px;
+        }
+      }
+      @media (max-width: 540px) {
+        main {
+          padding: 20px 16px;
+        }
+        .topbar {
+          padding: 14px 16px;
+          gap: 14px;
+        }
+        .topbar a:last-child {
+          margin-left: 0;
+        }
+        .hero {
+          padding-top: 12px;
+        }
+        h1 {
+          letter-spacing: -1px;
+        }
+        .panel {
+          padding: 20px 16px;
+        }
+        h2 {
+          font-size: 21px;
+        }
+        .metric span {
+          font-size: 11px;
+        }
+        summary {
+          padding: 16px 12px;
+          font-size: 14px;
+        }
+        summary small {
+          font-size: 8px;
+        }
+        .phase-body {
+          padding: 4px 10px 10px;
+        }
+        .hero p {
+          font-size: 15px;
+        }
+      }
+      @media print {
+        .toc,
+        .topbar {
+          display: none;
+        }
+        .layout,
+        .release .layout {
+          display: block;
+        }
+        details:not([open]) > .phase-body {
+          display: block;
+        }
+        body {
+          background: white;
+        }
+        .panel {
+          break-inside: auto;
+        }
+        .metrics {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body class="release">
+    <nav class="topbar" aria-label="Tài liệu Dev Recall">
+      <a class="brand" href="../MASTER_ROADMAP.html">Dev Recall</a
+      ><a href="../MASTER_ROADMAP.html">Roadmap</a
+      ><a href="../releases/index.html">Có gì mới</a
+      ><a href="http://dev-recall.localhost">Mở app ↗</a>
+    </nav>
+    <main>
+      <header class="hero">
+        <span class="eyebrow">ARCHITECTURE DECISION · PHASE 1</span>
+        <h1>ADR-001 — Lưu trữ knowledge và quyền sở hữu dữ liệu</h1>
+        <p>
+          Quyết định kho dữ liệu, origin sở hữu và cách bảo vệ knowledge cá nhân
+          trước khi thêm Capture/Edit.
+        </p>
+        <span class="badge">PROPOSED · CHỜ NGƯỜI DÙNG CHỐT</span>
+      </header>
+      <div class="layout">
+        <aside class="toc" aria-label="Mục lục">
+          <strong>TRONG TRANG NÀY</strong
+          ><a href="#section-d0b68299">Bối cảnh</a
+          ><a href="#section-2384807f">Quyết định đề xuất</a
+          ><a href="#section-1d43f48b">Ranh giới dữ liệu và khởi tạo</a
+          ><a href="#section-ba84652c">Hợp đồng backup và khôi phục</a
+          ><a href="#section-ec48f2b1">Các phương án đã cân nhắc</a
+          ><a href="#section-75d4b9f7">Hệ quả và rủi ro chấp nhận</a
+          ><a href="#section-85784231">Rollback và migration</a
+          ><a href="#section-250c7291">Điều kiện chốt</a
+          ><a href="#section-cfec9998">Nguồn kỹ thuật</a>
+        </aside>
+        <div class="content">
+          <ul>
+            <li>Status: <strong>PROPOSED — chờ người dùng chốt</strong></li>
+            <li>Date: 2026-10-08</li>
+            <li>
+              Phase:
+              <a href="../MASTER_ROADMAP.md#phase-1">Phase 1 — Foundation</a>
+            </li>
+            <li>Decision owner: người dùng Dev Recall</li>
+          </ul>
+          <section class="panel" id="section-d0b68299">
+            <h2>Bối cảnh</h2>
+            <p>
+              V0.1 đọc 53 recall từ các file <code>data/*.yaml</code> bằng raw
+              import đồng bộ. YAML là nguồn chuẩn; app không có database, không
+              ghi dữ liệu cá nhân và không có API. Người dùng hiện chỉnh kiến
+              thức bằng cách sửa YAML rồi build lại production.
+            </p>
+            <p>
+              Phase 2 dự kiến thêm Add/Edit. Nếu bật ghi trước khi chốt nơi lưu,
+              YAML và một kho trong trình duyệt có thể cùng trông như nguồn
+              chuẩn; bản build sau cũng có thể ghi đè nội dung người dùng. Quyết
+              định này phải xác định ai sở hữu dữ liệu, runtime nào có quyền ghi
+              và cách đưa dữ liệu sang native nếu gate desktop được mở sau này.
+            </p>
+          </section>
+          <section class="panel" id="section-2384807f">
+            <h2>Quyết định đề xuất</h2>
+            <p>
+              <strong
+                >Chọn IndexedDB làm canonical store cho browser profile, với một
+                origin chính và export backup có version.</strong
+              >
+              Đây là khuyến nghị cho browser-first hiện tại, chưa phải quyết
+              định được chấp nhận và chưa thay đổi app.
+            </p>
+            <div
+              class="table-scroll"
+              tabindex="0"
+              role="region"
+              aria-label="Bảng chi tiết"
+            >
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Mục</th>
+                    <th scope="col">Quyết định đề xuất</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Canonical browser origin</td>
+                    <td>
+                      <code>http://dev-recall.localhost</code> qua route hiện
+                      tại. <code>http://127.0.0.1:15300</code> là direct/test
+                      origin riêng; không được xem là cùng profile hay cùng kho.
+                      Nếu sau này app có hostname production ổn định, phải có
+                      migration có chủ đích trước khi dùng origin đó để ghi.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Chủ sở hữu knowledge</td>
+                    <td>
+                      Người dùng sở hữu bản local trong IndexedDB của browser
+                      profile tại origin chính. Sau bootstrap, đây là
+                      <strong>nguồn duy nhất có quyền ghi</strong> cho profile
+                      đó.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Vai trò YAML</td>
+                    <td>
+                      <code>data/*.yaml</code> là seed mặc định, source cho
+                      validation/build và fixture cho test. YAML không được nhập
+                      lại hoặc overlay mỗi lần khởi động sau bootstrap. Bản seed
+                      mới đi qua migration có kiểm soát; không tự ghi đè recall
+                      người dùng đã sửa.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Repository</td>
+                    <td>
+                      UI/search gọi hợp đồng <code>KnowledgeRepository</code>;
+                      implementation browser dùng IndexedDB.
+                      <code>UsageRepository</code> là ranh giới riêng về quyền
+                      reset/retention; usage chưa bật mặc định. Không buộc hai
+                      repository thành cùng schema hoặc cùng transaction.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Version</td>
+                    <td>
+                      Metadata lưu <code>schemaVersion</code> cho cấu trúc
+                      database và seed version/manifest để biết
+                      bootstrap/migration đã chạy tới đâu. Version của file
+                      backup độc lập với cả hai. Migration phải forward có kiểm
+                      tra và có backup trước thay đổi dữ liệu.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Backup</td>
+                    <td>
+                      Format JSON có <code>format</code>,
+                      <code>formatVersion</code>, <code>exportedAt</code>,
+                      <code>sourceOrigin</code> và danh sách knowledge.
+                      Knowledge luôn có trong bản backup đầy đủ. Usage/query
+                      history mặc định không đi kèm; nếu sau này hỗ trợ thì
+                      người dùng chọn riêng và thấy rõ trước khi export.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Chuyển runtime</td>
+                    <td>
+                      Native runtime là profile/storage khác. Nếu gate G4 chọn
+                      Tauri, chuyển bằng export/import được kiểm, không giả định
+                      webview IndexedDB tự đọc chung. SQLite trong app directory
+                      là ứng viên cho Phase 15; Phase 1 không khóa package hay
+                      schema native.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel" id="section-1d43f48b">
+            <h2>Ranh giới dữ liệu và khởi tạo</h2>
+            <ul>
+              <li>
+                Tách dữ liệu knowledge canonical khỏi metadata sử dụng: ID ổn
+                định của recall là khóa tham chiếu; reset usage không xóa
+                knowledge.
+              </li>
+              <li>
+                App repository là nơi duy nhất nhận thay đổi knowledge. File
+                backup là bản sao bên ngoài, không phải writer thứ hai; nó chỉ
+                trở thành canonical sau một lần restore được người dùng yêu cầu
+                và xác thực thành công.
+              </li>
+              <li>
+                Ở lần chạy đầu, người dùng chọn khôi phục backup hoặc dùng seed.
+                <strong>Nếu chọn seed</strong>, validate toàn bộ seed trước, rồi
+                ghi các record và marker/version bootstrap trong cùng một
+                transaction. Nếu chọn backup, validate backup thay cho seed và
+                ghi backup cùng marker trong một transaction; không cần validate
+                seed ở nhánh này. Nếu bất kỳ bước nào lỗi, transaction bị hủy và
+                không có record hay marker một phần; lần sau phải thử lại hoặc
+                báo lỗi, không được coi kho rỗng là đã khởi tạo.
+              </li>
+              <li>
+                Hợp đồng cập nhật seed cho các phase sau: ID seed mới được thêm;
+                ID chưa bị sửa local có thể nhận nội dung seed mới; ID đã bị
+                người dùng sửa được giữ nguyên và đưa ra để xem xét cập nhật; ID
+                bị bỏ khỏi seed không tự xóa dữ liệu local. Không tái sử dụng ID
+                đã có cho một recall mang ý nghĩa khác. Cách xác định thay đổi
+                local và màn hình xử lý conflict sẽ được đặc tả trước phase
+                implement tương ứng.
+              </li>
+              <li>
+                Nếu bootstrap/mở database thất bại, không âm thầm khởi tạo một
+                kho rỗng có thể ghi. UI tương lai phải nói rõ storage lỗi và
+                không giả rằng dữ liệu cá nhân đã biến mất; chỉ cho xem seed ở
+                chế độ read-only nếu có fallback.
+              </li>
+              <li>
+                Dữ liệu không tự gửi ra server. Không lưu query hoặc history qua
+                lần mở app cho tới khi người dùng bật usage logging theo một
+                quyết định riêng.
+              </li>
+              <li>
+                <code>http://dev-recall.localhost</code> là route local hiện
+                được cấp cho app và là origin canonical được đề xuất cho profile
+                này; đây chưa phải hostname production hay cam kết URL lâu dài.
+                <code>http://127.0.0.1:15300</code>, port khác, browser profile
+                khác và Tauri webview là những phạm vi khác nhau. Nếu route
+                canonical phải đổi, dừng ghi trên route mới cho tới khi người
+                dùng export, xác thực và restore dữ liệu; không tự khởi tạo một
+                profile trống rồi nhận ghi mới.
+              </li>
+            </ul>
+          </section>
+          <section class="panel" id="section-ba84652c">
+            <h2>Hợp đồng backup và khôi phục</h2>
+            <ul>
+              <li>
+                Export đầy đủ có knowledge cùng <code>formatVersion</code>,
+                <code>exportedAt</code> và <code>sourceOrigin</code>. Bản export
+                là bản sao portable; người dùng cần chủ động export trước khi
+                bắt đầu authoring và trước một lần đổi origin/runtime.
+              </li>
+              <li>
+                Restore phải kiểm tra format/version/schema và toàn bộ record
+                trước khi ghi. ID trùng trong file, file lỗi/không đầy đủ hoặc
+                format mới hơn mà app chưa hiểu đều bị từ chối nguyên file;
+                không import một phần.
+              </li>
+              <li>
+                Restore đầy đủ được thực hiện vào profile/origin đích sạch
+                <strong>trước lần bootstrap đầu tiên</strong>. Startup phải cho
+                người dùng chọn restore backup hoặc dùng seed mặc định; nếu
+                restore được chọn, validate và ghi backup cùng marker bootstrap
+                trong một transaction thay cho seed. Vì vậy, “chưa có knowledge”
+                nghĩa là profile chưa bootstrap và chưa restore, không chỉ là
+                database chưa có bản ghi do người dùng tạo.
+              </li>
+              <li>
+                Nếu kho đã bootstrap (kể cả mới chỉ chứa seed), Phase 2–3 chưa
+                được phép âm thầm merge hay replace bằng backup; phải dừng và
+                hướng người dùng tới luồng có preview cùng lựa chọn rõ ràng.
+                Policy cho luồng đó cần được chốt trước khi implement.
+              </li>
+              <li>
+                Khi người dùng bắt đầu đổi origin, origin cũ vẫn là nguồn
+                canonical nhưng chuyển sang read-only trước khi tạo export để
+                không phát sinh thay đổi bị bỏ sót. Nếu chuyển bị hủy, có thể
+                bật ghi lại trên origin cũ. Restore và xác minh xong ở origin
+                mới, người dùng xác nhận thì mới chuyển quyền ghi; giữ nguyên
+                kho cũ. Nếu cần sửa/xuất lại trong lúc chuyển, phải restore lại
+                bản export mới nhất trước khi xác nhận. Chi tiết giao diện xác
+                nhận/chuyển quyền ghi thuộc phase implement migration.
+              </li>
+              <li>
+                Browser storage vẫn là best-effort. Phase 2 không phụ thuộc vào
+                lời hứa từ API giữ chỗ lưu trữ và không tự xin quyền đó khi khởi
+                động. Export thủ công vẫn là đường recovery portable; app cần
+                cho người dùng thấy giới hạn này trước khi bật authoring.
+              </li>
+            </ul>
+          </section>
+          <section class="panel" id="section-ec48f2b1">
+            <h2>Các phương án đã cân nhắc</h2>
+            <div
+              class="table-scroll"
+              tabindex="0"
+              role="region"
+              aria-label="Bảng chi tiết"
+            >
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Phương án</th>
+                    <th scope="col">Ưu điểm</th>
+                    <th scope="col">Tradeoff và kết luận</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Giữ YAML làm canonical duy nhất</td>
+                    <td>
+                      File dễ đọc, diff/review qua Git, dễ backup thủ công.
+                    </td>
+                    <td>
+                      Browser không ghi được file repo một cách portable;
+                      Add/Edit tiếp tục buộc sửa YAML/build. Có thể làm content
+                      source/seed, không phù hợp làm kho authoring của app
+                      browser.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>IndexedDB trên browser</strong></td>
+                    <td>
+                      Có transaction, async, object có cấu trúc và hoạt động
+                      offline; hợp với app hiện tại.
+                    </td>
+                    <td>
+                      Theo origin và profile; browser có quota/eviction hoặc
+                      người dùng xóa site data. Cần export/restore rõ ràng và
+                      không được hứa “không bao giờ mất”.
+                      <strong>Đề xuất chọn trước cho browser-first.</strong>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>File do người dùng chọn qua File System Access API</td>
+                    <td>
+                      Người dùng nhìn thấy file thật, dễ chủ động backup và dùng
+                      ngoài app.
+                    </td>
+                    <td>
+                      Cần picker/permission từ user gesture, phạm vi hỗ trợ
+                      browser không đồng đều; xử lý file bị di chuyển, ghi dở và
+                      xung đột khó hơn. Chưa chọn làm backend chính.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Tauri + SQLite/file local</td>
+                    <td>
+                      Trải nghiệm local rõ, phù hợp native và transaction; có
+                      đường lưu bền trong app data directory.
+                    </td>
+                    <td>
+                      Đòi shell/package, permission scope, build/OS QA và
+                      migration riêng. Native chưa qua gate G4, nên hoãn quyết
+                      định triển khai tới Phase 13/15.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>localStorage</code></td>
+                    <td>API đơn giản.</td>
+                    <td>
+                      Đồng bộ, dung lượng nhỏ, dễ chặn UI khi dữ liệu lớn; không
+                      có transaction cho thay đổi nhiều bản ghi. Không chọn làm
+                      canonical store.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel" id="section-75d4b9f7">
+            <h2>Hệ quả và rủi ro chấp nhận</h2>
+            <p>
+              <strong>Được:</strong> có một đường browser-first để Phase 2 triển
+              khai mà không viết trực tiếp vào YAML; đọc/ghi có transaction;
+              offline; hợp đồng repository cho phép UI/search không phụ thuộc
+              backend.
+            </p>
+            <p>
+              <strong>Phải xử lý:</strong> IndexedDB là best-effort storage.
+              Người dùng có thể xóa site data; browser có thể thu hồi dữ liệu
+              theo quota/pressure. Export tải file và restore phải được
+              implement rồi kiểm ở Phase 2–3 trước khi coi Capture/Edit an toàn.
+              Nếu storage denied/quota/corrupt/version mới hơn, app cần thông
+              báo và recovery thay vì tạo kho trống.
+            </p>
+            <p>
+              <strong>Không cam kết:</strong> backup tự động, encryption-at-rest
+              do app, sync nhiều máy, đọc chung giữa origins, ghi trực tiếp
+              YAML, Tauri, SQLite hay browser support cho File System Access.
+              Chúng cần phase/gate riêng.
+            </p>
+          </section>
+          <section class="panel" id="section-85784231">
+            <h2>Rollback và migration</h2>
+            <p>
+              Trước Phase 2, rollback chỉ là giữ nguyên runtime YAML hiện tại vì
+              ADR này chưa đổi app. Sau khi người dùng bắt đầu authoring ở
+              IndexedDB, không thể rollback bằng cách bỏ database và quay về
+              seed: phải export canonical knowledge, kiểm backup, rồi mới gỡ
+              implementation hoặc chuyển runtime. Migration giữ
+              ID/content/metadata hợp lệ, báo conflict theo ID, không silently
+              merge hoặc ghi đè; recovery được kiểm trước khi xoá kho cũ.
+            </p>
+            <p>
+              Native migration (nếu được chọn) dùng bản export có version làm
+              biên chuyển. Giữ bản browser gốc tới khi xác nhận import và hành
+              trình restore trên native; không tự xóa dữ liệu nguồn sau copy.
+            </p>
+          </section>
+          <section class="panel" id="section-250c7291">
+            <h2>Điều kiện chốt</h2>
+            <p>
+              Phase 1 chỉ được đánh dấu <code>DONE</code> khi người dùng chốt
+              hoặc sửa các điểm sau:
+            </p>
+            <ol>
+              <li>
+                Đồng ý dùng IndexedDB cho browser-first và
+                <code>dev-recall.localhost</code> là origin canonical, hay chọn
+                phương án khác.
+              </li>
+              <li>
+                Đồng ý YAML chỉ còn là seed sau bootstrap; không có hai nguồn có
+                quyền ghi.
+              </li>
+              <li>
+                Đồng ý export versioned JSON là đường sở hữu/phục hồi dữ liệu;
+                query/usage không tự đi kèm backup.
+              </li>
+              <li>
+                Ghi rõ giới hạn best-effort của browser storage và việc native
+                profile cần migration riêng.
+              </li>
+            </ol>
+            <p>
+              Sau khi chốt, cập nhật status/date/người quyết định ở đây và
+              execution baseline trong
+              <a href="../MASTER_ROADMAP.md">Master Roadmap</a>.
+              <strong
+                >Phase 1 không implement database, migration runtime, export,
+                Add/Edit hoặc native code.</strong
+              >
+            </p>
+          </section>
+          <section class="panel" id="section-cfec9998">
+            <h2>Nguồn kỹ thuật</h2>
+            <ul>
+              <li>
+                <a
+                  href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Basic_Terminology"
+                  >IndexedDB: transactions, structured records và same-origin</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB"
+                  >IndexedDB: cách dùng, lỗi và version change</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria"
+                  >Browser storage quota và eviction</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API"
+                  >Web Storage API và giới hạn của localStorage</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://developer.mozilla.org/en-US/docs/Web/API/File_System_API"
+                  >File System API và quyền truy cập file</a
+                >
+                ·
+                <a
+                  href="https://developer.mozilla.org/en-US/docs/Web/API/Window/showDirectoryPicker"
+                  ><code>showDirectoryPicker()</code> còn giới hạn hỗ trợ</a
+                >
+              </li>
+              <li>
+                <a href="https://v2.tauri.app/plugin/sql/">Tauri SQL plugin</a>
+                ·
+                <a href="https://v2.tauri.app/security/capabilities/"
+                  >Tauri capabilities và quyền theo webview</a
+                >
+              </li>
+              <li>
+                <a href="../architecture.md">V0.1 architecture</a> ·
+                <a href="../data-format.md">data contract</a> ·
+                <a href="../MASTER_ROADMAP.md">Master Roadmap</a>
+              </li>
+            </ul>
+          </section>
+        </div>
+      </div>
+      <footer>
+        <a href="ADR-001-storage.md">Nguồn Markdown ↗</a> · Local-first
+        developer memory · Tài liệu và trạng thái được ghi theo evidence thực
+        tế.
+      </footer>
+    </main>
+  </body>
+</html>
