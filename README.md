@@ -18,6 +18,8 @@ npm run dev
 - [Kiến trúc và đề xuất V0.2](docs/architecture.md) · [Bản trực quan](docs/architecture.html)
 - [Báo cáo kiểm chứng V0.1](docs/v0.1-review.md) · [Bản trực quan](docs/v0.1-review.html)
 - [Hướng dẫn dữ liệu](docs/data-format.md) · [Bản trực quan](docs/data-format.html)
+- [Master Roadmap](docs/MASTER_ROADMAP.md) · [Bản trực quan](docs/MASTER_ROADMAP.html)
+- [Có gì mới theo version](docs/releases/index.html) · [Quy ước release notes](docs/release-notes.md)
 
 Dev Hub đã cấp block 15300–15399; app bind 127.0.0.1:15300, strictPort.
 Proxy chung hiện publish port 80 trên mọi interface. Không đổi publication trong task này.

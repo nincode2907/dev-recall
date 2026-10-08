@@ -2,9 +2,10 @@ import assert from "node:assert/strict";
 import { mkdir } from "node:fs/promises";
 import { chromium, expect } from "@playwright/test";
 import { searchCases } from "../tests/search-cases.ts";
+import { documentation, documentationUrl } from "../src/data/documentation.ts";
 import { readData } from "./read-data.ts";
 
-const base = "http://127.0.0.1:15300";
+const base = process.env.DEV_RECALL_BASE_URL ?? "http://127.0.0.1:15300";
 const production = process.argv.includes("--production");
 await mkdir(new URL("../artifacts/", import.meta.url), { recursive: true });
 const browser = await chromium.launch({ channel: "chrome", headless: true });
@@ -37,6 +38,35 @@ try {
         .evaluate((img: HTMLImageElement) => img.naturalWidth),
     )
     .toBeGreaterThan(0);
+
+  await page.locator(".documentation-menu > summary").click();
+  await expect(page.locator(".documentation-title")).toHaveCount(
+    documentation.length,
+  );
+  await expect(page.locator(".documentation-source")).toHaveCount(
+    documentation.length,
+  );
+  for (const doc of documentation) {
+    assert.equal(
+      await page
+        .locator(
+          `.documentation-title[href="${documentationUrl(doc.source, "html")}"]`,
+        )
+        .count(),
+      1,
+      `Thiếu link HTML: ${doc.source}`,
+    );
+    assert.equal(
+      await page
+        .locator(
+          `.documentation-source[href="${documentationUrl(doc.source, "md")}"]`,
+        )
+        .count(),
+      1,
+      `Thiếu link Markdown: ${doc.source}`,
+    );
+  }
+  await page.locator(".documentation-menu > summary").click();
 
   for (const [query, expectedId] of searchCases) {
     await input.fill(query);
@@ -212,23 +242,37 @@ try {
     "Mobile có tràn ngang",
   );
   await page.screenshot({ path: "artifacts/app-mobile.png", fullPage: true });
+  await page.locator(".documentation-menu > summary").click();
+  await expect(page.locator(".documentation-panel")).toBeVisible();
+  assert.ok(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+    "Danh mục tài liệu trên mobile bị tràn ngang",
+  );
+  await page.screenshot({
+    path: "artifacts/docs-menu-mobile.png",
+    fullPage: true,
+  });
+  await page.locator(".documentation-menu > summary").click();
   await page.setViewportSize({ width: 1440, height: 1100 });
 
-  for (const name of [
-    "plan-v1",
-    "data-format",
-    "architecture",
-    "v0.1-review",
-  ]) {
+  for (const doc of documentation) {
+    const name = doc.source.replace(/\.md$/, "");
     await page.goto(`${base}/docs/${name}.html`);
     await expect(page.locator("h1")).toBeVisible();
     assert.equal(await page.locator("html").getAttribute("lang"), "vi");
     assert.ok(await page.locator('link[rel="icon"]').getAttribute("href"));
     assert.equal(
-      (await page.request.get(`${base}/docs/${name}.md`)).status(),
+      (
+        await page.request.get(`${base}${documentationUrl(doc.source, "md")}`)
+      ).status(),
       200,
     );
-    await page.screenshot({ path: `artifacts/${name}.png`, fullPage: true });
+    await page.screenshot({
+      path: `artifacts/docs-${name.replaceAll("/", "-")}.png`,
+      fullPage: true,
+    });
     await page.setViewportSize({ width: 390, height: 844 });
     assert.ok(
       await page.evaluate(
@@ -319,7 +363,7 @@ try {
   await page.screenshot({ path: "artifacts/app-ready.png", fullPage: false });
   assert.deepEqual(errors, [], `Lỗi browser: ${errors.join("; ")}`);
   console.log(
-    `Browser ${production ? "production" : "dev"} đạt: 53 item, ${searchCases.length} queries top 3, Cmd/Ctrl keyboard + normal Cmd+C, clipboard thật/lỗi/pending, cảnh báo, empty, ${production ? "" : "malformed YAML + duplicate ID, "}startup, desktop/laptop/mobile, 4 tài liệu, favicon và proxy.`,
+    `Browser ${production ? "production" : "dev"} đạt: 53 item, ${searchCases.length} queries top 3, Cmd/Ctrl keyboard + normal Cmd+C, clipboard thật/lỗi/pending, cảnh báo, empty, ${production ? "" : "malformed YAML + duplicate ID, "}startup, desktop/laptop/mobile, ${documentation.length} tài liệu, favicon và proxy.`,
   );
 } finally {
   await browser.close();

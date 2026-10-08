@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" />
+    <meta
+      name="source-sha256"
+      content="449f1a0f8fed2f89b08a866998a04ee728dfeefbdee4cf3fa9e7b315e3e71e20"
+    />
+    <meta
+      name="description"
+      content="53 thao tác để nhớ việc, tìm lại command và tiếp tục làm. Tìm theo cách bạn nhớ, dùng bàn phím rồi copy."
+    />
+    <title>V0.1.0 — Nhớ việc, tìm lại thao tác</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: "Avenir Next", system-ui, sans-serif;
+        color: #243a35;
+        background: #f5f7f3;
+        line-height: 1.7;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+      }
+      a {
+        color: #146a53;
+        text-underline-offset: 4px;
+      }
+      a:hover {
+        color: #084932;
+      }
+      a:focus-visible,
+      summary:focus-visible,
+      .table-scroll:focus-visible {
+        outline: 3px solid #27866b;
+        outline-offset: 4px;
+      }
+      .topbar {
+        border-bottom: 1px solid #d8e3dc;
+        background: #fff;
+        padding: 16px max(24px, calc((100vw - 1200px) / 2));
+        display: flex;
+        gap: 24px;
+        align-items: center;
+        flex-wrap: wrap;
+        font-size: 13px;
+      }
+      .brand {
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: #1a4235;
+        text-decoration: none;
+        font-size: 18px;
+      }
+      .topbar a:last-child {
+        margin-left: auto;
+      }
+      main {
+        max-width: 1200px;
+        margin: auto;
+        padding: 36px 28px;
+      }
+      .hero {
+        padding: 26px 0 34px;
+        max-width: 900px;
+      }
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 2px;
+        color: #276e55;
+        font-weight: 800;
+      }
+      h1 {
+        font-size: clamp(30px, 4.4vw, 54px);
+        line-height: 1.15;
+        letter-spacing: -1.7px;
+        margin: 18px 0;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.3;
+        margin: 0 0 22px;
+        letter-spacing: -0.5px;
+      }
+      h3 {
+        font-size: 18px;
+      }
+      .hero p {
+        font-size: 17px;
+        max-width: 750px;
+        color: #52675e;
+      }
+      .badge {
+        display: inline-block;
+        border: 1px solid #cadad0;
+        border-radius: 30px;
+        padding: 5px 12px;
+        font-size: 12px;
+        font-weight: 700;
+        margin: 6px 8px 0 0;
+        color: #286149;
+        background: #edf5ee;
+      }
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin: 4px 0 28px;
+      }
+      .metric {
+        background: #e5eee1;
+        border-radius: 14px;
+        padding: 20px;
+      }
+      .metric strong {
+        display: block;
+        font-size: 30px;
+        line-height: 1.3;
+      }
+      .metric span {
+        font-size: 13px;
+        color: #456350;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: 230px minmax(0, 1fr);
+        gap: 26px;
+        align-items: start;
+      }
+      .toc {
+        position: sticky;
+        top: 16px;
+        max-height: calc(100vh - 32px);
+        overflow: auto;
+        padding: 18px;
+        background: #fff;
+        border: 1px solid #d8e3dc;
+        border-radius: 12px;
+        font-size: 12px;
+      }
+      .toc strong {
+        display: block;
+        margin-bottom: 12px;
+      }
+      .toc a {
+        display: block;
+        padding: 5px 0;
+        text-decoration: none;
+        color: #50635a;
+      }
+      .toc a:hover {
+        color: #146a53;
+        text-decoration: underline;
+      }
+      .content {
+        min-width: 0;
+      }
+      .panel {
+        background: #fff;
+        border: 1px solid #d8e3dc;
+        border-radius: 16px;
+        padding: 28px;
+        margin: 0 0 24px;
+        overflow-wrap: anywhere;
+        scroll-margin-top: 24px;
+      }
+      p,
+      li {
+        font-size: 14px;
+      }
+      li {
+        margin: 8px 0;
+      }
+      ul,
+      ol {
+        padding-left: 23px;
+      }
+      strong {
+        color: #203e32;
+      }
+      .table-scroll {
+        overflow-x: auto;
+        border: 1px solid #e1e8e0;
+        border-radius: 10px;
+        margin: 18px 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+        min-width: 580px;
+      }
+      th,
+      td {
+        padding: 13px;
+        text-align: left;
+        vertical-align: top;
+        border-bottom: 1px solid #e1e8e0;
+      }
+      th {
+        background: #eef4ea;
+        color: #35513c;
+      }
+      th:first-child {
+        width: 24%;
+      }
+      tr:last-child td {
+        border-bottom: 0;
+      }
+      details {
+        border: 1px solid #d5e1d5;
+        border-radius: 12px;
+        margin: 16px 0;
+        background: #fff;
+        scroll-margin-top: 24px;
+      }
+      summary {
+        cursor: pointer;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 18px 20px;
+        background: #f0f5ec;
+        border-radius: 12px;
+        line-height: 1.4;
+        font-size: 15px;
+        font-weight: 700;
+      }
+      summary:before {
+        content: "+";
+        font-size: 22px;
+        color: #347554;
+      }
+      details[open] > summary:before {
+        content: "−";
+      }
+      summary small {
+        font-size: 9px;
+        letter-spacing: 1px;
+        margin-left: auto;
+        color: #57744d;
+      }
+      details[open] > summary {
+        border-radius: 12px 12px 0 0;
+        border-bottom: 1px solid #d5e1d5;
+      }
+      .phase-body {
+        padding: 4px 18px 14px;
+      }
+      .phase-body table {
+        min-width: 540px;
+      }
+      .phase-body td:first-child {
+        font-weight: 700;
+        color: #43624b;
+      }
+      code {
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 0.9em;
+        background: #edf2eb;
+        border-radius: 3px;
+        padding: 2px 4px;
+      }
+      pre {
+        background: #1c362d;
+        color: #f1f6ef;
+        padding: 22px;
+        border-radius: 12px;
+        overflow-x: auto;
+        font-size: 12px;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      pre code {
+        background: none;
+        padding: 0;
+      }
+      .release main {
+        max-width: 980px;
+      }
+      .release .layout {
+        grid-template-columns: 190px minmax(0, 1fr);
+      }
+      .release .hero {
+        border-bottom: 1px solid #d8e3dc;
+        margin-bottom: 28px;
+      }
+      footer {
+        font-size: 12px;
+        color: #68796e;
+        padding: 22px 0 40px;
+      }
+      @media (max-width: 850px) {
+        .layout,
+        .release .layout {
+          display: block;
+        }
+        .toc {
+          position: static;
+          max-height: 240px;
+          margin-bottom: 24px;
+        }
+        .metrics {
+          gap: 8px;
+        }
+        .metric {
+          padding: 14px;
+        }
+        .metric strong {
+          font-size: 24px;
+        }
+      }
+      @media (max-width: 540px) {
+        main {
+          padding: 20px 16px;
+        }
+        .topbar {
+          padding: 14px 16px;
+          gap: 14px;
+        }
+        .topbar a:last-child {
+          margin-left: 0;
+        }
+        .hero {
+          padding-top: 12px;
+        }
+        h1 {
+          letter-spacing: -1px;
+        }
+        .panel {
+          padding: 20px 16px;
+        }
+        h2 {
+          font-size: 21px;
+        }
+        .metric span {
+          font-size: 11px;
+        }
+        summary {
+          padding: 16px 12px;
+          font-size: 14px;
+        }
+        summary small {
+          font-size: 8px;
+        }
+        .phase-body {
+          padding: 4px 10px 10px;
+        }
+        .hero p {
+          font-size: 15px;
+        }
+      }
+      @media print {
+        .toc,
+        .topbar {
+          display: none;
+        }
+        .layout,
+        .release .layout {
+          display: block;
+        }
+        details:not([open]) > .phase-body {
+          display: block;
+        }
+        body {
+          background: white;
+        }
+        .panel {
+          break-inside: auto;
+        }
+        .metrics {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body class="release">
+    <nav class="topbar" aria-label="Tài liệu Dev Recall">
+      <a class="brand" href="../MASTER_ROADMAP.html">Dev Recall</a
+      ><a href="../MASTER_ROADMAP.html">Roadmap</a
+      ><a href="../releases/index.html">Có gì mới</a
+      ><a href="http://dev-recall.localhost">Mở app ↗</a>
+    </nav>
+    <main>
+      <header class="hero">
+        <span class="eyebrow">WHAT’S NEW · V0.1.0</span>
+        <h1>V0.1.0 — Nhớ việc, tìm lại thao tác</h1>
+        <p>
+          53 thao tác để nhớ việc, tìm lại command và tiếp tục làm. Tìm theo
+          cách bạn nhớ, dùng bàn phím rồi copy.
+        </p>
+        <span class="badge">READY · BẢN ĐẦU · KIỂM 08 OCT 2026</span>
+      </header>
+      <div class="layout">
+        <aside class="toc" aria-label="Mục lục">
+          <strong>TRONG TRANG NÀY</strong
+          ><a href="#section-247ee06e">Có gì mới</a
+          ><a href="#section-d4a0d278">Có gì thay đổi</a
+          ><a href="#section-a079f0f0">Đã sửa và làm rõ</a
+          ><a href="#section-fc703b0e">Kiến thức đáng chú ý</a
+          ><a href="#section-b9b352ef">Migration và giới hạn</a
+          ><a href="#section-1ef72578">Kiểm chứng của bản này</a
+          ><a href="#section-babfd35c">Dùng ngay</a>
+        </aside>
+        <div class="content">
+          <p><strong>Ready · Bản đầu · Ngày kiểm 2026-10-08</strong></p>
+          <p>
+            Bạn nhớ việc muốn làm nhưng quên command hoặc phím tắt? Mở Dev
+            Recall, gõ theo cách mình nhớ rồi copy. Bản đầu tập trung vào luồng
+            này và xử lý mọi query tại máy.
+          </p>
+          <p>
+            Package: <code>0.1.0</code> (tên ngắn V0.1). Evidence: commit
+            <code>8a3a22c</code>, branch <code>feat/polish-v0.1</code>. Đây là
+            trang hồi cứu của bản hiện có, không phải version bump mới; chưa xác
+            nhận merge/tag hoặc ngày phát hành.
+          </p>
+          <section class="panel" id="section-247ee06e">
+            <h2>Có gì mới</h2>
+            <ul>
+              <li>
+                <strong>53 thao tác cá nhân ban đầu:</strong> Terminal, tmux,
+                Git, Docker và macOS; command, shortcut, đường dẫn và workflow
+                có note/nhãn tác động.
+              </li>
+              <li>
+                <strong>Tìm theo intent:</strong> tiếng Việt có/không dấu,
+                English, aliases, tên công cụ, command trực tiếp và lỗi gõ nhẹ.
+              </li>
+              <li>
+                <strong>Luồng bằng bàn phím:</strong> gõ ngay khi mở; ↑/↓ chọn,
+                Enter xem, Cmd/Ctrl Enter copy, Esc tìm tiếp, Cmd/Ctrl K thay
+                query.
+              </li>
+              <li>
+                <strong>Copy đúng thứ cần:</strong> nội dung chính và ví dụ có
+                nút riêng; mẫu lệnh nhắc thay <code>&lt;parameter&gt;</code>;
+                app không tự chạy command.
+              </li>
+            </ul>
+          </section>
+          <section class="panel" id="section-d4a0d278">
+            <h2>Có gì thay đổi</h2>
+            <p>
+              Các cải tiến dưới đây thuộc phần hoàn thiện V0.1 sau snapshot đầu,
+              không gán thành release 0.1.1 chưa tồn tại.
+            </p>
+            <ul>
+              <li>
+                <strong>Search đáng tin hơn:</strong> exact title/alias/command
+                được ưu tiên trước phrase/token/fuzzy. Query thiếu kiến thức như
+                “xem process nào ăn ram” trả không có kết quả, không gợi ý nhầm
+                mục giữ port.
+              </li>
+              <li>
+                <strong>Dễ tìm bằng cách gọi của mình:</strong> “git đổi tên
+                nhánh”, “create multiple folders”, “show hidden files in Finder”
+                và aliases split-window tmux được bổ sung.
+              </li>
+              <li>
+                <strong>Laptop dùng bàn phím thuận hơn:</strong> chọn kết quả
+                cuộn trong list, giữ ô search; chiều cao list theo viewport để
+                thấy cả kết quả cuối.
+              </li>
+              <li>
+                <strong>Biết copy đã thành công hay chưa:</strong> phản hồi luôn
+                trong vùng nhìn thấy; clipboard lỗi có cách copy thủ công; thông
+                báo cũ không xuất hiện sau khi đổi query.
+              </li>
+            </ul>
+          </section>
+          <section class="panel" id="section-a079f0f0">
+            <h2>Đã sửa và làm rõ</h2>
+            <ul>
+              <li>
+                Hai shortcut copy liên tiếp khi pending chỉ ghi clipboard một
+                lần; đổi selection không giữ feedback thuộc thao tác cũ.
+              </li>
+              <li>
+                Khởi động chậm có thông báo mở app và link tải lại; lỗi YAML/ID
+                trùng nêu file/lý do và cách sửa.
+              </li>
+              <li>
+                Prefix tmux hiển thị <strong>Prefix → phím sau</strong>, giúp
+                phân biệt nhấn lần lượt với shortcut đồng thời.
+              </li>
+              <li>
+                Workflow tên pane tách lệnh chạy trong terminal khỏi hai dòng
+                lưu trong <code>~/.tmux.conf</code>; tránh paste config như lệnh
+                shell.
+              </li>
+              <li>
+                <code>skip-worktree</code> có tên/cảnh báo rõ: đây là cờ cho
+                file tracked, không bảo đảm ignore thay đổi local bền vững.
+              </li>
+              <li>
+                Số đếm kiểm tra được đồng bộ: 11 mục tmux, 12 mục Git, tổng 53.
+              </li>
+            </ul>
+          </section>
+          <section class="panel" id="section-fc703b0e">
+            <h2>Kiến thức đáng chú ý</h2>
+            <p>
+              Kho hiện có mục <code>.DS_Store</code> và
+              <code>git update-index --skip-worktree &lt;file&gt;</code> theo
+              nhu cầu người dùng. Restore <code>.DS_Store</code> được gắn
+              destructive vì bỏ thay đổi chưa stage của file đã tracked;
+              skip-worktree là caution và có cách bỏ cờ/kiểm tra. Không có bulk
+              import hoặc tự thêm command từ AI.
+            </p>
+          </section>
+          <section class="panel" id="section-b9b352ef">
+            <h2>Migration và giới hạn</h2>
+            <p>
+              Không có migration storage: V0.1 vẫn đọc YAML; sửa dữ liệu thì
+              build lại production. Chưa có Capture/Edit, usage history,
+              Favorites/Recent, AI, cloud sync hay desktop/global shortcut.
+              Search vẫn cần aliases, chưa hiểu mọi câu tự nhiên. Copy mẫu rồi
+              thay parameter trước khi dùng; kiểm note/risk.
+            </p>
+          </section>
+          <section class="panel" id="section-1ef72578">
+            <h2>Kiểm chứng của bản này</h2>
+            <div
+              class="table-scroll"
+              tabindex="0"
+              role="region"
+              aria-label="Bảng chi tiết"
+            >
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">VERIFIED theo báo cáo V0.1</th>
+                    <th scope="col">NOT VERIFIED</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      55/55 tests, 53 item/ID, TypeScript, build và format
+                    </td>
+                    <td>Không chạy thật toàn bộ seed command/shortcut</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      42 query top 3 ở unit/Chrome dev/production; search p95
+                      1,66 ms với 53 mục
+                    </td>
+                    <td>Không suy rộng benchmark sang dataset lớn/máy khác</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Keyboard, clipboard thành công/lỗi/pending,
+                      startup/error/empty; desktop/laptop/mobile
+                    </td>
+                    <td>
+                      Chưa kiểm Safari/Firefox, Windows/Linux native, screen
+                      reader, IME thực tế
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Direct URL và proxy IPv4/IPv6, strictPort, Caddy/registry
+                    </td>
+                    <td>Không đọc/đổi prefix tmux cá nhân</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              <a href="../v0.1-review.html">Báo cáo QA và giới hạn đầy đủ</a>.
+              Kết quả ở trên từ lượt kiểm 2026-10-08, không phải test lại trong
+              lượt tạo roadmap/release docs này.
+            </p>
+          </section>
+          <section class="panel" id="section-babfd35c">
+            <h2>Dùng ngay</h2>
+            <p>
+              <a href="http://dev-recall.localhost">Mở Dev Recall</a>. Thử
+              “thằng nào giữ port”, “tmux chia man hinh doc” hoặc “git đổi tên
+              nhánh”. Đang chạy bản local dev để bạn dùng và chỉnh
+              <code>data/*.yaml</code>; cách start/build ở
+              <a href="../../README.md">README</a>.
+            </p>
+            <p>
+              <a href="index.html">Tất cả versions</a> ·
+              <a href="../MASTER_ROADMAP.html"
+                >Master Roadmap — kế hoạch chưa triển khai</a
+              >
+            </p>
+          </section>
+        </div>
+      </div>
+      <footer>
+        <a href="v0.1.0.md">Nguồn Markdown ↗</a> · Local-first developer memory
+        · Tài liệu và trạng thái được ghi theo evidence thực tế.
+      </footer>
+    </main>
+  </body>
+</html>

@@ -13,6 +13,10 @@ YAML trong `data/` là nguồn chuẩn. Chạy lệnh từ root, cần Node.js 2
 - Đổi nội dung kiến thức: đọc `docs/data-format.md`; giữ ID ổn định, aliases hữu ích,
   note chính xác và riskNote cho risk caution/destructive. Không tự đổi prefix tmux.
 - Đổi phạm vi sản phẩm: đọc `docs/plan-v1.md`; các bản sau chưa được duyệt.
+- Lập/chạy phase tương lai: đọc `docs/MASTER_ROADMAP.md`; chỉ chạy phase được giao,
+  kiểm dependencies/gates thật và dừng sau phase đó.
+- Mỗi version kể cả patch/data fix có `docs/releases/v<version>.md/html` và index;
+  What's new nêu mới/thay đổi/fix/ảnh hưởng. Quy ước: `docs/release-notes.md`.
 - Đổi search/state/runtime: đọc `docs/architecture.md`; metadata và lifecycle chỉ là
   đề xuất V0.2, chưa có trong runtime. Bằng chứng V0.1: `docs/v0.1-review.md`.
 - Tài liệu Markdown là source; cập nhật HTML tương ứng và source-sha256 cùng thay đổi.

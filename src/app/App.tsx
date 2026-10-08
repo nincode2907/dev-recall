@@ -5,6 +5,7 @@ import { createSearch } from "../search/engine";
 import { ItemDetail } from "../components/ItemDetail";
 import { categoryLabels, typeLabels } from "../data/labels";
 import { Icon } from "../components/Icon";
+import { DocumentationMenu } from "../components/DocumentationMenu";
 
 const collection = loadCollection();
 const suggestions = [
@@ -391,10 +392,7 @@ export function App() {
       </main>
       <footer className="app-footer">
         <span>Từ điều bạn từng biết, đến việc bạn cần làm.</span>
-        <a href="/docs/plan-v1.html">
-          Kế hoạch phát triển
-          <Icon name="arrow" size={13} />
-        </a>
+        <DocumentationMenu />
       </footer>
     </div>
   );

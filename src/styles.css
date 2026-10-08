@@ -674,6 +674,109 @@ svg {
 .app-footer a:hover {
   color: var(--primary);
 }
+.documentation-menu {
+  position: relative;
+  z-index: 20;
+}
+.documentation-menu > summary {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 10px;
+  border: 1px solid #d7e0ec;
+  border-radius: 7px;
+  color: #526781;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+.documentation-menu > summary::-webkit-details-marker {
+  display: none;
+}
+.documentation-menu > summary:hover,
+.documentation-menu[open] > summary {
+  color: var(--primary);
+  background: #fff;
+}
+.documentation-panel {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 10px);
+  width: min(760px, calc(100vw - 40px));
+  max-height: min(72vh, 650px);
+  overflow: auto;
+  padding: 20px;
+  border: 1px solid #d7e0ec;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 14px 40px #20304b24;
+  color: #20304b;
+  text-align: left;
+}
+.documentation-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+.documentation-heading strong {
+  font-size: 15px;
+}
+.documentation-heading span {
+  color: var(--muted);
+  font-size: 10px;
+}
+.documentation-groups {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  padding-top: 15px;
+}
+.documentation-groups section {
+  min-width: 0;
+}
+.documentation-groups h2 {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.documentation-groups ul {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.documentation-groups li {
+  margin: 0;
+}
+.documentation-groups a.documentation-title {
+  display: inline-block;
+  color: #244dcc;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.5;
+}
+.documentation-groups a.documentation-title:hover,
+.documentation-groups a.documentation-source:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.documentation-groups p {
+  margin: 3px 0 4px;
+  color: #64758d;
+  font-size: 10px;
+  line-height: 1.5;
+}
+.documentation-groups a.documentation-source {
+  color: #75859a;
+  font-size: 9px;
+}
 .empty-list {
   padding: 35px 23px;
   display: flex;
@@ -837,6 +940,12 @@ svg {
     align-items: flex-start;
     line-height: 1.6;
   }
+  .documentation-panel {
+    width: min(600px, calc(100vw - 40px));
+  }
+  .documentation-groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .header-note > .status-dot {
     display: none;
   }
@@ -873,6 +982,15 @@ svg {
   }
   .app-footer > span {
     max-width: 160px;
+  }
+  .documentation-panel {
+    right: -2px;
+    width: calc(100vw - 28px);
+    padding: 15px;
+  }
+  .documentation-groups {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

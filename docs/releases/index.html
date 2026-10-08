@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" />
+    <meta
+      name="source-sha256"
+      content="f6c3cb01fbff7720719122f9db83e7519c517263e7545f0fdd690c2bbdb25d4c"
+    />
+    <meta
+      name="description"
+      content="Những thay đổi giúp bạn tìm lại thao tác nhanh hơn. Mỗi bản cập nhật có một trang riêng để đọc trong một phút."
+    />
+    <title>Dev Recall — Có gì mới?</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: "Avenir Next", system-ui, sans-serif;
+        color: #243a35;
+        background: #f5f7f3;
+        line-height: 1.7;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+      }
+      a {
+        color: #146a53;
+        text-underline-offset: 4px;
+      }
+      a:hover {
+        color: #084932;
+      }
+      a:focus-visible,
+      summary:focus-visible,
+      .table-scroll:focus-visible {
+        outline: 3px solid #27866b;
+        outline-offset: 4px;
+      }
+      .topbar {
+        border-bottom: 1px solid #d8e3dc;
+        background: #fff;
+        padding: 16px max(24px, calc((100vw - 1200px) / 2));
+        display: flex;
+        gap: 24px;
+        align-items: center;
+        flex-wrap: wrap;
+        font-size: 13px;
+      }
+      .brand {
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: #1a4235;
+        text-decoration: none;
+        font-size: 18px;
+      }
+      .topbar a:last-child {
+        margin-left: auto;
+      }
+      main {
+        max-width: 1200px;
+        margin: auto;
+        padding: 36px 28px;
+      }
+      .hero {
+        padding: 26px 0 34px;
+        max-width: 900px;
+      }
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 2px;
+        color: #276e55;
+        font-weight: 800;
+      }
+      h1 {
+        font-size: clamp(30px, 4.4vw, 54px);
+        line-height: 1.15;
+        letter-spacing: -1.7px;
+        margin: 18px 0;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.3;
+        margin: 0 0 22px;
+        letter-spacing: -0.5px;
+      }
+      h3 {
+        font-size: 18px;
+      }
+      .hero p {
+        font-size: 17px;
+        max-width: 750px;
+        color: #52675e;
+      }
+      .badge {
+        display: inline-block;
+        border: 1px solid #cadad0;
+        border-radius: 30px;
+        padding: 5px 12px;
+        font-size: 12px;
+        font-weight: 700;
+        margin: 6px 8px 0 0;
+        color: #286149;
+        background: #edf5ee;
+      }
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin: 4px 0 28px;
+      }
+      .metric {
+        background: #e5eee1;
+        border-radius: 14px;
+        padding: 20px;
+      }
+      .metric strong {
+        display: block;
+        font-size: 30px;
+        line-height: 1.3;
+      }
+      .metric span {
+        font-size: 13px;
+        color: #456350;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: 230px minmax(0, 1fr);
+        gap: 26px;
+        align-items: start;
+      }
+      .toc {
+        position: sticky;
+        top: 16px;
+        max-height: calc(100vh - 32px);
+        overflow: auto;
+        padding: 18px;
+        background: #fff;
+        border: 1px solid #d8e3dc;
+        border-radius: 12px;
+        font-size: 12px;
+      }
+      .toc strong {
+        display: block;
+        margin-bottom: 12px;
+      }
+      .toc a {
+        display: block;
+        padding: 5px 0;
+        text-decoration: none;
+        color: #50635a;
+      }
+      .toc a:hover {
+        color: #146a53;
+        text-decoration: underline;
+      }
+      .content {
+        min-width: 0;
+      }
+      .panel {
+        background: #fff;
+        border: 1px solid #d8e3dc;
+        border-radius: 16px;
+        padding: 28px;
+        margin: 0 0 24px;
+        overflow-wrap: anywhere;
+        scroll-margin-top: 24px;
+      }
+      p,
+      li {
+        font-size: 14px;
+      }
+      li {
+        margin: 8px 0;
+      }
+      ul,
+      ol {
+        padding-left: 23px;
+      }
+      strong {
+        color: #203e32;
+      }
+      .table-scroll {
+        overflow-x: auto;
+        border: 1px solid #e1e8e0;
+        border-radius: 10px;
+        margin: 18px 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+        min-width: 580px;
+      }
+      th,
+      td {
+        padding: 13px;
+        text-align: left;
+        vertical-align: top;
+        border-bottom: 1px solid #e1e8e0;
+      }
+      th {
+        background: #eef4ea;
+        color: #35513c;
+      }
+      th:first-child {
+        width: 24%;
+      }
+      tr:last-child td {
+        border-bottom: 0;
+      }
+      details {
+        border: 1px solid #d5e1d5;
+        border-radius: 12px;
+        margin: 16px 0;
+        background: #fff;
+        scroll-margin-top: 24px;
+      }
+      summary {
+        cursor: pointer;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 18px 20px;
+        background: #f0f5ec;
+        border-radius: 12px;
+        line-height: 1.4;
+        font-size: 15px;
+        font-weight: 700;
+      }
+      summary:before {
+        content: "+";
+        font-size: 22px;
+        color: #347554;
+      }
+      details[open] > summary:before {
+        content: "−";
+      }
+      summary small {
+        font-size: 9px;
+        letter-spacing: 1px;
+        margin-left: auto;
+        color: #57744d;
+      }
+      details[open] > summary {
+        border-radius: 12px 12px 0 0;
+        border-bottom: 1px solid #d5e1d5;
+      }
+      .phase-body {
+        padding: 4px 18px 14px;
+      }
+      .phase-body table {
+        min-width: 540px;
+      }
+      .phase-body td:first-child {
+        font-weight: 700;
+        color: #43624b;
+      }
+      code {
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 0.9em;
+        background: #edf2eb;
+        border-radius: 3px;
+        padding: 2px 4px;
+      }
+      pre {
+        background: #1c362d;
+        color: #f1f6ef;
+        padding: 22px;
+        border-radius: 12px;
+        overflow-x: auto;
+        font-size: 12px;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      pre code {
+        background: none;
+        padding: 0;
+      }
+      .release main {
+        max-width: 980px;
+      }
+      .release .layout {
+        grid-template-columns: 190px minmax(0, 1fr);
+      }
+      .release .hero {
+        border-bottom: 1px solid #d8e3dc;
+        margin-bottom: 28px;
+      }
+      footer {
+        font-size: 12px;
+        color: #68796e;
+        padding: 22px 0 40px;
+      }
+      @media (max-width: 850px) {
+        .layout,
+        .release .layout {
+          display: block;
+        }
+        .toc {
+          position: static;
+          max-height: 240px;
+          margin-bottom: 24px;
+        }
+        .metrics {
+          gap: 8px;
+        }
+        .metric {
+          padding: 14px;
+        }
+        .metric strong {
+          font-size: 24px;
+        }
+      }
+      @media (max-width: 540px) {
+        main {
+          padding: 20px 16px;
+        }
+        .topbar {
+          padding: 14px 16px;
+          gap: 14px;
+        }
+        .topbar a:last-child {
+          margin-left: 0;
+        }
+        .hero {
+          padding-top: 12px;
+        }
+        h1 {
+          letter-spacing: -1px;
+        }
+        .panel {
+          padding: 20px 16px;
+        }
+        h2 {
+          font-size: 21px;
+        }
+        .metric span {
+          font-size: 11px;
+        }
+        summary {
+          padding: 16px 12px;
+          font-size: 14px;
+        }
+        summary small {
+          font-size: 8px;
+        }
+        .phase-body {
+          padding: 4px 10px 10px;
+        }
+        .hero p {
+          font-size: 15px;
+        }
+      }
+      @media print {
+        .toc,
+        .topbar {
+          display: none;
+        }
+        .layout,
+        .release .layout {
+          display: block;
+        }
+        details:not([open]) > .phase-body {
+          display: block;
+        }
+        body {
+          background: white;
+        }
+        .panel {
+          break-inside: auto;
+        }
+        .metrics {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body class="release">
+    <nav class="topbar" aria-label="Tài liệu Dev Recall">
+      <a class="brand" href="../MASTER_ROADMAP.html">Dev Recall</a
+      ><a href="../MASTER_ROADMAP.html">Roadmap</a
+      ><a href="../releases/index.html">Có gì mới</a
+      ><a href="http://dev-recall.localhost">Mở app ↗</a>
+    </nav>
+    <main>
+      <header class="hero">
+        <span class="eyebrow">WHAT’S NEW</span>
+        <h1>Dev Recall — Có gì mới?</h1>
+        <p>
+          Những thay đổi giúp bạn tìm lại thao tác nhanh hơn. Mỗi bản cập nhật
+          có một trang riêng để đọc trong một phút.
+        </p>
+        <span class="badge">0.1.0 · READY, CHƯA XÁC NHẬN RELEASE</span>
+      </header>
+      <div class="layout">
+        <aside class="toc" aria-label="Mục lục">
+          <strong>TRONG TRANG NÀY</strong
+          ><a href="#section-ca5816a0">V0.1.0 — Bộ nhớ thao tác đầu tiên</a
+          ><a href="#section-94265da7">Cách đọc</a>
+        </aside>
+        <div class="content">
+          <p>
+            Mỗi version có một trang riêng, dù thêm tính năng lớn hay sửa một
+            lỗi nhỏ. Xem thay đổi ảnh hưởng đến việc tìm và nhớ lại thao tác của
+            bạn.
+          </p>
+          <section class="panel" id="section-ca5816a0">
+            <h2>V0.1.0 — Bộ nhớ thao tác đầu tiên</h2>
+            <p><strong>Ready · Bản đầu · Ngày kiểm 2026-10-08</strong></p>
+            <p>
+              53 thao tác, tìm tiếng Việt/English, dùng bằng bàn phím và copy
+              tại máy. Bản hoàn thiện giảm kết quả fuzzy sai, sửa
+              scroll/focus/feedback copy và làm rõ workflow tmux.
+            </p>
+            <p>
+              <a href="v0.1.0.html">Xem có gì mới trong V0.1.0</a> ·
+              <a href="v0.1.0.md">Nguồn Markdown</a>
+            </p>
+            <p>
+              Trạng thái: có code/evidence trên <code>feat/polish-v0.1</code>,
+              commit <code>8a3a22c</code>; chưa xác nhận merge hoặc tag release.
+              Chưa có version mới sau 0.1.0 được công bố.
+            </p>
+          </section>
+          <section class="panel" id="section-94265da7">
+            <h2>Cách đọc</h2>
+            <ul>
+              <li>
+                Lớn: đổi luồng, runtime, nguồn dữ liệu hoặc cần migration.
+              </li>
+              <li>Vừa: thêm capability trong luồng hiện tại.</li>
+              <li>Nhỏ: fix/cải tiến/kiến thức; vẫn có trang riêng.</li>
+              <li>Ready khác Released: push branch không tự là phát hành.</li>
+            </ul>
+            <p>
+              <a href="../release-notes.html">Quy ước What&#x27;s new</a> ·
+              <a href="../MASTER_ROADMAP.html">Master Roadmap</a> ·
+              <a href="http://dev-recall.localhost">Mở Dev Recall</a>
+            </p>
+          </section>
+        </div>
+      </div>
+      <footer>
+        <a href="index.md">Nguồn Markdown ↗</a> · Local-first developer memory ·
+        Tài liệu và trạng thái được ghi theo evidence thực tế.
+      </footer>
+    </main>
+  </body>
+</html>

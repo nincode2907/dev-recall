@@ -1,0 +1,719 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" />
+    <meta
+      name="source-sha256"
+      content="0a7b14f44b5576d163a2533c4812849cd09da8db5097d3825b7c4c18f83e0f56"
+    />
+    <meta
+      name="description"
+      content="Một phiên bản, một trang Có gì mới. Tính năng lớn, bản vá nhỏ và sửa kiến thức đều có chỗ trong lịch sử."
+    />
+    <title>What&#x27;s new — quy ước cho mọi version</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: "Avenir Next", system-ui, sans-serif;
+        color: #243a35;
+        background: #f5f7f3;
+        line-height: 1.7;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+      }
+      a {
+        color: #146a53;
+        text-underline-offset: 4px;
+      }
+      a:hover {
+        color: #084932;
+      }
+      a:focus-visible,
+      summary:focus-visible,
+      .table-scroll:focus-visible {
+        outline: 3px solid #27866b;
+        outline-offset: 4px;
+      }
+      .topbar {
+        border-bottom: 1px solid #d8e3dc;
+        background: #fff;
+        padding: 16px max(24px, calc((100vw - 1200px) / 2));
+        display: flex;
+        gap: 24px;
+        align-items: center;
+        flex-wrap: wrap;
+        font-size: 13px;
+      }
+      .brand {
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: #1a4235;
+        text-decoration: none;
+        font-size: 18px;
+      }
+      .topbar a:last-child {
+        margin-left: auto;
+      }
+      main {
+        max-width: 1200px;
+        margin: auto;
+        padding: 36px 28px;
+      }
+      .hero {
+        padding: 26px 0 34px;
+        max-width: 900px;
+      }
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 2px;
+        color: #276e55;
+        font-weight: 800;
+      }
+      h1 {
+        font-size: clamp(30px, 4.4vw, 54px);
+        line-height: 1.15;
+        letter-spacing: -1.7px;
+        margin: 18px 0;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.3;
+        margin: 0 0 22px;
+        letter-spacing: -0.5px;
+      }
+      h3 {
+        font-size: 18px;
+      }
+      .hero p {
+        font-size: 17px;
+        max-width: 750px;
+        color: #52675e;
+      }
+      .badge {
+        display: inline-block;
+        border: 1px solid #cadad0;
+        border-radius: 30px;
+        padding: 5px 12px;
+        font-size: 12px;
+        font-weight: 700;
+        margin: 6px 8px 0 0;
+        color: #286149;
+        background: #edf5ee;
+      }
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin: 4px 0 28px;
+      }
+      .metric {
+        background: #e5eee1;
+        border-radius: 14px;
+        padding: 20px;
+      }
+      .metric strong {
+        display: block;
+        font-size: 30px;
+        line-height: 1.3;
+      }
+      .metric span {
+        font-size: 13px;
+        color: #456350;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: 230px minmax(0, 1fr);
+        gap: 26px;
+        align-items: start;
+      }
+      .toc {
+        position: sticky;
+        top: 16px;
+        max-height: calc(100vh - 32px);
+        overflow: auto;
+        padding: 18px;
+        background: #fff;
+        border: 1px solid #d8e3dc;
+        border-radius: 12px;
+        font-size: 12px;
+      }
+      .toc strong {
+        display: block;
+        margin-bottom: 12px;
+      }
+      .toc a {
+        display: block;
+        padding: 5px 0;
+        text-decoration: none;
+        color: #50635a;
+      }
+      .toc a:hover {
+        color: #146a53;
+        text-decoration: underline;
+      }
+      .content {
+        min-width: 0;
+      }
+      .panel {
+        background: #fff;
+        border: 1px solid #d8e3dc;
+        border-radius: 16px;
+        padding: 28px;
+        margin: 0 0 24px;
+        overflow-wrap: anywhere;
+        scroll-margin-top: 24px;
+      }
+      p,
+      li {
+        font-size: 14px;
+      }
+      li {
+        margin: 8px 0;
+      }
+      ul,
+      ol {
+        padding-left: 23px;
+      }
+      strong {
+        color: #203e32;
+      }
+      .table-scroll {
+        overflow-x: auto;
+        border: 1px solid #e1e8e0;
+        border-radius: 10px;
+        margin: 18px 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+        min-width: 580px;
+      }
+      th,
+      td {
+        padding: 13px;
+        text-align: left;
+        vertical-align: top;
+        border-bottom: 1px solid #e1e8e0;
+      }
+      th {
+        background: #eef4ea;
+        color: #35513c;
+      }
+      th:first-child {
+        width: 24%;
+      }
+      tr:last-child td {
+        border-bottom: 0;
+      }
+      details {
+        border: 1px solid #d5e1d5;
+        border-radius: 12px;
+        margin: 16px 0;
+        background: #fff;
+        scroll-margin-top: 24px;
+      }
+      summary {
+        cursor: pointer;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 18px 20px;
+        background: #f0f5ec;
+        border-radius: 12px;
+        line-height: 1.4;
+        font-size: 15px;
+        font-weight: 700;
+      }
+      summary:before {
+        content: "+";
+        font-size: 22px;
+        color: #347554;
+      }
+      details[open] > summary:before {
+        content: "−";
+      }
+      summary small {
+        font-size: 9px;
+        letter-spacing: 1px;
+        margin-left: auto;
+        color: #57744d;
+      }
+      details[open] > summary {
+        border-radius: 12px 12px 0 0;
+        border-bottom: 1px solid #d5e1d5;
+      }
+      .phase-body {
+        padding: 4px 18px 14px;
+      }
+      .phase-body table {
+        min-width: 540px;
+      }
+      .phase-body td:first-child {
+        font-weight: 700;
+        color: #43624b;
+      }
+      code {
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 0.9em;
+        background: #edf2eb;
+        border-radius: 3px;
+        padding: 2px 4px;
+      }
+      pre {
+        background: #1c362d;
+        color: #f1f6ef;
+        padding: 22px;
+        border-radius: 12px;
+        overflow-x: auto;
+        font-size: 12px;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      pre code {
+        background: none;
+        padding: 0;
+      }
+      .release main {
+        max-width: 980px;
+      }
+      .release .layout {
+        grid-template-columns: 190px minmax(0, 1fr);
+      }
+      .release .hero {
+        border-bottom: 1px solid #d8e3dc;
+        margin-bottom: 28px;
+      }
+      footer {
+        font-size: 12px;
+        color: #68796e;
+        padding: 22px 0 40px;
+      }
+      @media (max-width: 850px) {
+        .layout,
+        .release .layout {
+          display: block;
+        }
+        .toc {
+          position: static;
+          max-height: 240px;
+          margin-bottom: 24px;
+        }
+        .metrics {
+          gap: 8px;
+        }
+        .metric {
+          padding: 14px;
+        }
+        .metric strong {
+          font-size: 24px;
+        }
+      }
+      @media (max-width: 540px) {
+        main {
+          padding: 20px 16px;
+        }
+        .topbar {
+          padding: 14px 16px;
+          gap: 14px;
+        }
+        .topbar a:last-child {
+          margin-left: 0;
+        }
+        .hero {
+          padding-top: 12px;
+        }
+        h1 {
+          letter-spacing: -1px;
+        }
+        .panel {
+          padding: 20px 16px;
+        }
+        h2 {
+          font-size: 21px;
+        }
+        .metric span {
+          font-size: 11px;
+        }
+        summary {
+          padding: 16px 12px;
+          font-size: 14px;
+        }
+        summary small {
+          font-size: 8px;
+        }
+        .phase-body {
+          padding: 4px 10px 10px;
+        }
+        .hero p {
+          font-size: 15px;
+        }
+      }
+      @media print {
+        .toc,
+        .topbar {
+          display: none;
+        }
+        .layout,
+        .release .layout {
+          display: block;
+        }
+        details:not([open]) > .phase-body {
+          display: block;
+        }
+        body {
+          background: white;
+        }
+        .panel {
+          break-inside: auto;
+        }
+        .metrics {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body class="roadmap">
+    <nav class="topbar" aria-label="Tài liệu Dev Recall">
+      <a class="brand" href="MASTER_ROADMAP.html">Dev Recall</a
+      ><a href="MASTER_ROADMAP.html">Roadmap</a
+      ><a href="releases/index.html">Có gì mới</a
+      ><a href="http://dev-recall.localhost">Mở app ↗</a>
+    </nav>
+    <main>
+      <header class="hero">
+        <span class="eyebrow">RELEASE GUIDE</span>
+        <h1>What&#x27;s new — quy ước cho mọi version</h1>
+        <p>
+          Một phiên bản, một trang Có gì mới. Tính năng lớn, bản vá nhỏ và sửa
+          kiến thức đều có chỗ trong lịch sử.
+        </p>
+        <span class="badge">POLICY · MỌI VERSION</span>
+      </header>
+      <div class="layout">
+        <aside class="toc" aria-label="Mục lục">
+          <strong>TRONG TRANG NÀY</strong
+          ><a href="#section-149b9fd5">Một version, một trang</a
+          ><a href="#section-e38d9011">Trạng thái phải trung thực</a
+          ><a href="#section-94c09010">Version number và mức ảnh hưởng</a
+          ><a href="#section-bdbcc6a7">Nội dung một trang</a
+          ><a href="#section-1e610a6d">Mẫu bản cập nhật nhỏ</a
+          ><a href="#section-b33b0055"
+            >Delivery checklist cho một release được giao</a
+          >
+        </aside>
+        <div class="content">
+          <p>
+            Ngày chốt yêu cầu: 2026-10-08. Người dùng muốn mỗi version, dù lớn
+            hay nhỏ, có một trang HTML tóm tắt có gì mới và có gì thay đổi, dễ
+            đọc như trang What&#x27;s new của Chrome. Đây là tài liệu hướng dẫn
+            release, không thêm feature vào app.
+          </p>
+          <section class="panel" id="section-149b9fd5">
+            <h2>Một version, một trang</h2>
+            <ul>
+              <li>
+                Source:
+                <code
+                  >docs/releases/v&lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;.md</code
+                >; human view: <code>.html</code> cùng tên.
+              </li>
+              <li>
+                Index: <code>docs/releases/index.md/html</code>, mới nhất trước;
+                mỗi entry có version, ngày, trạng thái, mức ảnh hưởng, summary
+                và link riêng.
+              </li>
+              <li>
+                Không bỏ patch, hotfix, data correction hay cải tiến nhỏ. Một
+                bản nhỏ có thể chỉ cần 1–3 câu, nhưng vẫn có trang riêng.
+              </li>
+              <li>
+                Không coi một phase là một version. Nhiều phase có thể cùng
+                release; một phase có thể có nhiều patch. Chỉ ghi thay đổi thực
+                sự có trong bản đó.
+              </li>
+              <li>
+                <code>V0.1</code> là tên ngắn của package <code>0.1.0</code>.
+                Chưa tự tạo <code>0.1.1</code> chỉ vì đang viết tài liệu, không
+                bump version trong lượt planning.
+              </li>
+            </ul>
+          </section>
+          <section class="panel" id="section-e38d9011">
+            <h2>Trạng thái phải trung thực</h2>
+            <div
+              class="table-scroll"
+              tabindex="0"
+              role="region"
+              aria-label="Bảng chi tiết"
+            >
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Status</th>
+                    <th scope="col">Khi dùng</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Draft</td>
+                    <td>
+                      Đang soạn; feature/checks chưa hoàn tất. Không nằm trong
+                      mục “đã phát hành”.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Ready</td>
+                    <td>
+                      Có code/evidence đạt trên branch; chờ người dùng
+                      merge/release. Ghi rõ branch/commit và tested scope.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Released</td>
+                    <td>
+                      Người dùng đã thực sự merge/release theo protocol đã chốt;
+                      ngày/commit/tag có evidence. Không tự suy từ push branch.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Withdrawn</td>
+                    <td>
+                      Bản bị rút; nêu lý do, ảnh hưởng và bản thay thế/recovery.
+                      Không xóa lịch sử.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              Ngày lập note, ngày kiểm và ngày phát hành là ba thông tin khác
+              nhau. Chưa release thì không điền một ngày giả. Trang V0.1.0 hiện
+              là retrospective Ready theo commit <code>8a3a22c</code>, chưa xác
+              nhận merge/tag.
+            </p>
+          </section>
+          <section class="panel" id="section-94c09010">
+            <h2>Version number và mức ảnh hưởng</h2>
+            <p>
+              Trước V1, đề xuất <code>0.minor.patch</code>: patch cho sửa
+              lỗi/data/doc không thay hành vi hoặc schema tương thích; minor cho
+              capability mới hoặc thay đổi schema/hành vi đáng kể, luôn ghi
+              migration. Từ V1: major cho incompatibility, minor cho feature
+              tương thích, patch cho fix tương thích. Chốt SemVer trước release;
+              không gán số version cứng cho từng milestone.
+            </p>
+            <p>Nhãn tác động người dùng độc lập với số version/dòng diff:</p>
+            <div
+              class="table-scroll"
+              tabindex="0"
+              role="region"
+              aria-label="Bảng chi tiết"
+            >
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Nhãn</th>
+                    <th scope="col">Người dùng cần biết</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Lớn</td>
+                    <td>
+                      Thay luồng dùng, nguồn lưu trữ, runtime, compatibility
+                      hoặc cần migration/backup.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Vừa</td>
+                    <td>
+                      Thêm capability có ích trong luồng hiện tại, không cần đổi
+                      toàn bộ cách dùng.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Nhỏ</td>
+                    <td>
+                      Fix/cải tiến/data correction gọn; vẫn nêu lợi ích và điều
+                      kiện nếu có.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              Không chọn patch để che một breaking change. Không gọi một thay
+              đổi “lớn” chỉ vì diff nhiều dòng HTML.
+            </p>
+          </section>
+          <section class="panel" id="section-bdbcc6a7">
+            <h2>Nội dung một trang</h2>
+            <p>
+              Trang mở đầu bằng version/ngày/status/impact và một câu “bản này
+              giúp việc gì”. Phần tóm tắt đọc trong khoảng một phút; chi tiết kỹ
+              thuật đưa sang architecture/QA hoặc PR, không nhồi vào What&#x27;s
+              new.
+            </p>
+            <div
+              class="table-scroll"
+              tabindex="0"
+              role="region"
+              aria-label="Bảng chi tiết"
+            >
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Section</th>
+                    <th scope="col">Nội dung</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Có gì mới</td>
+                    <td>
+                      Capability mới và cách bắt đầu dùng, ví dụ cụ thể khi giúp
+                      hiểu.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Có gì thay đổi</td>
+                    <td>
+                      Trước → sau, lợi ích/tác động. Nêu thay đổi lớn và nhỏ
+                      riêng khi cần.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Đã sửa</td>
+                    <td>
+                      Lỗi nào người dùng gặp và behavior sau sửa; không chỉ tên
+                      file/code.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Kiến thức</td>
+                    <td>
+                      Recall thêm/sửa/deprecated, thay đổi command/context/risk
+                      đáng chú ý.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Migration / breaking</td>
+                    <td>
+                      Cần backup/đổi cấu hình/restore gì, compatibility và
+                      rollback; hoặc ghi không có.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Known issues</td>
+                    <td>
+                      Giới hạn còn lại, workaround; không giấu NOT VERIFIED sau
+                      một badge READY.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Kiểm chứng</td>
+                    <td>
+                      Tested runtime/checks quan trọng và link evidence; phân
+                      biệt VERIFIED/NOT VERIFIED.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Dùng ngay</td>
+                    <td>
+                      Link mở app, shortcut/cách dùng thay đổi và hướng dẫn
+                      update khi có.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              Section không có thay đổi có thể ghi “Không có” ngắn hoặc gộp,
+              không thêm filler. Screenshot chỉ khi giúp thấy UI mới; fix dữ
+              liệu nhỏ không bắt buộc screenshot. Risk/dangerous operation không
+              bị che bởi copy marketing.
+            </p>
+          </section>
+          <section class="panel" id="section-1e610a6d">
+            <h2>Mẫu bản cập nhật nhỏ</h2>
+            <pre><code>V0.x.y · Ready · Nhỏ · ngày kiểm YYYY-MM-DD
+Sửa cách tìm tên nhánh Git bằng tiếng Việt không dấu.
+
+Đã sửa: “git doi ten nhanh” ưu tiên thao tác đổi tên thay vì tạo nhánh.
+Migration: Không có.
+Kiểm chứng: query regression + typecheck/data checks đã chạy; link QA.
+Known issues: các giới hạn hiện hành chưa thay đổi, link scope nếu cần.</code></pre>
+            <p>
+              Đây là mẫu, không phải release mới. Chỉ điền kết quả test đã chạy
+              của bản thực tế; không copy benchmark V0.1 sang mọi version.
+            </p>
+          </section>
+          <section class="panel" id="section-b33b0055">
+            <h2>Delivery checklist cho một release được giao</h2>
+            <ol>
+              <li>
+                Kiểm actual diff, scope và commit/base của version; tách
+                capability đã ship khỏi kế hoạch.
+              </li>
+              <li>
+                Xác nhận version nguồn duy nhất; UI/About/package/artifact/notes
+                cùng version khi những phần đó tồn tại.
+              </li>
+              <li>
+                Viết Markdown, index entry và HTML visual; giữ source-sha256
+                đúng nguồn sau format.
+              </li>
+              <li>
+                Đăng ký/đồng bộ trang mới vào docs delivery manifest, kể cả thư
+                mục releases; build phải chứa HTML/Markdown và mọi link/asset
+                cần. Hiện sync-docs chỉ có bốn cặp cũ, không tự discover trang
+                mới; cần xử lý trong phiên delivery được giao, không claim đã
+                làm ở lượt planning.
+              </li>
+              <li>
+                Kiểm links, mobile/desktop, readability, release status,
+                metadata và source hash. Nếu native được activate, bundle
+                What&#x27;s new đọc offline; không cần network để biết bản vừa
+                cập nhật.
+              </li>
+              <li>
+                Chạy checks theo thay đổi; ghi VERIFIED/NOT VERIFIED. Thu
+                screenshot nếu nội dung cần, tránh test lại cả sản phẩm cho một
+                doc/data fix không liên quan.
+              </li>
+              <li>
+                Theo Git policy đã được người dùng chốt: tạo nhánh lúc bắt đầu;
+                implement xong/checks đạt mới commit/push; báo branch/compare để
+                người dùng merge. Instruction riêng cấm Git (như planning này)
+                được ưu tiên.
+              </li>
+              <li>
+                Chỉ chuyển Ready → Released sau khi có evidence merge/release.
+                Không tự merge, publish/tag hoặc deploy khi chưa có scope tương
+                ứng.
+              </li>
+            </ol>
+            <p>
+              Release notes bổ sung, không thay thế
+              <a href="MASTER_ROADMAP.md">Master Roadmap</a>,
+              <a href="architecture.md">architecture</a> hay
+              <a href="v0.1-review.md">QA</a>. AGENTS chỉ giữ link/quy ước ngắn,
+              không duplicate toàn checklist.
+            </p>
+          </section>
+        </div>
+      </div>
+      <footer>
+        <a href="release-notes.md">Nguồn Markdown ↗</a> · Local-first developer
+        memory · Tài liệu và trạng thái được ghi theo evidence thực tế.
+      </footer>
+    </main>
+  </body>
+</html>

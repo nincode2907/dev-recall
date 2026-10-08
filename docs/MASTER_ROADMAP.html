@@ -1,0 +1,4530 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" />
+    <meta
+      name="source-sha256"
+      content="200816b7b3870ae9439b11c4834cd8898ea4dbda5cb497c0631c99d4fbf728cf"
+    />
+    <meta
+      name="description"
+      content="Từ bộ nhớ thao tác V0.1 đến V1: từng phase nhỏ, điểm dừng rõ và quyết định dựa trên cách bạn dùng thật."
+    />
+    <title>Dev Recall Master Roadmap</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: "Avenir Next", system-ui, sans-serif;
+        color: #243a35;
+        background: #f5f7f3;
+        line-height: 1.7;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+      }
+      a {
+        color: #146a53;
+        text-underline-offset: 4px;
+      }
+      a:hover {
+        color: #084932;
+      }
+      a:focus-visible,
+      summary:focus-visible,
+      .table-scroll:focus-visible {
+        outline: 3px solid #27866b;
+        outline-offset: 4px;
+      }
+      .topbar {
+        border-bottom: 1px solid #d8e3dc;
+        background: #fff;
+        padding: 16px max(24px, calc((100vw - 1200px) / 2));
+        display: flex;
+        gap: 24px;
+        align-items: center;
+        flex-wrap: wrap;
+        font-size: 13px;
+      }
+      .brand {
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: #1a4235;
+        text-decoration: none;
+        font-size: 18px;
+      }
+      .topbar a:last-child {
+        margin-left: auto;
+      }
+      main {
+        max-width: 1200px;
+        margin: auto;
+        padding: 36px 28px;
+      }
+      .hero {
+        padding: 26px 0 34px;
+        max-width: 900px;
+      }
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 2px;
+        color: #276e55;
+        font-weight: 800;
+      }
+      h1 {
+        font-size: clamp(30px, 4.4vw, 54px);
+        line-height: 1.15;
+        letter-spacing: -1.7px;
+        margin: 18px 0;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.3;
+        margin: 0 0 22px;
+        letter-spacing: -0.5px;
+      }
+      h3 {
+        font-size: 18px;
+      }
+      .hero p {
+        font-size: 17px;
+        max-width: 750px;
+        color: #52675e;
+      }
+      .badge {
+        display: inline-block;
+        border: 1px solid #cadad0;
+        border-radius: 30px;
+        padding: 5px 12px;
+        font-size: 12px;
+        font-weight: 700;
+        margin: 6px 8px 0 0;
+        color: #286149;
+        background: #edf5ee;
+      }
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin: 4px 0 28px;
+      }
+      .metric {
+        background: #e5eee1;
+        border-radius: 14px;
+        padding: 20px;
+      }
+      .metric strong {
+        display: block;
+        font-size: 30px;
+        line-height: 1.3;
+      }
+      .metric span {
+        font-size: 13px;
+        color: #456350;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: 230px minmax(0, 1fr);
+        gap: 26px;
+        align-items: start;
+      }
+      .toc {
+        position: sticky;
+        top: 16px;
+        max-height: calc(100vh - 32px);
+        overflow: auto;
+        padding: 18px;
+        background: #fff;
+        border: 1px solid #d8e3dc;
+        border-radius: 12px;
+        font-size: 12px;
+      }
+      .toc strong {
+        display: block;
+        margin-bottom: 12px;
+      }
+      .toc a {
+        display: block;
+        padding: 5px 0;
+        text-decoration: none;
+        color: #50635a;
+      }
+      .toc a:hover {
+        color: #146a53;
+        text-decoration: underline;
+      }
+      .content {
+        min-width: 0;
+      }
+      .panel {
+        background: #fff;
+        border: 1px solid #d8e3dc;
+        border-radius: 16px;
+        padding: 28px;
+        margin: 0 0 24px;
+        overflow-wrap: anywhere;
+        scroll-margin-top: 24px;
+      }
+      p,
+      li {
+        font-size: 14px;
+      }
+      li {
+        margin: 8px 0;
+      }
+      ul,
+      ol {
+        padding-left: 23px;
+      }
+      strong {
+        color: #203e32;
+      }
+      .table-scroll {
+        overflow-x: auto;
+        border: 1px solid #e1e8e0;
+        border-radius: 10px;
+        margin: 18px 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+        min-width: 580px;
+      }
+      th,
+      td {
+        padding: 13px;
+        text-align: left;
+        vertical-align: top;
+        border-bottom: 1px solid #e1e8e0;
+      }
+      th {
+        background: #eef4ea;
+        color: #35513c;
+      }
+      th:first-child {
+        width: 24%;
+      }
+      tr:last-child td {
+        border-bottom: 0;
+      }
+      details {
+        border: 1px solid #d5e1d5;
+        border-radius: 12px;
+        margin: 16px 0;
+        background: #fff;
+        scroll-margin-top: 24px;
+      }
+      summary {
+        cursor: pointer;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 18px 20px;
+        background: #f0f5ec;
+        border-radius: 12px;
+        line-height: 1.4;
+        font-size: 15px;
+        font-weight: 700;
+      }
+      summary:before {
+        content: "+";
+        font-size: 22px;
+        color: #347554;
+      }
+      details[open] > summary:before {
+        content: "−";
+      }
+      summary small {
+        font-size: 9px;
+        letter-spacing: 1px;
+        margin-left: auto;
+        color: #57744d;
+      }
+      details[open] > summary {
+        border-radius: 12px 12px 0 0;
+        border-bottom: 1px solid #d5e1d5;
+      }
+      .phase-body {
+        padding: 4px 18px 14px;
+      }
+      .phase-body table {
+        min-width: 540px;
+      }
+      .phase-body td:first-child {
+        font-weight: 700;
+        color: #43624b;
+      }
+      code {
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 0.9em;
+        background: #edf2eb;
+        border-radius: 3px;
+        padding: 2px 4px;
+      }
+      pre {
+        background: #1c362d;
+        color: #f1f6ef;
+        padding: 22px;
+        border-radius: 12px;
+        overflow-x: auto;
+        font-size: 12px;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      pre code {
+        background: none;
+        padding: 0;
+      }
+      .release main {
+        max-width: 980px;
+      }
+      .release .layout {
+        grid-template-columns: 190px minmax(0, 1fr);
+      }
+      .release .hero {
+        border-bottom: 1px solid #d8e3dc;
+        margin-bottom: 28px;
+      }
+      footer {
+        font-size: 12px;
+        color: #68796e;
+        padding: 22px 0 40px;
+      }
+      @media (max-width: 850px) {
+        .layout,
+        .release .layout {
+          display: block;
+        }
+        .toc {
+          position: static;
+          max-height: 240px;
+          margin-bottom: 24px;
+        }
+        .metrics {
+          gap: 8px;
+        }
+        .metric {
+          padding: 14px;
+        }
+        .metric strong {
+          font-size: 24px;
+        }
+      }
+      @media (max-width: 540px) {
+        main {
+          padding: 20px 16px;
+        }
+        .topbar {
+          padding: 14px 16px;
+          gap: 14px;
+        }
+        .topbar a:last-child {
+          margin-left: 0;
+        }
+        .hero {
+          padding-top: 12px;
+        }
+        h1 {
+          letter-spacing: -1px;
+        }
+        .panel {
+          padding: 20px 16px;
+        }
+        h2 {
+          font-size: 21px;
+        }
+        .metric span {
+          font-size: 11px;
+        }
+        summary {
+          padding: 16px 12px;
+          font-size: 14px;
+        }
+        summary small {
+          font-size: 8px;
+        }
+        .phase-body {
+          padding: 4px 10px 10px;
+        }
+        .hero p {
+          font-size: 15px;
+        }
+      }
+      @media print {
+        .toc,
+        .topbar {
+          display: none;
+        }
+        .layout,
+        .release .layout {
+          display: block;
+        }
+        details:not([open]) > .phase-body {
+          display: block;
+        }
+        body {
+          background: white;
+        }
+        .panel {
+          break-inside: auto;
+        }
+        .metrics {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body class="roadmap">
+    <nav class="topbar" aria-label="Tài liệu Dev Recall">
+      <a class="brand" href="MASTER_ROADMAP.html">Dev Recall</a
+      ><a href="MASTER_ROADMAP.html">Roadmap</a
+      ><a href="releases/index.html">Có gì mới</a
+      ><a href="http://dev-recall.localhost">Mở app ↗</a>
+    </nav>
+    <main>
+      <header class="hero">
+        <span class="eyebrow">PRODUCT EVOLUTION · PLANNING ONLY</span>
+        <h1>Dev Recall Master Roadmap</h1>
+        <p>
+          Từ bộ nhớ thao tác V0.1 đến V1: từng phase nhỏ, điểm dừng rõ và quyết
+          định dựa trên cách bạn dùng thật.
+        </p>
+        <span class="badge">DRAFT · 08 OCT 2026</span>
+      </header>
+      <div class="metrics">
+        <div class="metric"><strong>7</strong><span>Milestones</span></div>
+        <div class="metric">
+          <strong>27</strong><span>Phases · tất cả PLANNED</span>
+        </div>
+        <div class="metric"><strong>9</strong><span>Decision gates</span></div>
+      </div>
+      <div class="layout">
+        <aside class="toc" aria-label="Mục lục">
+          <strong>TRONG TRANG NÀY</strong
+          ><a href="#section-3151b661"
+            >Execution baseline — current phase and next step</a
+          ><a href="#section-cf454041">Product North Star</a
+          ><a href="#section-bcc00f58">Product principles</a
+          ><a href="#section-9b502bac">Current baseline</a
+          ><a href="#section-bfca2f41">Target V1 experience</a
+          ><a href="#section-f108ce0e">Milestones and priority</a
+          ><a href="#section-0c8c7d43">Decision gates</a
+          ><a href="#milestone-1"
+            >Milestone 1 — Foundation — dữ liệu có chủ và phục hồi được</a
+          ><a href="#milestone-2"
+            >Milestone 2 — Personal Memory — kiến thức của chính mình</a
+          ><a href="#milestone-3"
+            >Milestone 3 — Retrieval &amp; Workflows — tìm đúng và làm đúng</a
+          ><a href="#milestone-4"
+            >Milestone 4 — Fast Access — vào được trong vài giây</a
+          ><a href="#milestone-5"
+            >Milestone 5 — Optional Intelligence — trợ giúp có giới hạn</a
+          ><a href="#milestone-6"
+            >Milestone 6 — Context &amp; Curated Knowledge — thêm đúng thứ còn
+            thiếu</a
+          ><a href="#milestone-7"
+            >Milestone 7 — Hardening &amp; V1 — đóng vòng sử dụng hằng ngày</a
+          ><a href="#section-ce338ed5">V1 Definition and completion gate</a
+          ><a href="#section-cc513c56"
+            >Version communication — What&#x27;s new cho mọi version</a
+          ><a href="#section-0a458cc1">Post-V1 evolution</a
+          ><a href="#section-73bad1e1">Phase Execution Protocol</a
+          ><a href="#section-29d643c1">Roadmap review and source notes</a>
+        </aside>
+        <div class="content">
+          <p>
+            Ngày lập: 2026-10-08. Trạng thái:
+            <strong>DRAFT — chờ người dùng chốt từng phase</strong>. Đây là kế
+            hoạch, không phải danh sách tính năng đã triển khai. 7 milestone, 27
+            phase; không bắt buộc làm hết các nhánh conditional/experimental để
+            đạt V1.
+          </p>
+          <p>
+            Nguồn baseline: commit <code>8a3a22c</code> (package 0.1.0), nhánh
+            <code>feat/polish-v0.1</code>. Tài liệu lượt này ở nhánh
+            <code>docs/master-roadmap</code>, dựa trên commit đó. Local main
+            đang ở <code>e38c0bd</code>; chưa xác nhận người dùng merge nhánh
+            polish hoặc phát hành tag. Không commit/push trong lượt lập kế hoạch
+            này; không bắt đầu Phase 1.
+          </p>
+          <section class="panel" id="section-3151b661">
+            <h2>Execution baseline — current phase and next step</h2>
+            <div
+              class="table-scroll"
+              tabindex="0"
+              role="region"
+              aria-label="Bảng chi tiết"
+            >
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Trạng thái thực thi tại baseline</th>
+                    <th scope="col">Giá trị</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Bản sản phẩm gần nhất đã kiểm</td>
+                    <td>
+                      V0.1.0 · commit <code>8a3a22c</code> trên
+                      <code>feat/polish-v0.1</code>; chưa xác nhận
+                      merge/release.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Phase đang implement</td>
+                    <td>
+                      <strong>Không có.</strong> Roadmap mới được lập; chưa
+                      phase nào bắt đầu hoặc hoàn tất.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Phase kế tiếp đề xuất</td>
+                    <td>
+                      <strong
+                        >Phase 1 — Chốt hợp đồng lưu trữ và quyền sở hữu dữ
+                        liệu</strong
+                      >
+                      · <code>PLANNED</code>, chưa phải <code>READY</code> hay
+                      đang chạy.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Cần làm để bắt đầu</td>
+                    <td>
+                      Người dùng chốt/giao Phase 1. Phiên implement kiểm tra lại
+                      code, base branch và dependency trước khi làm.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Tiến độ roadmap</td>
+                    <td>
+                      0 phase <code>DONE</code> · 0 <code>IN PROGRESS</code> ·
+                      27 <code>PLANNED</code>. Các gate/nhánh tùy chọn chưa được
+                      mở.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              Đây là snapshot tiến độ tại ngày lập roadmap, không tự cập nhật
+              theo Git. Cuối mỗi phase được giao, cập nhật bảng này cùng status
+              phase, commit/evidence hoàn tất và phase đủ điều kiện tiếp theo;
+              nếu chưa đủ dependency/gate, để <code>BLOCKED</code> hoặc
+              <code>PLANNED</code> và nêu lý do. Chỉ implement phase mà người
+              dùng giao, không tự chuyển sang phase kế tiếp.
+            </p>
+          </section>
+          <section class="panel" id="section-cf454041">
+            <h2>Product North Star</h2>
+            <p>
+              “Tôi nhớ việc muốn làm, nhưng quên cách làm.” Dev Recall là lớp bộ
+              nhớ thao tác riêng của developer: mở thật nhanh, gõ intent, lấy
+              command/shortcut/workflow đúng ngữ cảnh, copy và trở lại công
+              việc. Kiến thức cá nhân được capture nhẹ, kiểm chứng trong scope
+              rõ và trưởng thành theo việc người dùng thực sự cần/quên. Local
+              deterministic search là đường chính; AI chỉ là trợ giúp được chọn,
+              không là nguồn trust mặc định.
+            </p>
+          </section>
+          <section class="panel" id="section-bcc00f58">
+            <h2>Product principles</h2>
+            <ul>
+              <li>
+                Recall nhanh hơn, đáng tin hơn hoặc dễ học hơn là lý do duy nhất
+                để thêm capability. Không tối ưu số feature/dataset.
+              </li>
+              <li>
+                Không chạy command trong V1. Copy là hành động chính;
+                check/verify/undo của workflow do người dùng thực hiện.
+              </li>
+              <li>
+                Canonical knowledge và usage metadata tách repository,
+                schema/version, backup/reset và quyền riêng tư. Không rewrite
+                YAML theo mỗi copy.
+              </li>
+              <li>
+                Một nguồn chuẩn có quyền ghi trong mỗi profile/runtime. Browser
+                hiện không tự có quyền sửa YAML trong repo; browser storage và
+                native storage không tự dùng chung.
+              </li>
+              <li>
+                Relevance/context/trust đứng trước usage boost. Exact đúng
+                intent không bị một mục “hay dùng” khác đè lên.
+              </li>
+              <li>
+                Unknown context/trust phải hiện là unknown. Source/provenance
+                không tự đồng nghĩa đúng; AI/import không tự thành Verified.
+              </li>
+              <li>
+                Trust có nhiều chiều: origin, verification và active/deprecated.
+                Personal có thể verified trong môi trường riêng; không ép tất cả
+                vào enum loại trừ nhau.
+              </li>
+              <li>
+                Queries/history ở local mặc định. Remote AI phải có
+                opt-in/payload rõ, không silent upload history/corpus/secrets;
+                không có key trong client bundle.
+              </li>
+              <li>
+                Ưu tiên few-fields capture, bounded recent/missing/related;
+                tránh form lớn, graph, editor hoặc dashboard lấn át search.
+              </li>
+              <li>
+                Dev Hub biết WHAT đang chạy/cấu hình; Recall biết HOW thao tác.
+                Integration qua hợp đồng đọc riêng, không takeover
+                registry/process.
+              </li>
+              <li>
+                Backup/restore có bằng chứng trước authoring và trước
+                update/migration. Lỗi usage không làm mất knowledge.
+              </li>
+              <li>
+                Gate có thể kết luận DEFERRED/reject. Thiếu evidence không là lý
+                do implement thử mọi ý tưởng.
+              </li>
+              <li>
+                Mọi version thực tế, kể cả patch hoặc data fix nhỏ, có Markdown
+                nguồn và một trang HTML What&#x27;s new riêng; xem
+                <a href="release-notes.md">quy ước release notes</a>.
+              </li>
+            </ul>
+          </section>
+          <section class="panel" id="section-9b502bac">
+            <h2>Current baseline</h2>
+            <div
+              class="table-scroll"
+              tabindex="0"
+              role="region"
+              aria-label="Bảng chi tiết"
+            >
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Mục</th>
+                    <th scope="col">Hiện có tại commit 8a3a22c</th>
+                    <th scope="col">Chưa có</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>App</td>
+                    <td>
+                      React + TypeScript + Vite, một luồng search/detail/copy,
+                      UI Việt, keyboard-first, responsive
+                    </td>
+                    <td>Capture/edit UI, Favorites, Recent</td>
+                  </tr>
+                  <tr>
+                    <td>Knowledge</td>
+                    <td>
+                      53 mục/182 aliases; Terminal 10, tmux 11, Git 12, Docker
+                      10, macOS 10; YAML nguồn chuẩn; 47 safe/2 caution/4
+                      destructive
+                    </td>
+                    <td>
+                      Persistent authoring store, provenance/lifecycle runtime,
+                      structured workflow steps
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Search</td>
+                    <td>
+                      Fuse.js + normalization Việt, category filter, explicit
+                      relevance tiers, guard typo, example search; pure
+                      engine/cache giới hạn
+                    </td>
+                    <td>Usage/context ranking, semantic/vector search, AI</td>
+                  </tr>
+                  <tr>
+                    <td>State</td>
+                    <td>
+                      React query/selectedId/clipboard, stale-copy feedback
+                      guard, list scroll theo viewport, startup fallback
+                    </td>
+                    <td>
+                      Usage/query persistence, missing list, background
+                      collection
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Runtime</td>
+                    <td>
+                      127.0.0.1:15300 strictPort; block 15300–15399;
+                      dev-recall.localhost qua Caddy; browser only
+                    </td>
+                    <td>Native/Tauri, global shortcut, app daemon/API</td>
+                  </tr>
+                  <tr>
+                    <td>Gates đã có bằng chứng</td>
+                    <td>
+                      Báo cáo V0.1 ghi 55/55 tests, 42 query top 3
+                      dev/production; search p95 1,66 ms trên 53 mục;
+                      clipboard/error/focus/responsive/HTTP IPv4/IPv6
+                    </td>
+                    <td>
+                      Không suy rộng sang OS/browser khác, corpus lớn hoặc chạy
+                      thật mọi seed command
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Docs</td>
+                    <td>
+                      AGENTS operating manual, plan-v1, data-format,
+                      architecture và v0.1-review; sync-docs hiện kiểm/đóng gói
+                      4 cặp đã đăng ký
+                    </td>
+                    <td>
+                      Auto-discovery release pages mới trong sync manifest; đây
+                      là việc documentation delivery ở phiên release sau
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              Bằng chứng test/benchmark là từ
+              <a href="v0.1-review.md">lượt QA V0.1</a> ngày 2026-10-08, không
+              phải rerun trong lượt planning. Lượt này đọc
+              source/config/tests/dataset và registry; parse dataset xác nhận 53
+              mục/182 aliases. <a href="plan-v1.md">Kế hoạch V0.1</a> vẫn là
+              scope chuẩn của bản hiện tại; roadmap lịch sử V0.2–V0.5 chỉ là
+              context. Tài liệu này thay phần định hướng tương lai, không tự mở
+              rộng scope V0.1.
+            </p>
+            <p>
+              Điểm cần xử lý trước phát triển: dữ liệu hiện eager raw-import;
+              validator từ chối unknown fields nên bất kỳ field mới cần
+              schema/migration thật. App chưa có persistent writes; không được
+              thêm editor rồi giữ hai nguồn chuẩn. Score hiện tại là ranking
+              tương đối, chưa là confidence được calibration. Browser storage có
+              scope origin; direct URL và hostname không chia store. Caddy
+              shared proxy đang publish 80:80 trên mọi interface; lượt này không
+              đổi nó.
+            </p>
+          </section>
+          <section class="panel" id="section-bfca2f41">
+            <h2>Target V1 experience</h2>
+            <p>
+              Khi đang coding, người dùng gọi Dev Recall bằng đường truy cập đã
+              kiểm (browser nhanh hoặc native shortcut), gõ “tmux cuộn log”,
+              chọn đáp án đúng scope, copy và trở lại editor. Recent giúp quay
+              lại thứ vừa dùng; query missing được ghi local khi đã chọn bật.
+              Sau khi giải quyết một việc mới, capture intent/content trong vài
+              field; khi kiến thức đổi, sửa/deprecate có undo và backup.
+              Workflow chỉ rõ bước chạy ở terminal hay file config, điều kiện,
+              warning, check và undo.
+            </p>
+            <p>
+              Nếu các gate mở AI, intent fallback tìm lại kho trước; suggestion
+              chưa kiểm luôn tách biệt và chỉ thành knowledge sau review của
+              người dùng. Nếu các gate đóng, V1 vẫn là personal memory hoàn
+              chỉnh, không là một chatbot thiếu AI.
+            </p>
+          </section>
+          <section class="panel" id="section-f108ce0e">
+            <h2>Milestones and priority</h2>
+            <p>
+              P0 = integrity bắt buộc cho core hoặc cho nhánh đã được chọn
+              activate; không tự ép activate một nhánh. P1 = high-value. P2 =
+              enhancement. Experimental = phải qua gate có evidence trước
+              commitment. S/M/L là size tương đối, không ước lượng giờ; phase
+              dưới đây đã chia về S/M để một run tập trung hoặc vài run cùng mục
+              tiêu có thể hoàn tất.
+            </p>
+            <div
+              class="table-scroll"
+              tabindex="0"
+              role="region"
+              aria-label="Bảng chi tiết"
+            >
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Milestone</th>
+                    <th scope="col">Phases</th>
+                    <th scope="col">Sau milestone có gì mới?</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>M1 — Foundation — dữ liệu có chủ và phục hồi được</td>
+                    <td>1–3</td>
+                    <td>
+                      Kho local có một nguồn chuẩn, export/restore/migration có
+                      bằng chứng. Capture sau đó không phải thử nghiệm trên dữ
+                      liệu chưa có backup.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>M2 — Personal Memory — kiến thức của chính mình</td>
+                    <td>4–8</td>
+                    <td>
+                      Capture/edit không cần YAML, biết origin/context/trust,
+                      recent và Missing knowledge phản ánh dùng thật.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      M3 — Retrieval &amp; Workflows — tìm đúng và làm đúng
+                    </td>
+                    <td>9–12</td>
+                    <td>
+                      Search được đo bằng intent cá nhân; quy trình tuyến tính
+                      có check/verify/undo. Ranking usage và related chỉ bật nếu
+                      hữu ích.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>M4 — Fast Access — vào được trong vài giây</td>
+                    <td>13–18</td>
+                    <td>
+                      Có quyết định browser hay native dựa vào access latency.
+                      Nếu chọn native: offline shell, migration, shortcut,
+                      lifecycle và package đã kiểm.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>M5 — Optional Intelligence — trợ giúp có giới hạn</td>
+                    <td>19–22</td>
+                    <td>
+                      Nếu cần: hiểu intent rồi tìm lại kho; suggestion/agent
+                      proposal luôn qua trust boundary và human approval. Có thể
+                      defer toàn nhánh.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      M6 — Context &amp; Curated Knowledge — thêm đúng thứ còn
+                      thiếu
+                    </td>
+                    <td>23–24</td>
+                    <td>
+                      Nếu có evidence: Dev Hub chỉ cung cấp context đọc,
+                      external import chỉ batch nhỏ có nguồn/review; không biến
+                      Recall thành Dev Hub/encyclopedia.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      M7 — Hardening &amp; V1 — đóng vòng sử dụng hằng ngày
+                    </td>
+                    <td>25–27</td>
+                    <td>
+                      Knowledge có maintenance, backup/recovery và quality
+                      evidence; V1 có định nghĩa hoàn tất, support matrix và
+                      release notes theo từng version.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              Đường core: Phases
+              <strong>1–10, 13 (chỉ quyết định access), 25–27</strong>. Phase
+              11/12, native 14–18, AI/agent 19–22 và integration/import 23–24 có
+              gate riêng. Nếu nhánh native được chọn, 14–18 trở thành
+              prerequisite integrity của V1 native. Gate negative là kết quả hợp
+              lệ, không thay bằng một feature khác cho đủ milestone.
+            </p>
+          </section>
+          <section class="panel" id="section-0c8c7d43">
+            <h2>Decision gates</h2>
+            <p>
+              Các ngưỡng là đề xuất để đánh giá sau implementation, không phải
+              số liệu đã đo của sản phẩm.
+            </p>
+            <div
+              class="table-scroll"
+              tabindex="0"
+              role="region"
+              aria-label="Bảng chi tiết"
+            >
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Gate</th>
+                    <th scope="col">Evidence cần</th>
+                    <th scope="col">YES</th>
+                    <th scope="col">NO / chưa đủ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>G1 — Content hay retrieval?</td>
+                    <td>
+                      ≥20 failed/rejected sessions hoặc sample manual có intent;
+                      phân loại thiếu recall/alias/context/semantics
+                    </td>
+                    <td>
+                      Thiếu recall → capture/review; alias/context → Phase 9
+                    </td>
+                    <td>Chưa đủ: dùng thêm/thu mẫu thủ công, không gọi AI</td>
+                  </tr>
+                  <tr>
+                    <td>G2 — Usage boost có ích?</td>
+                    <td>
+                      ≥40 query sessions có outcome; replay ≥10 ambiguous cases
+                      và held-out corpus
+                    </td>
+                    <td>Phase 11, enable nếu có gain và không phá tiers</td>
+                    <td>Giữ text-only; metadata vẫn giúp recent/missing</td>
+                  </tr>
+                  <tr>
+                    <td>G3 — Related có giảm thao tác?</td>
+                    <td>≥5 nhu cầu đi từ recall sang recall lặp lại</td>
+                    <td>Phase 12 tối đa 3 links</td>
+                    <td>Defer; search đã là navigation</td>
+                  </tr>
+                  <tr>
+                    <td>G4 — Browser access có chậm?</td>
+                    <td>
+                      Phase 13 đo ≥20 journeys/≥5 ngày hoặc sample chấp nhận;
+                      access vs retrieval latency tách riêng
+                    </td>
+                    <td>
+                      Median &gt;5 giây hoặc &gt;20% mất ≥3 giây chỉ mở app,
+                      prototype hữu ích → cân nhắc 14–18
+                    </td>
+                    <td>
+                      Browser đạt mục tiêu → defer native; ghi quyết định cho V1
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>G5 — Aliases thật sự không đủ?</td>
+                    <td>
+                      Phase 9 xong, ≥10 semantic misses có đáp án đúng sẵn trong
+                      kho, privacy/secret/provider ADR được chốt
+                    </td>
+                    <td>Phase 20 requery local bằng intent AI</td>
+                    <td>Cải thiện content/aliases; defer 20–21</td>
+                  </tr>
+                  <tr>
+                    <td>G6 — Cần AI suggestion?</td>
+                    <td>
+                      Intent fallback có gain, nhưng ≥5 missing tasks người dùng
+                      muốn AI gợi ý
+                    </td>
+                    <td>Phase 21 quarantine + human review</td>
+                    <td>Không sinh command mới</td>
+                  </tr>
+                  <tr>
+                    <td>G7 — Agent learning loop có ích?</td>
+                    <td>
+                      ≥5 bài học reusable bị bỏ capture; người dùng muốn handoff
+                    </td>
+                    <td>Phase 22 proposal file, approval bắt buộc</td>
+                    <td>Capture tay; không dựng MCP/daemon</td>
+                  </tr>
+                  <tr>
+                    <td>G8 — Runtime context có ích?</td>
+                    <td>
+                      ≥5 query/journey cần project/service context và Dev Hub có
+                      read contract
+                    </td>
+                    <td>Phase 23 read-only, explicit target/context</td>
+                    <td>Manual context; không sửa Dev Hub để ép check pass</td>
+                  </tr>
+                  <tr>
+                    <td>G9 — Import có lợi hơn capture?</td>
+                    <td>
+                      ≥10 missing intents phù hợp một nguồn; source/license và
+                      review cost được kiểm
+                    </td>
+                    <td>Phase 24 một batch tối đa 20</td>
+                    <td>Không import; mở rộng knowledge qua dùng thật</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              Outcome gate ghi ngày, evidence link/sample, decision, owner và lý
+              do. Nếu chưa đủ evidence: phase nhánh giữ PLANNED; không có nghĩa
+              Codex tiếp tục tự thu thập hoặc tự triển khai. Nếu người dùng
+              quyết defer: DEFERRED, nêu điều kiện mở lại.
+            </p>
+          </section>
+          <section class="panel" id="milestone-1">
+            <h2>Milestone 1 — Foundation — dữ liệu có chủ và phục hồi được</h2>
+            <p>
+              Kho local có một nguồn chuẩn, export/restore/migration có bằng
+              chứng. Capture sau đó không phải thử nghiệm trên dữ liệu chưa có
+              backup.
+            </p>
+            <details id="phase-1">
+              <summary>
+                <span
+                  >Phase 1 — Chốt hợp đồng lưu trữ và quyền sở hữu dữ liệu</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>P0</strong> · Size: <strong>S</strong> ·
+                  Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Baseline V0.1; không có phase mới trước đó.</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>
+                          Chọn nguồn chuẩn cho knowledge có thể sửa mà không mất
+                          bản V0.1.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Browser hiện chỉ đọc YAML bundle; Add/Edit trước quyết
+                          định storage sẽ tạo hai nguồn chuẩn.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Một ADR đủ rõ để biết dữ liệu nằm đâu, backup thế nào
+                          và chuyển sang desktop ra sao.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Đối chiếu IndexedDB, file do người dùng chọn và native
+                          SQLite/file; khuyến nghị browser-first IndexedDB có
+                          export, adapter nhỏ cho repository.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Chưa tạo DB, Add/Edit, server hay migration runtime;
+                          không mặc định chọn Tauri.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          Hợp đồng KnowledgeRepository tách UsageRepository;
+                          định nghĩa schemaVersion, primary origin, ID ổn định,
+                          lỗi storage và seed bootstrap một lần.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Phải chốt origin dev-recall.localhost; direct URL có
+                          storage riêng. Sau migration, local store là
+                          canonical, YAML là seed/export fixture; không overlay
+                          hai nguồn có quyền ghi.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          ADR có quyết định/alternatives/rollback; một nguồn
+                          chuẩn, không secret trong bundle, format backup
+                          versioned và đường chuyển desktop.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Reader walkthrough: capture, cập nhật seed, mất
+                          storage, đổi origin, restore và chuyển native; quyết
+                          định không mâu thuẫn.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          ADR được người dùng chốt; không viết storage
+                          implementation trong phase này.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Quyết định storage, browser support, format/version và
+                          các rủi ro đã chấp nhận cho Phase 2–3.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+            <details id="phase-2">
+              <summary>
+                <span>Phase 2 — Kho knowledge tại máy và export đầu tiên</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>P0</strong> · Size: <strong>M</strong> ·
+                  Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 1</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>
+                          Đọc từ kho local bền vững, có bản xuất trước khi cho
+                          phép authoring.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Reload không được làm mất kiến thức và phiên bản code
+                          mới không được ghi đè dữ liệu cá nhân.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Kho 53 seed hoạt động như trước; người dùng tải được
+                          bản backup knowledge.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Implement adapter đã chốt; bootstrap seed một lần;
+                          export knowledge kèm format/schema version;
+                          startup/storage error có recovery.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Chưa Add/Edit, query log, sync cloud, SQL server hay
+                          tự cập nhật seed vào dữ liệu đã sửa.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          Đổi loader sang repository async có trạng thái
+                          loading/error; giữ engine pure, ID ổn định, canonical
+                          và usage riêng. Schema hiện tại migrate không đổi
+                          intent.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Quota/eviction, transaction abort, schema mới hơn app;
+                          backup phải tồn tại trước future capture. Không
+                          silently fallback sang kho trống.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          53 item không đổi ID/content; reload giữ dữ liệu;
+                          export round-trip parse được; lỗi init không xóa DB;
+                          không fetch query.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Unit repository; browser fresh/reload/storage
+                          denied/quota simulation; kiểm export đầy đủ và primary
+                          origin; regression 42 queries/keyboard.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Storage + export ổn định; lỗi có cách tiếp tục; chưa
+                          bật authoring.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Export thật, schema/migration fixture và evidence nền
+                          để Phase 3 kiểm restore.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+            <details id="phase-3">
+              <summary>
+                <span>Phase 3 — Restore, migration và phục hồi dữ liệu</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>P0</strong> · Size: <strong>M</strong> ·
+                  Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 2</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>
+                          Chứng minh kiến thức có thể khôi phục trước khi cho
+                          thêm/sửa.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Export không đủ nếu file sai hoặc update app có thể
+                          làm hỏng kho đang dùng.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Người dùng preview backup, khôi phục kho, quay về bản
+                          trước nếu thất bại.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Import đúng format backup; validate toàn bộ trước
+                          transaction; preview số mục/thay thế; backup trước
+                          restore; migration ít nhất một version fixture.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Chưa merge hai kho tự động, đồng bộ nhiều máy hay
+                          import external database.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          Restore replace có chủ đích, atomically swap snapshot;
+                          schemaVersion và migration functions; usage restore là
+                          lựa chọn riêng, mặc định không export query history.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Định nghĩa duplicate IDs, file lớn, incompatible
+                          version, import cùng file; checksum không thay
+                          validation hoặc chứng minh nguồn đáng tin.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          File lỗi không đổi kho; restore valid tái tạo
+                          ID/content/risk; interrupted migration giữ snapshot;
+                          có undo restore từ backup.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Thử hỏng YAML/JSON, duplicate, newer schema,
+                          interrupted write; export → fresh profile → restore;
+                          đo corpus trước/sau.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Restore drill đạt và recovery có tài liệu; dữ liệu cá
+                          nhân chưa thể bị authoring làm mất âm thầm.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Backup/restore protocol để capture, native migration
+                          và V1 release dùng lại.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+          </section>
+          <section class="panel" id="milestone-2">
+            <h2>Milestone 2 — Personal Memory — kiến thức của chính mình</h2>
+            <p>
+              Capture/edit không cần YAML, biết origin/context/trust, recent và
+              Missing knowledge phản ánh dùng thật.
+            </p>
+            <details id="phase-4">
+              <summary>
+                <span>Phase 4 — Trust, provenance và ngữ cảnh thao tác</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>P0</strong> · Size: <strong>M</strong> ·
+                  Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 3</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>
+                          Phân biệt kiến thức đã kiểm, riêng cá nhân, nhập
+                          ngoài, AI và lỗi thời.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Risk hiện có chưa mô tả nguồn/điều kiện; verified
+                          không đồng nghĩa universal.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Detail nêu nguồn, nền tảng/tool, giới hạn và trạng
+                          thái tin cậy mà không che command.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Thêm provenance/context tối thiểu và deprecation;
+                          migrate seed thận trọng; cách lọc platform phù hợp khi
+                          có dữ liệu.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không graph, mandatory field dài cho mọi capture, tự
+                          đánh dấu Verified hoặc gán trusted cho toàn bộ seed.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          Đề xuất origin personal/imported/ai; verification
+                          unreviewed/verified; lifecycle active/deprecated tách
+                          nhau. Nhãn Verified/Personal/Imported/AI
+                          Suggested/Deprecated được suy ra, có thể Personal vẫn
+                          verified trong scope.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Chốt source URL/verifiedAt/toolVersion khi cần;
+                          unknown không bị coi compatible; giữ ID deprecated cho
+                          usage.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          53 seed migrate không mất field; nguồn/verification có
+                          scope; deprecated không vào search mặc định;
+                          unreviewed hiển thị rõ; risk không bị lifecycle thay
+                          thế.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Schema migrations, platform mismatch/unknown,
+                          imported/AI not trusted, deprecated search; review 5
+                          ví dụ khác nguồn.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Không thể biến knowledge nguồn ngoài thành trusted chỉ
+                          bằng import; UI đủ gọn để copy.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Contract dùng cho capture, workflow, external import
+                          và AI review.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+            <details id="phase-5">
+              <summary>
+                <span>Phase 5 — Usage memory và recent tại máy</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>P1</strong> · Size: <strong>M</strong> ·
+                  Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 3, Phase 4</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>Nhớ các thao tác người dùng thực sự dùng.</td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Seed phổ thông chưa phản ánh điều hay quên của chủ
+                          máy; metadata là bằng chứng cho ưu tiên sau này.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Xem một nhóm recent ngắn khi search rỗng, biết thao
+                          tác vừa dùng; có bật/tắt và xóa usage.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Views/copies/lastUsed theo hành động có chủ đích;
+                          recent tối đa 5; successful query → chosen ID một lần
+                          per session; storage local có retention/cap.
+                          Arrow/refocus/render không là view; mỗi lần mở detail
+                          chủ động là view, mỗi clipboard write thành công do
+                          một copy action mới là copy.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không personalized ranking, Favorites navigation, ghi
+                          từng arrow/keystroke, tracking ngoài máy.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          UsageRepository riêng, version riêng, UTC timestamps;
+                          một query session đếm một lần; clipboard failure không
+                          tăng copies; cài đặt lưu query riêng với count theo
+                          item.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Chốt opt-in, retention đề xuất 30 ngày/500 query keys;
+                          khóa normalized, không raw variants mặc định; metadata
+                          lỗi không chặn knowledge.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          Reload giữ recent/counter; cùng action/request bị
+                          replay không đếm lặp, hai copy chủ động thành công
+                          khác nhau vẫn tăng 2; pending/fail không tăng; query
+                          outcome chỉ một lần/session. Xóa usage giữ knowledge;
+                          tắt query logging không lưu query.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Fake clock/unit session, browser
+                          copy/reload/reset/privacy, metadata corruption;
+                          inspect network khi tìm/copy.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Usage semantics và quyền kiểm soát đạt; ranking text
+                          cũ vẫn giữ.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          5–7 ngày dùng thật nếu người dùng muốn, hoặc manual
+                          sample tương đương: intents dùng nhiều, access/copy
+                          friction; không giữ Codex chờ liên tục.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+            <details id="phase-6">
+              <summary>
+                <span>Phase 6 — Missing knowledge từ query thất bại</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>P1</strong> · Size: <strong>M</strong> ·
+                  Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 5</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>
+                          Biến tìm không được thành hàng đợi knowledge cần bổ
+                          sung.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Không nên thêm hàng loạt command khi chưa biết người
+                          dùng thật sự cần gì.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Mục Missing knowledge như “xem process nào ăn ram ×4”,
+                          có xóa/đánh dấu đã xử lý.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Ghi query cuối ổn định có chủ đích/Enter zero-result
+                          hoặc rời search sau xác nhận; aggregate normalized;
+                          top 10 missing, retention/cap và clear.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không logging mỗi phím, lưu query ngoài máy, tự tạo
+                          recall hoặc AI suggestion.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          Session candidate/debounce trong memory; chỉ commit
+                          event hợp lệ. Item ID liên kết sau khi bổ sung;
+                          successful-query count không bằng result count.
+                          Zero-result chỉ đếm khi result count bằng 0;
+                          rejected-result có outcome riêng sau hành động “chưa
+                          đúng”, không trộn vào zero count.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Query ngắn/stopword/secret; cấu hình opt-in từ Phase
+                          5; query có result nhưng không hữu ích cần thao tác
+                          “chưa đúng”, không suy từ blur đơn thuần.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          4 phiên query giống nhau có/không dấu → một key count
+                          4; sửa/hủy candidate không tăng; tắt logging không
+                          ghi; clear không xóa recall.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Fake timers/session boundaries/reload; thử RAM query,
+                          escape/edit nhanh, có result nhưng rejected; kiểm no
+                          network.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Missing list phản ánh intent đã thất bại thật; không
+                          biến noisy typing thành thống kê.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Tần suất missing, nhóm lỗi alias/content/context để
+                          Gate G1/G5 quyết định bước tiếp.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+            <details id="phase-7">
+              <summary>
+                <span>Phase 7 — Capture nhẹ từ intent hoặc missing query</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>P1</strong> · Size: <strong>M</strong> ·
+                  Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 3, Phase 4, Phase 6</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>Thêm kiến thức cá nhân mà không sửa YAML.</td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Giá trị chính là nhớ lại thứ mình cần; capture phải đủ
+                          nhanh để dùng ngay sau khi giải quyết việc.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Từ “Thêm recall” hoặc một missing query, lưu một mục
+                          và tìm/copy ngay.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Form title/intent, content, category/type gợi ý
+                          deterministic; aliases có thể bắt đầu từ query;
+                          note/context/risk có yêu cầu tùy trường hợp; preview
+                          trước save.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không rich text editor, AI autofill, import history,
+                          chạy thử command, ép 10 field ở mọi mục.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          Canonical write qua repository transaction; ID tạo một
+                          lần; schema + escaping; phát hiện duplicate để gợi ý
+                          mở/sửa, không auto merge.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Ví dụ .DS_Store phải giữ caveat skip-worktree, không
+                          hứa ignore tracked change bền vững. Risk detector là
+                          gợi ý, người dùng review; không biến giá trị đoán
+                          thành Verified.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          5 capture đơn giản hoàn thành median ≤30 giây theo
+                          test có người dùng; saved item top 3 qua query vừa
+                          dùng; reload/export giữ đủ dữ liệu; invalid không
+                          partial save.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Browser keyboard-only
+                          create/cancel/errors/duplicate/dangerous content;
+                          injection display escaping; backup round-trip; đo thao
+                          tác và số field cần nhập.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Capture primary flow ổn định và có backup; không làm
+                          chậm search.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Thời gian capture, field hay bỏ trống, aliases đã dùng
+                          và missing được đóng cho Phase 8–9.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+            <details id="phase-8">
+              <summary>
+                <span>Phase 8 — Sửa, deprecate và hoàn tác nhẹ</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>P0</strong> · Size: <strong>M</strong> ·
+                  Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 7</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>
+                          Sửa kiến thức sai hoặc đổi môi trường mà không mất
+                          ID/history.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Knowledge operational lỗi thời nguy hiểm hơn việc
+                          thiếu knowledge.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Edit một mục, xem diff ngắn, deprecate/mở lại và undo
+                          lần sửa gần nhất.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Edit ID ổn định, validation/risk preview, optimistic
+                          revision check giữa tab; soft deprecate + replacement
+                          link optional; một mức undo tối thiểu.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không version-control UI, collaborative editing, nhánh
+                          knowledge hay audit dashboard.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          Revision counter, transaction, bounded previous
+                          snapshot; usage theo ID giữ nguyên; export gồm
+                          deprecated record, search mặc định bỏ qua.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Lost update đa tab, sửa command destructively, ID
+                          rename; authoring phải có export/restore trước khi
+                          overwrite.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          Edit giữ ID/counter; stale revision không ghi đè;
+                          deprecated không gợi ý mặc định; undo tái tạo
+                          content/risk; invalid không đổi kho.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Multi-tab stale edit, cancel/reload,
+                          undo/deprecate/restore, duplicate title/ID; browser
+                          keyboard và negative validation.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Người dùng có thể sửa sai và phục hồi; không cần YAML
+                          hoặc destructive delete.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Các lỗi knowledge thật và chỉnh sửa aliases cho
+                          retrieval/trust maintenance.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+          </section>
+          <section class="panel" id="milestone-3">
+            <h2>
+              Milestone 3 — Retrieval &amp; Workflows — tìm đúng và làm đúng
+            </h2>
+            <p>
+              Search được đo bằng intent cá nhân; quy trình tuyến tính có
+              check/verify/undo. Ranking usage và related chỉ bật nếu hữu ích.
+            </p>
+            <details id="phase-9">
+              <summary>
+                <span>Phase 9 — Deterministic search từ bằng chứng thực</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>P1</strong> · Size: <strong>M</strong> ·
+                  Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 6, Phase 7, Phase 8</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>
+                          Cải thiện recall đúng với các query cá nhân trước khi
+                          dùng AI.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Sáu query nghiệm thu không đại diện toàn bộ đời sống;
+                          failed queries chỉ có giá trị khi đổi retrieval đúng.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Query thực, English/Việt, typo, category/context và
+                          direct command tìm đúng, ít false positive.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Golden corpus ít nhất 50 intent của người dùng/seed,
+                          negative cases; aliases trước; chỉ thêm rule
+                          ranking/parameter normalization khi chứng minh được.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không semantic/vector search, tăng dataset hàng loạt,
+                          hard-code từng query hoặc usage boost ở phase này.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          Giữ pure engine và exact → phrase → literal → fuzzy;
+                          versioned search fixtures; context tường minh, không
+                          đoán tool/platform thiếu.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Giá trị cụ thể như port 8080 không nên buộc trùng
+                          example 3000; nếu thêm parameter handling phải
+                          generic, không substitute command vào clipboard ngầm.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          ≥90% intended recall top 3 trên corpus held-out; 42
+                          cases V0.1 không regress; critical negatives không trả
+                          command sai; p95 search &lt;100 ms với dataset hiện
+                          tại và 500 fixture items.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Split corpus tuning/held-out, unit + browser;
+                          typo/reorder/unknown parameter/ambiguity; performance
+                          cold/warm, kiểm query chưa có knowledge.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Retrieval deterministic đạt mục tiêu; remaining
+                          failures phân loại content/aliases/semantics thay vì
+                          gọi AI cho mọi fuzzy.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Confusion cases, top3 hit rate, baseline ranking và
+                          sample corpus cho Gate G2/G5.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+            <details id="phase-10">
+              <summary>
+                <span>Phase 10 — Workflow có check, bước làm và undo</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>P1</strong> · Size: <strong>M</strong> ·
+                  Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 4, Phase 8, Phase 9</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>Nhớ lại quy trình nhiều bước một cách an toàn.</td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Một snippet dài khó biết chạy ở đâu, tác động gì và
+                          khi nào hoàn tất.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Xem workflow tuyến tính: điều kiện → kiểm tra → làm →
+                          xác minh → undo; copy từng bước.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Step title/content/context/risk, optional verify/undo;
+                          giữ workflow string V0.1 tương thích; 3 workflow cá
+                          nhân mẫu qua review.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không command execution, orchestration engine,
+                          branching DSL, terminals hay auto-verification.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          Optional structured steps trong canonical schema +
+                          migration; render/copy step riêng; copy toàn bộ chỉ
+                          khi cùng context và không vô tình chạy check/undo.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Shell vs config, steps khác môi trường, verify không
+                          bảo đảm an toàn; undo có thể không có. .DS_Store cần
+                          phân biệt local flag và bỏ tracked trong repo.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          V0.1 workflow vẫn đọc được; steps/context/risk rõ;
+                          copy step chính xác; config không bị copy như shell;
+                          verify/undo không chạy tự động.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Schema backwards compatibility; browser keyboard từng
+                          bước; source-check 3 workflow và safety review;
+                          export/restore.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Workflow giúp làm đúng trình tự, không tạo automation
+                          engine.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Patterns multi-step và nhu cầu context cho native/Dev
+                          Hub, rủi ro copy toàn workflow.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+            <details id="phase-11">
+              <summary>
+                <span>Phase 11 — Thử personalized ranking có giới hạn</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>Experimental</strong> · Size:
+                  <strong>M</strong> · Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 5, Phase 9</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>
+                          Kiểm xem usage/recency có giúp tìm nhanh hơn mà không
+                          làm sai text relevance.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Phổ biến không có nghĩa đúng intent; không nên làm một
+                          mục được copy nhiều chiếm mọi query.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Nếu Gate G2 đạt, bật personal boost nhỏ; có tắt/reset
+                          và baseline fallback.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Compare offline text-only với usage/recency; chỉ boost
+                          bên trong cùng relevance tier, sau hard context
+                          filter; tie boost capped và explainable.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không learning model, score neural, đẩy frequent item
+                          lên trước exact match khác, hoặc remote analytics.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          Optional ranking signals từ UsageRepository;
+                          deterministic comparator có caps; metrics không trở
+                          thành canonical fields.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Chỉ chọn nếu ≥40 query sessions có outcome; benchmark
+                          proposed boost bằng replay, không suy ý từ views thụ
+                          động; retention bias.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          Không regress exact/top3 critical corpus; giảm median
+                          lựa chọn/keystrokes hoặc cải thiện top1 trên ≥10
+                          ambiguous cases; nếu không có gain thì giữ text-only.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Replay/ablation fresh/frequent/deprecated/cold start;
+                          browser reset/toggle; search performance; manual
+                          compare cùng intents.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Enable có evidence rõ hoặc DEFERRED với runtime
+                          experiment tắt/gỡ; không chặn V1.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Gain/loss report, caps và quyết định có
+                          personalization ranking hay chỉ recent.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+            <details id="phase-12">
+              <summary>
+                <span>Phase 12 — Related recall ít và có chủ đích</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>P2</strong> · Size: <strong>S</strong> ·
+                  Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 8, Phase 10</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>Giúp tìm bước kế tiếp khi thực sự liên quan.</td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Workflow có thể cần resize/rename/copy mode, nhưng một
+                          sidebar link dài tạo noise.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Tối đa 3 related recalls do người dùng xác nhận, đi
+                          lại nhanh bằng bàn phím.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          relatedIds thủ công, back-to-query giữ
+                          query/selection; không ưu tiên related hơn search.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không graph, semantic auto-links, nhiều cấp category
+                          hay recommendations tự động.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          Optional related IDs validate tồn tại; bỏ link
+                          deprecated/broken khỏi UI; cycles không tạo recursive
+                          rendering.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Gate G3: ít nhất 5 nhu cầu chuyển recall cùng nhóm lặp
+                          lại; nếu không có evidence, defer.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          Không quá 3 link; broken ID có validation; không trap
+                          focus; không đổi clipboard ngầm; query trở lại đúng.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Related/back/focus/loop/deprecated/restore; usability
+                          comparison với chỉ search trên 5 journeys.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Có cải thiện bước tiếp hoặc DEFERRED; không bắt buộc
+                          để V1 hoàn tất.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Navigation friction và nhu cầu thực; không tạo lý do
+                          xây knowledge graph.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+          </section>
+          <section class="panel" id="milestone-4">
+            <h2>Milestone 4 — Fast Access — vào được trong vài giây</h2>
+            <p>
+              Có quyết định browser hay native dựa vào access latency. Nếu chọn
+              native: offline shell, migration, shortcut, lifecycle và package
+              đã kiểm.
+            </p>
+            <details id="phase-13">
+              <summary>
+                <span
+                  >Phase 13 — Gate desktop và quyết định kiến trúc truy cập
+                  nhanh</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>P1</strong> · Size: <strong>S</strong> ·
+                  Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 5, Phase 9</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>
+                          Chọn native shell chỉ khi browser access gây ma sát
+                          thật.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Không nên đầu tư packaging/IPC nếu bottleneck thực tế
+                          nằm ở knowledge hoặc aliases.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Quyết định browser đủ nhanh hay thử cửa sổ nhỏ kiểu
+                          Spotlight, với prototype flow và ADR.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Đo ≥20 open-to-copy journeys trong ≥5 ngày dùng thật
+                          hoặc sample manual được người dùng chấp nhận; đối
+                          chiếu Tauri và browser quick access; rà
+                          toolchain/macOS.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không cài Rust/global tools, tạo Tauri app, global
+                          shortcut, registry allocation hay chuyển dữ liệu.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          ADR runtime capabilities tối thiểu; renderer/search
+                          tái sử dụng; local native persistence, asset bundling
+                          và migration browser-origin → desktop; không shared DB
+                          ngầm.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Gate G4: nếu median &gt;5 giây hoặc &gt;20% journeys
+                          mất ≥3 giây chỉ để mở app, và prototype giúp, chọn
+                          native. Nếu browser đạt mục tiêu thì defer Phases
+                          14–18.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          ADR ghi outcome, chi phí bảo trì, native prerequisites
+                          và mô hình một writer/profile; không giả định
+                          IndexedDB đọc chung giữa origin/webview.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Reader walkthrough
+                          browser/desktop/offline/update/backup; đo access tách
+                          khỏi query-to-copy; kiểm tài liệu Tauri hiện tại.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Decision documented; người dùng chọn nhánh đi tiếp;
+                          chưa viết native code.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Access latency, frequency và decision log để tránh
+                          chọn Tauri vì tên công nghệ.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+            <details id="phase-14">
+              <summary>
+                <span>Phase 14 — Tauri shell chỉ đọc và copy</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>Experimental</strong> · Size:
+                  <strong>M</strong> · Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 13; chỉ activate khi G4 chốt native.</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>
+                          Chứng minh renderer chạy native offline trước khi
+                          chuyển authoring.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Native shell có quyền OS và lifecycle khác browser;
+                          phải kiểm tối thiểu trước khi mang dữ liệu cá nhân
+                          vào.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Mở Dev Recall desktop, search/detail/copy offline từ
+                          seed hoặc snapshot được chọn.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Chỉ sau G4=ACTIVATE và toolchain đã có/được cho phép
+                          riêng: shell macOS, assets bundle, native clipboard
+                          bridge nhỏ, read-only data snapshot.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không global shortcut, tự launch login, write
+                          knowledge, sync, shell execution hoặc sửa Caddy/port.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          src-tauri riêng; narrow RuntimeCapabilities;
+                          capabilities chỉ clipboard/read file người dùng chọn;
+                          không cho renderer arbitrary process/filesystem
+                          access.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Rust/Xcode thiếu thì BLOCKED và báo prerequisite,
+                          không cài global ngầm. Browser capture/edit phải được
+                          disable trong read-only native mode.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          Không Dev Hub/server vẫn mở, tìm và copy được; 42
+                          queries pass; permission tối thiểu; read-only rõ;
+                          schema lỗi có recovery.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Native launch offline/clipboard/window-close/reopen;
+                          capabilities review; corpus và viewport smoke; compare
+                          browser semantics.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Native retrieval/copy hoạt động độc lập hoặc rollback
+                          shell; authoring chưa có.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Compatibility/performance của webview và permission
+                          surface cho Phase 15–18.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+            <details id="phase-15">
+              <summary>
+                <span>Phase 15 — Persistence và chuyển kho sang desktop</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>P0</strong> · Size: <strong>M</strong> ·
+                  Status: <strong>PLANNED</strong>
+                </p>
+                <p>
+                  Dependencies: Phase 3, Phase 5, Phase 7, Phase 8, Phase 14;
+                  chỉ activate khi G4 chốt native.
+                </p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>
+                          Đưa authoring/usage vào native mà không chia hai nguồn
+                          chuẩn.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          App giống nhau nhưng browser IndexedDB và native store
+                          không tự chia dữ liệu; migration sai làm mất knowledge
+                          cá nhân.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Chọn backup browser → preview import native →
+                          capture/edit/recent tại máy, có export/restore tương
+                          đương.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Native repository adapter đã chọn; migrate knowledge,
+                          optional usage với consent; chọn profile/writer chính;
+                          receipt/rollback bằng backup.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không auto bidirectional sync browser/native, cloud,
+                          shared daemon hoặc tự truy cập Chrome profile.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          Native SQLite hoặc atomic file theo ADR, không chọn cả
+                          hai; renderer dùng cùng repository contract;
+                          lifecycle/schema giữ ID và metadata isolation.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          G4 active; cách tránh hai app cùng ghi divergently;
+                          browser legacy store không bị xóa tự động; không lưu
+                          secret trong backup.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          Migration giữ ID/content/risk/deprecation, counters
+                          khi chọn; restore/undo/capture/edit pass ở native;
+                          aborted import không phá kho; browser backup vẫn phục
+                          hồi được.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Browser export → clean native profile → round-trip;
+                          concurrent update/conflict snapshots; full
+                          capture/edit/metadata/reset/error drill.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Một canonical native store + recovery rõ; nếu chưa
+                          xong không bật native authoring.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Migration receipt, data integrity diff và adapter
+                          parity matrix.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+            <details id="phase-16">
+              <summary>
+                <span>Phase 16 — Global shortcut mở → gõ → copy → ẩn</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>P1</strong> · Size: <strong>M</strong> ·
+                  Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 15; chỉ activate khi G4 chốt native.</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>
+                          Giảm chi phí truy cập Dev Recall giữa lúc coding.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Native window bình thường chưa đạt trải nghiệm
+                          Spotlight.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Shortcut cấu hình được mở/focus cửa sổ nhỏ; search
+                          autofocus; copy rồi Esc ẩn để tiếp tục coding.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Register/unregister shortcut, conflict feedback,
+                          toggle visible, focus/query policy rõ; shortcut trong
+                          app giữ nguyên.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không execute command, tự đọc editor/terminal, ambient
+                          context capture hay tự bật launch-at-login.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          Native global shortcut capability scoped; window
+                          controller đơn instance; restore foreground bằng API
+                          cho phép, không accessibility privilege ngầm.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Shortcut conflict với OS/apps; người dùng chốt chord;
+                          query cũ select-all hay reset; clipboard-success chỉ
+                          ẩn theo setting đã chốt, failure không biến mất.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          20 journeys từ editor/terminal: ≥95% open/focus thành
+                          công; không mất keystroke đầu; Esc ẩn; clipboard fail
+                          giữ feedback; conflict không crash.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Native real keyboard from multiple foreground apps,
+                          rapid toggle, remap/restart/unregister; verify normal
+                          Cmd+C và focus recovery.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Luồng access/copy hoạt động tin cậy trên máy chủ;
+                          không cần tính năng lifecycle phức tạp.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Open-to-copy latency và shortcut conflicts để Phase 17
+                          harden.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+            <details id="phase-17">
+              <summary>
+                <span>Phase 17 — Window lifecycle, resume và một instance</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>P1</strong> · Size: <strong>M</strong> ·
+                  Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 16; chỉ activate khi G4 chốt native.</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>
+                          Làm shortcut ổn định qua sleep, màn hình khác và vòng
+                          đời app.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Demo shortcut tốt chưa chứng minh có thể dùng cả ngày.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Cửa sổ không nhân bản, không mở ngoài màn hình và
+                          không giành focus bất ngờ.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Single-instance handoff, hide vs quit, sleep/wake,
+                          monitor disconnect, zoom/position safe bounds;
+                          settings shortcut tồn tại qua restart.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không tray management suite, window snapping system,
+                          multi-window workspaces, startup-at-login mặc định hay
+                          cross-platform port.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          OS event handlers có cleanup; bounded window
+                          preferences; pending clipboard không bị state/close
+                          race; no arbitrary automation.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          macOS focus restrictions và full-screen apps; close có
+                          ẩn hay quit phải rõ; không tự cấp quyền Accessibility
+                          để bypass.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          30 toggle/resume/monitor scenarios không
+                          duplicate/orphan handlers; reopen có input visible;
+                          không crash khi copy pending/clipboard denied.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Native exploratory matrix, event-loop cleanup tests,
+                          one/multiple monitor where available; NOT VERIFIED
+                          case phải ghi, không giả định.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Không còn lifecycle blocker trên support matrix đã
+                          chọn; chỉ trì hoãn edge case được người dùng chấp
+                          nhận.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Real support matrix, failure recoveries và packaging
+                          prerequisites.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+            <details id="phase-18">
+              <summary>
+                <span
+                  >Phase 18 — Đóng gói desktop và cập nhật thủ công an
+                  toàn</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>P0</strong> · Size: <strong>M</strong> ·
+                  Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 17; chỉ activate khi G4 chốt native.</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>Chạy bản desktop đáng tin cậy ngoài dev server.</td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          V1 dùng hằng ngày cần khởi động ổn định, bảo toàn dữ
+                          liệu khi cập nhật và có đường rollback.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Artifact macOS cài/mở được, có
+                          version/About/what&#x27;s-new và backup trước update.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Release build, package cho máy mục tiêu;
+                          signing/notarization khi phân phối và có
+                          credentials/quyền cần thiết; manual update path,
+                          schema compatibility và rollback.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không mua account, nhận EULA, cài global tool, publish
+                          công khai hoặc auto-updater ngầm; không yêu cầu nhiều
+                          OS.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          Version nguồn duy nhất, assets/release notes bundle
+                          offline, native data path ổn định; atomic migrations
+                          đã có, không nhúng signing secrets.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Chốt public distribution hay private local artifact;
+                          signing thiếu thì không claim notarized. V1 native
+                          không được phụ thuộc npm dev/Caddy đang chạy.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          Clean supported machine/profile mở offline; update
+                          N→N+1 giữ knowledge/usage; newer-schema rollback không
+                          corrupt; release page có nội dung đúng version.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Install/open/quit/reopen, upgrade/restore; inspect
+                          bundle/network/secrets; ghi tested signing status và
+                          hỗ trợ CPU/OS thực tế.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Artifact + manual update/restore hướng dẫn đủ dùng
+                          riêng; nếu phân phối cần signing chưa có thì ghi
+                          blocker của distribution.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Packaging/upgrade evidence cho V1; auto-update chỉ xét
+                          sau V1.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+          </section>
+          <section class="panel" id="milestone-5">
+            <h2>Milestone 5 — Optional Intelligence — trợ giúp có giới hạn</h2>
+            <p>
+              Nếu cần: hiểu intent rồi tìm lại kho; suggestion/agent proposal
+              luôn qua trust boundary và human approval. Có thể defer toàn
+              nhánh.
+            </p>
+            <details id="phase-19">
+              <summary>
+                <span
+                  >Phase 19 — Gate AI: failure taxonomy, confidence và privacy
+                  ADR</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>Experimental</strong> · Size:
+                  <strong>S</strong> · Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 6, Phase 9</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>
+                          Chứng minh cần AI và định nghĩa egress trước khi chọn
+                          provider.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          AI không giải quyết việc kho thiếu knowledge hoặc
+                          alias rõ ràng; Fuse score chưa là calibrated
+                          confidence.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Nếu semantics thật sự là bottleneck, có quyết định AI
+                          opt-in với phạm vi và ngân sách rõ; nếu không thì
+                          không thêm AI.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Rà ≥20 failed/rejected query sessions; chia thiếu
+                          content/alias/context/semantic; offline confidence
+                          policy exact/ambiguity/known mismatch;
+                          provider/secret/runtime tradeoff ADR. Privacy boundary
+                          của proposal local cũng được quyết định ở ADR này khi
+                          G7 được xem xét.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không gọi API, cài SDK, embed corpus hoặc gửi history
+                          để tự đánh giá.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          Intent fallback seam nhận một query và context được
+                          phép; keep local search first; score bands phải được
+                          kiểm trên held-out labels.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          G5 chỉ active nếu sau Phase 9 vẫn có ≥10 semantic
+                          cases có recall đúng trong kho mà không tìm ra. Chốt
+                          provider khả dụng, cost cap, secret transport và
+                          consent; browser không bundle API key. Nếu
+                          G5=NO/DEFERRED và chỉ cần file handoff local, không
+                          cần chọn provider/secret transport hoặc có đủ semantic
+                          misses; vẫn chốt local proposal/redaction/approval
+                          boundary để Phase 22 dùng.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          Decision log giải thích AI hay aliases/capture;
+                          negative/safety set; egress chỉ query hiện tại, không
+                          toàn lịch sử; không route platform mismatch sang AI để
+                          đoán.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Offline labeling/reader review
+                          privacy/timeout/failure/cancellation, tham chiếu docs
+                          provider chính thức lúc lựa chọn; chưa gửi request.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          ADR được chốt (kể cả quyết định chưa đủ evidence/không
+                          dùng AI, G5=NO/DEFERRED); 20–21 deferred khi không
+                          active. Proposal local boundary có thể đủ cho 22,
+                          không yêu cầu remote provider.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Taxonomy, calibrated confidence target, approved
+                          payload và runtime prerequisites.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+            <details id="phase-20">
+              <summary>
+                <span>Phase 20 — AI intent fallback → tìm lại kho local</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>Experimental</strong> · Size:
+                  <strong>M</strong> · Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 4, Phase 19</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>
+                          Diễn giải intent khó rồi ưu tiên tìm recall đã có.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Không nên biến mỗi query thành chatbot hay dùng AI làm
+                          nguồn command đầu tiên.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Người dùng chủ động yêu cầu AI cho query khó; thấy
+                          query gửi đi; nhận recall local phù hợp hoặc no-result
+                          có thể retry.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Chỉ sau G5 active: một provider/runtime đã chốt,
+                          opt-in hiện tại, rewrite query/structured intent,
+                          re-run deterministic search; timeout/cancel/budget và
+                          local fallback.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không AI-generated command suggestion, bulk history
+                          upload, default remote call cho mọi keystroke hoặc
+                          auto save.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          One provider adapter + strict response schema;
+                          transport/secret store theo ADR (native keychain hoặc
+                          local gateway được cho phép riêng); không key trong
+                          Vite/client bundle.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Nếu gateway cần service/port mới phải qua registry và
+                          scope được duyệt; thiếu safe secret transport thì
+                          BLOCKED/defer. Model output là data, không là
+                          instructions.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          Exact/local strong result không gọi AI; cancel không
+                          đổi query/results cũ; malformed/offline/timeout vẫn
+                          local search được; egress không có history; held-out
+                          gain có thật.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Mock contract/egress assertions + real approved test
+                          set khi có credentials; prompt injection/non-JSON/late
+                          response/budget tests; performance retrieval local
+                          không regress.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Có semantic retrieval gain trên corpus và privacy đạt,
+                          hoặc rollback/defer; chưa hiện command do AI mới sinh.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Hit-rate gain/cost/latency/error rate cho quyết định
+                          suggestion.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+            <details id="phase-21">
+              <summary>
+                <span>Phase 21 — AI suggestions trong vùng chưa tin cậy</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>Experimental</strong> · Size:
+                  <strong>M</strong> · Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 7, Phase 8, Phase 20</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>
+                          Cho gợi ý khi kho thật sự chưa có, với review và
+                          verification rõ.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Wrong command có thể tệ hơn no-result; model không
+                          được tự cấp trạng thái Verified.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          AI Suggested tách khỏi recall đã kiểm; xem
+                          nguồn/assumptions/risk, sửa hoặc từ chối trước khi lưu
+                          draft.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          On-demand suggestion, untrusted area, platform/tool
+                          assumptions, source-check checklist và
+                          save-as-unreviewed; human approval cho thêm/sửa.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không tự execute, auto-verify, auto-save lên canonical
+                          active trusted, hay gọi AI nếu user chỉ tìm local.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          Suggestion schema riêng, sanitized display; provenance
+                          ai + verification unreviewed; approval chuyển vào
+                          draft/personal chứ không tự thành Verified.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          G6: Phase 20 có gain nhưng còn ≥5 missing tasks người
+                          dùng muốn gợi ý. Link citation không tự chứng minh
+                          đúng; destructive suggestions phải cảnh báo cụ thể.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          Không lẫn AI với verified results; reject không lưu;
+                          approved draft vẫn unreviewed; có
+                          review/source/version để chuyển trust bằng người dùng;
+                          bí mật bị loại khỏi proposal.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Adversarial unsafe/invented-source/platform-mismatch
+                          cases, browser trust UI, approval/reject/reload;
+                          egress only consented query.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Suggestion dùng được và có trust boundary, hoặc
+                          DEFERRED; V1 core không phụ thuộc AI.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Approval/verification rate và các sai sót để quyết
+                          định giữ AI suggestion.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+            <details id="phase-22">
+              <summary>
+                <span>Phase 22 — Agent → Recall proposal có phê duyệt</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>Experimental</strong> · Size:
+                  <strong>M</strong> · Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 4, Phase 7, Phase 8, Phase 19</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>
+                          Thu bài học reusable sau khi agent giải quyết việc,
+                          không tự biến transcript thành knowledge.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Người dùng có thể quên capture ngay sau khi giải
+                          quyết; integration phải giữ quyền chọn.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Agent xuất proposal file → Dev Recall preview/diff →
+                          người dùng approve/edit/reject.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Gate G7: ≥5 bài học thực tế bị bỏ capture. Ưu tiên
+                          handoff file local versioned; redaction secret/path
+                          nhạy cảm; dedup, provenance và approval receipt.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không ingest toàn chat/history, auto write, credential
+                          scraping, MCP/daemon/network endpoint mặc định.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          Strict proposal import contract; same capture
+                          validation; untrusted instructions không thực thi;
+                          origin ai/personal tách verification. Có thể chạy khi
+                          Phases 20–21 deferred.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Agent ngoài app đã có data-egress riêng không được coi
+                          là đồng ý mới; producer tự mô tả nguồn chỉ là claim;
+                          không overwrite existing ID nếu chưa review. Phase 19
+                          DONE với G5=NO/DEFERRED vẫn thỏa dependency nếu local
+                          proposal boundary đã chốt; không cần remote provider
+                          hoặc Phases 20–21.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          Proposal không tạo active/trusted item trước approve;
+                          replay cùng proposal không nhân bản; reject/invalid
+                          không đổi kho; danger/secret visible; export/restore
+                          giữ provenance.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          5 real sanitized proposals +
+                          malformed/injection/duplicate/large file; approval
+                          edit/reject tests; source verification trace.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Capture proposal giảm bỏ sót, không tăng noise/risk;
+                          nếu không có nhu cầu thì defer.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Reusable lesson capture rate, duplicates và protocol
+                          evidence; chỉ sau đó xét plugin/MCP.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+          </section>
+          <section class="panel" id="milestone-6">
+            <h2>
+              Milestone 6 — Context &amp; Curated Knowledge — thêm đúng thứ còn
+              thiếu
+            </h2>
+            <p>
+              Nếu có evidence: Dev Hub chỉ cung cấp context đọc, external import
+              chỉ batch nhỏ có nguồn/review; không biến Recall thành Dev
+              Hub/encyclopedia.
+            </p>
+            <details id="phase-23">
+              <summary>
+                <span>Phase 23 — Dev Hub context adapter chỉ đọc</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>Experimental</strong> · Size:
+                  <strong>M</strong> · Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 4, Phase 10</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>
+                          Ghép WHAT của Dev Hub với HOW của Recall khi người
+                          dùng chọn context.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Không nên tự đoán service/project rồi cho command nguy
+                          hiểm; hai sản phẩm có trách nhiệm khác nhau.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Chọn project/service context, thấy workflow và
+                          parameter đúng từ snapshot Dev Hub, có cảnh báo stale.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Gate G8: ≥5 queries/context journeys cần runtime thật.
+                          Versioned read-only export/API contract do Dev Hub
+                          cung cấp; prototype explicit context binding và
+                          preview.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không restart/stop service, đọc credential, sửa
+                          registry/allocation hay biến Recall thành dashboard
+                          Dev Hub.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          Adapter/DTO riêng; IDs/project/service allowlist,
+                          freshness timestamp; typed workflow parameters và
+                          shell-safe preview, không interpolation tự chạy.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Browser không đọc arbitrary projects.yml; thiếu
+                          contract thì prototype bằng fixture, báo phần live
+                          chưa kiểm. API mới phía Dev Hub là task riêng cần
+                          duyệt. G8 live chỉ active khi Dev Hub read contract
+                          thật tồn tại; fixture chỉ là prototype/evidence trong
+                          test/dev, không expose fake context như project thật.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          Không context → không đoán target; snapshot
+                          stale/offline vẫn search/copy knowledge được;
+                          bad/path-like value không tạo unsafe command; live
+                          context chỉ khi user chọn.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Contract fixture/schema injection/stale/offline tests;
+                          live read-only integration khi được phép; verify không
+                          write/action requests.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          DONE live integration chỉ khi contract thật và live
+                          read-only verification đạt. Nếu thiếu contract: ghi
+                          fixture prototype VERIFIED, live NOT VERIFIED và phase
+                          DEFERRED/IN PROGRESS theo scope, không claim feature
+                          đã ship; không chặn V1.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Schema/freshness requirements, target errors prevented
+                          và nhu cầu integration thực.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+            <details id="phase-24">
+              <summary>
+                <span>Phase 24 — Import external nhỏ, có review</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>Experimental</strong> · Size:
+                  <strong>M</strong> · Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 3, Phase 4, Phase 7, Phase 8, Phase 9</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>
+                          Đưa một ít knowledge thiếu vào kho mà không làm mất ưu
+                          tiên cá nhân.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Import toàn bộ TLDR/Navi biến app thành encyclopedia
+                          và mang dữ liệu chưa phù hợp platform.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Chọn preview tối đa 20 mục từ một nguồn, review/dedup
+                          rồi thêm dạng Imported.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Gate G9: ≥10 missing intents có nguồn đáp ứng và nhập
+                          có lợi hơn capture tay; chọn một format/source, giữ
+                          attribution/license, giới hạn size và quarantine.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không bulk sync, crawling, tự trusted, overwriting
+                          personal items hoặc dùng imported popularity để áp đảo
+                          text match.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          Importer adapter vào proposal/capture pipeline;
+                          namespaced incoming IDs/collision handling; Imported
+                          unreviewed. Relevance tiers giữ nguyên, personal chỉ
+                          thắng khi textual equivalence.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Kiểm license/source chính thức tại thời điểm
+                          implementation; Navi placeholder/workflow không được
+                          hiểu thành runnable script tự động.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          20-item cap; review trước save; duplicates preview;
+                          risk/context đầy đủ; rollback/import backup đạt;
+                          primary 50-query corpus không giảm hit rate.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Malformed/oversized/source license/duplicate fixtures,
+                          review/decline flow, mixed personal/imported ranking
+                          and export/restore.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Small batch hữu ích, không làm tăng noise; nếu không
+                          đạt gain thì defer/không giữ import adapter dư thừa.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Review cost, useful-item rate và source-specific
+                          limitations cho sau V1.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+          </section>
+          <section class="panel" id="milestone-7">
+            <h2>
+              Milestone 7 — Hardening &amp; V1 — đóng vòng sử dụng hằng ngày
+            </h2>
+            <p>
+              Knowledge có maintenance, backup/recovery và quality evidence; V1
+              có định nghĩa hoàn tất, support matrix và release notes theo từng
+              version.
+            </p>
+            <details id="phase-25">
+              <summary>
+                <span>Phase 25 — Knowledge maintenance và kiểm lại nguồn</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>P0</strong> · Size: <strong>M</strong> ·
+                  Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 4, Phase 8, Phase 10</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>Giữ knowledge đúng qua thay đổi tool/nền tảng.</td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Verified có scope/thời điểm; mature product cần biết
+                          mục nào nên kiểm lại.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Thấy các mục cần review ở khu vực maintenance gọn, có
+                          replace/deprecate và source.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Manual review queue dựa vào stale
+                          verification/context; tối đa nhóm nhỏ; kiểm 20 mục hay
+                          dùng và toàn bộ mục dangerous trước V1.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không web crawler tự sửa command, validation daemon,
+                          graph scoring hay auto-expire mọi knowledge theo ngày
+                          cứng.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          Optional reviewedAt/context fields, lifecycle
+                          transitions; fixture-based tests cho recall quan
+                          trọng; review procedure không tự execute destructive
+                          command.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Không gọi một mục “wrong” chỉ vì hết hạn review;
+                          Personal cần kiểm theo môi trường chủ máy. AI/imported
+                          nếu bật phải giữ unreviewed đến review thật.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          Risk/context/source có cho mọi dangerous item;
+                          changed/deprecated IDs không làm sai usage/related;
+                          review có evidence, unknown vẫn hiện là unknown.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Authoritative source check, safe sandbox only khi cần
+                          và được phép; migration/export; trust regression trên
+                          seed/personal/imported/AI đã activated.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Không còn knowledge integrity blocker; reviewed set +
+                          unresolved uncertainty có chỗ rõ.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Verification register và recall regression set cho
+                          gate V1.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+            <details id="phase-26">
+              <summary>
+                <span
+                  >Phase 26 — Resilience, performance và regression trước
+                  V1</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>P0</strong> · Size: <strong>M</strong> ·
+                  Status: <strong>PLANNED</strong>
+                </p>
+                <p>
+                  Dependencies: Phase 3, Phase 5, Phase 7, Phase 8, Phase 9,
+                  Phase 10, Phase 13, Phase 25
+                </p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>
+                          Đóng các failure mode ở những khả năng đã chọn triển
+                          khai.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Nhiều feature riêng hoạt động chưa đủ chứng minh kho
+                          cá nhân không mất, UI không trap hay clipboard không
+                          sai.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          App ổn định qua lỗi
+                          storage/clipboard/network/import/update và sử dụng
+                          keyboard hằng ngày.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Diff-aware regression, storage
+                          corruption/quota/rollback, concurrency multi-tab,
+                          XSS/untrusted content, responsive/focus, offline;
+                          support matrix rõ.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không pentest hệ thống khác, tối ưu 100k corpus, hoặc
+                          triển khai nhánh experimental bị deferred.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          Repair scoped issues; bounds cho
+                          query/cache/history/import; instrumentation local cho
+                          benchmark; schema migrations không phá restore.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Nếu native/AI/import/context được activate thì phải
+                          kiểm branch tương ứng trước DONE; nếu chưa đủ evidence
+                          thì disable/rollback branch, không hạ chuẩn core.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          Core suites pass; search p95 &lt;100 ms @current/500
+                          fixtures; critical negatives không command sai; no
+                          data-loss/security blocker; backup recovery drill đạt;
+                          actual keyboard/browser/native matrix recorded.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          Unit/integration/build/runtime/browser; egress
+                          assertions khi AI bật; native install/update khi
+                          native bật; fault injection và meaningful regression.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          Không còn P0/P1; P2/P3 có workaround và owner
+                          decision; NOT VERIFIED tách khỏi PASS.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Final quality evidence, performance/support matrix và
+                          remaining issues cho release.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+            <details id="phase-27">
+              <summary>
+                <span
+                  >Phase 27 — V1 acceptance, phát hành và hướng dẫn sử
+                  dụng</span
+                ><small>PLANNED</small>
+              </summary>
+              <div class="phase-body">
+                <p>
+                  Priority: <strong>P0</strong> · Size: <strong>M</strong> ·
+                  Status: <strong>PLANNED</strong>
+                </p>
+                <p>Dependencies: Phase 13, Phase 26</p>
+                <div
+                  class="table-scroll"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Bảng chi tiết"
+                >
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Kế hoạch thực hiện</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Goal</td>
+                        <td>
+                          Chốt V1 bằng trải nghiệm và độ tin cậy, không bằng số
+                          feature.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Why this phase exists</td>
+                        <td>
+                          Roadmap phải có điểm dừng; những gate không cần thiết
+                          không được ép thành prerequisite.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>User-visible outcome</td>
+                        <td>
+                          Bản V1 dùng hằng ngày, capture/edit/backup được,
+                          mở/tìm/copy nhanh và có What&#x27;s new đúng version.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Scope</td>
+                        <td>
+                          Review định nghĩa V1; pilot ≥14 ngày/≥40 completed
+                          intent sessions hoặc sample được người dùng chấp nhận;
+                          release notes Markdown/HTML, support/upgrade/recovery
+                          docs.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Explicit non-goals</td>
+                        <td>
+                          Không tự bật AI/import/native bị deferred, publish
+                          public/signing mua account, hay bắt đầu Post-V1 task.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Likely architecture/data changes</td>
+                        <td>
+                          Version thống nhất package/About/artifact/docs;
+                          release index và notes per every version kể cả patch.
+                          Chọn browser V1 hoặc native V1 theo G4 evidence;
+                          notes/offline packaging tương ứng.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Risks / decisions</td>
+                        <td>
+                          Nếu G4 chọn native thì Phases 14–18 phải DONE;
+                          optional branch khác activated phải qua Phase 26;
+                          pending gate không đồng nghĩa feature đã ship.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Acceptance criteria</td>
+                        <td>
+                          Đạt bảng V1 Definition bên dưới; notes đọc trong ≤1
+                          phút nêu New/Changed/Fixed/Breaking/Known issues;
+                          restore/support rõ; pilot không có integrity blocker.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Verification plan</td>
+                        <td>
+                          End-to-end user coding journeys, checked
+                          artifacts+backup restore; audit docs vs
+                          implementation; version/tag/branch validation nếu user
+                          cho release Git.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Exit condition</td>
+                        <td>
+                          V1 ready hoặc HOLD với blocker cụ thể; chỉ commit/push
+                          theo scope người dùng và AGENTS; không tự merge.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Evidence for later phases</td>
+                        <td>
+                          Release acceptance, chosen/deferred gates, pilot
+                          outcomes và baseline cho improvement loop sau V1.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </details>
+          </section>
+          <section class="panel" id="section-ce338ed5">
+            <h2>V1 Definition and completion gate</h2>
+            <p>
+              V1 là hoàn tất core và nhánh đã được chọn, không phải “làm đủ 27
+              phase”. Phase 27 chỉ DONE khi các điều sau có bằng chứng trên môi
+              trường support thực.
+            </p>
+            <div
+              class="table-scroll"
+              tabindex="0"
+              role="region"
+              aria-label="Bảng chi tiết"
+            >
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Dimension</th>
+                    <th scope="col">Định nghĩa hoàn tất đề xuất</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Retrieval</td>
+                    <td>
+                      Corpus ≥50 covered intents + negative/unknown cases tách
+                      mẫu tuning/held-out; ≥90% covered intents top 3. Không đếm
+                      missing knowledge thành search-engine failure; critical
+                      negative/platform mismatch không gợi ý command sai. 42
+                      V0.1 cases vẫn pass.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Speed</td>
+                    <td>
+                      Local search p95 &lt;100 ms trên dữ liệu hiện tại và 500
+                      fixture items. Primary open → correct copy median ≤5 giây,
+                      p95 ≤10 giây trong ≥20 journeys trên môi trường chính;
+                      benchmark index/search/typing/access tách rõ.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Capture</td>
+                    <td>
+                      Add + edit không YAML; 5 simple capture trials median ≤30
+                      giây; form keyboard dùng được, warning rõ,
+                      lưu/reload/restore giữ ID/content/context.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Personal memory</td>
+                    <td>
+                      Recent/copies/views/lastUsed đáng tin khi bật; logging
+                      opt-in/reset/retention; successful/zero/rejected query
+                      semantics riêng. Không bắt buộc usage boost nếu G2 không
+                      chứng minh gain.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Operational workflows</td>
+                    <td>
+                      Ít nhất 3 workflow cá nhân có
+                      precondition/check/action/verification/undo hoặc ghi undo
+                      không khả dụng; copy đúng context, không tự chạy.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Trust</td>
+                    <td>
+                      Source/origin/verification/lifecycle riêng; scope
+                      tool/platform rõ khi cần; mọi dangerous item có risk cụ
+                      thể và review; AI/import không silent Verified.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Data ownership</td>
+                    <td>
+                      Một nguồn chuẩn per profile; local mặc định; full export →
+                      clean profile → restore drill đạt;
+                      migrations/interrupt/quota lỗi không phá kho; metadata
+                      reset không xóa knowledge.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Fast access</td>
+                    <td>
+                      G4 có quyết định. Browser đạt speed thì browser V1 hợp lệ;
+                      nếu native được chọn, 14–18 DONE, offline package không
+                      cần dev server, shortcut/lifecycle/update được kiểm thật.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Optional capabilities</td>
+                    <td>
+                      Branch activated phải qua trust/privacy/quality gates;
+                      branch deferred không hiện như shipped, không có code dở
+                      dang bật mặc định. AI không là prerequisite V1.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Reliability</td>
+                    <td>
+                      Phase 26 không P0/P1, không integrity/security blocker;
+                      P2/P3 có decision/owner/workaround. Support matrix và NOT
+                      VERIFIED không bị biến thành PASS.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Daily use</td>
+                    <td>
+                      Pilot ≥14 ngày/≥40 completed intent sessions hoặc sample
+                      thay thế được người dùng chấp nhận; đo friction/outcome,
+                      không yêu cầu upload usage hay để Codex chạy chờ nhiều
+                      ngày.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Release</td>
+                    <td>
+                      Version thống nhất; README đúng cách
+                      start/use/update/restore; release notes Markdown/HTML mỗi
+                      version kể cả nhỏ; branch/commit/tag/distribution trạng
+                      thái trung thực. Không tự merge hay publish.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              Các ngưỡng có thể được người dùng điều chỉnh trước phase đo, phải
+              ghi rationale; không âm thầm nới ngưỡng để kết luận READY. Nếu
+              chưa đủ pilot/evidence, báo phần còn thiếu và dừng run ở scope
+              được giao, không tự gọi phase tiếp theo.
+            </p>
+          </section>
+          <section class="panel" id="section-cc513c56">
+            <h2>Version communication — What&#x27;s new cho mọi version</h2>
+            <p>
+              Phase không đồng nghĩa version: một phase có thể ra vài patch, vài
+              phase có thể gom một release sau QA. Không tạo version “đã phát
+              hành” cho feature còn PLANNED. Không bỏ trang vì thay đổi “chỉ
+              nhỏ”.
+            </p>
+            <ul>
+              <li>
+                Canonical source:
+                <code
+                  >docs/releases/v&lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;.md</code
+                >; visual: file <code>.html</code> cùng tên, source-sha256 cùng
+                Markdown.
+              </li>
+              <li>
+                <code>docs/releases/index.md/html</code> có version, ngày, trạng
+                thái, summary, mức ảnh hưởng và link trang riêng, mới nhất
+                trước. Không trộn candidate với released.
+              </li>
+              <li>
+                Mỗi trang tóm tắt ≤1 phút đọc: Có gì mới / Thay đổi / Sửa lỗi /
+                Kiến thức bổ sung-sửa / Breaking hoặc migration / Known issues /
+                verified-not-verified / dùng ra sao.
+              </li>
+              <li>
+                Nhãn “lớn / vừa / nhỏ” mô tả tác động người dùng, độc lập số
+                lượng dòng diff và SemVer. Không dùng release page làm PR
+                implementation log.
+              </li>
+              <li>
+                Chụp UI mới khi giúp hiểu; thay đổi nhỏ có thể chỉ 1–3 câu và
+                không cần screenshot. Giữ README/AGENTS ngắn, không copy cả
+                roadmap.
+              </li>
+              <li>
+                Có trang hồi cứu <a href="releases/v0.1.0.html">V0.1.0</a> theo
+                evidence hiện tại; trạng thái ready on feature branch, chưa xác
+                nhận merge/tag. Đây chỉ là documentation của bản hiện có.
+              </li>
+              <li>
+                Publication future: mở rộng docs manifest/sync để có
+                master/release pages/nested dirs và kiểm hash/link/build trong
+                phiên documentation delivery được giao. Lượt planning này không
+                sửa scripts/runtime; HTML mới được preview ở dev từ docs, chưa
+                claim được đóng gói production.
+              </li>
+            </ul>
+          </section>
+          <section class="panel" id="section-0a458cc1">
+            <h2>Post-V1 evolution</h2>
+            <p>
+              Dùng thật → nhìn metrics local/failed searches/friction → chọn một
+              candidate improvement → ưu tiên theo tốc độ, độ tin cậy, dễ học →
+              một run implement → đo lại → giữ/đảo ngược → cập nhật What&#x27;s
+              new.
+            </p>
+            <p>
+              Không đặt thêm hàng chục feature phỏng đoán. Favorites, automatic
+              updates, nhiều OS, cloud sync/auth, bidirectional sync, vector
+              search và plugin/MCP chỉ được xét khi loop này chỉ ra một vấn đề
+              rõ. Explicitly reject trong scope hiện tại: IDE/terminal emulator,
+              auto command execution, giant imported corpus, generic Q&amp;A
+              site và knowledge graph trước evidence.
+            </p>
+          </section>
+          <section class="panel" id="section-73bad1e1">
+            <h2>Phase Execution Protocol</h2>
+            <ol>
+              <li>
+                Đọc AGENTS.md, MASTER_ROADMAP.md, phase được giao,
+                architecture/data-format và release-notes khi cần; phase numbers
+                ổn định, không renumber khi reorder.
+              </li>
+              <li>
+                Inspect source/tests/data/config/registry hiện tại, không suy
+                rằng các phase trước đã DONE vì roadmap ghi PLANNED. Resolve
+                base commit/branch và kiểm dependencies/gate outcomes thật.
+              </li>
+              <li>
+                Nếu dependency/gate thiếu, báo cụ thể và chỉ chuẩn bị scope được
+                phép; không tự implement prerequisites hoặc phase kế tiếp. User
+                chọn ngoại lệ thì ghi decision/deviation trước code.
+              </li>
+              <li>
+                Tạo branch riêng từ base phù hợp (đã merge hay stacked phải rõ).
+                Chốt objective/in-scope/non-goals, acceptance và rollback cho
+                đúng một phase.
+              </li>
+              <li>
+                Implement đúng phase; đọc skills phù hợp, không cài global tools
+                hoặc đổi allocation/project khác ngầm. Không tự chạy recall
+                command phá dữ liệu.
+              </li>
+              <li>
+                Chạy verification plan: checks thích hợp, runtime/browser/native
+                và data/privacy/backup theo thay đổi. Evidence ghi PASS/FAIL/NOT
+                VERIFIED; không copy kết quả cũ như mới chạy.
+              </li>
+              <li>
+                Rà primary flow “tôi đang coding, quên một thao tác”; fix
+                friction thuộc phase, không redesign/feature creep.
+              </li>
+              <li>
+                Cập nhật actual outcome/status/deviations/evidence vào
+                roadmap/decision docs. Kiến trúc ghi đúng implemented; notes
+                không claim feature còn chưa kiểm.
+              </li>
+              <li>
+                Nếu tạo version thực tế: bump nguồn version theo chính sách đã
+                chốt, viết page Markdown/HTML riêng và index kể cả patch/data
+                fix; đồng bộ hash, runtime links và đóng gói docs. Version
+                lớn/nhỏ xem release-notes.md.
+              </li>
+              <li>
+                Kết thúc với scope/test/runtime/remaining/issues/release
+                evidence và phase nào đủ READY tiếp. Không tự bắt đầu phase
+                tiếp.
+              </li>
+              <li>
+                Git theo AGENTS và instruction mới nhất: mặc định user đã yêu
+                cầu tạo feature branch, implement xong mới commit/push rồi báo
+                để user merge; không commit/push trong lúc implement, không tự
+                merge/force-push. Nếu run cụ thể cấm commit/push (như lượt
+                planning này) thì chỉ lưu docs/code và dừng, không xin lại
+                permission không cần thiết.
+              </li>
+              <li>
+                Không coi một prototype hoặc gate negative là shipped
+                capability. Branch experimental thất bại phải rollback/disable;
+                status DEFERRED có trigger mở lại.
+              </li>
+            </ol>
+            <p>Mẫu giao việc cho phiên sau:</p>
+            <pre><code>Implement Phase 4 from docs/MASTER_ROADMAP.md.
+Re-inspect current baseline and verify dependencies/gates.
+Implement only that phase, run its verification plan, update actual docs
+and What&#x27;s new for the resulting version. Do not start Phase 5.
+Follow AGENTS.md for branch, final commit/push, and user merge.</code></pre>
+            <h3>Status markers</h3>
+            <div
+              class="table-scroll"
+              tabindex="0"
+              role="region"
+              aria-label="Bảng chi tiết"
+            >
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Status</th>
+                    <th scope="col">Ý nghĩa</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>PLANNED</td>
+                    <td>
+                      Có scope đề xuất; chưa được giao/bắt đầu,
+                      dependencies/gates có thể chưa đủ. Tất cả 27 phase hiện ở
+                      trạng thái này.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>READY</td>
+                    <td>
+                      Dependencies/evidence/gate decisions đủ, scope được chốt
+                      để người dùng có thể giao. Không tự động là authorization
+                      chạy.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>IN PROGRESS</td>
+                    <td>
+                      Đang trong phase đã giao; implemented-but-unverified vẫn
+                      thuộc trạng thái này.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>BLOCKED</td>
+                    <td>
+                      Không tiến được trong scope vì
+                      prerequisite/tool/credentials/decision; nêu blocker và
+                      hành động cần, không giả claim completion.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>DONE</td>
+                    <td>
+                      Acceptance/verification/exit của phase đạt; actual
+                      changes/evidence đã ghi. Còn caveat phải được nêu.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>DEFERRED</td>
+                    <td>
+                      Người dùng/gate decision chủ động chưa làm; ghi lý do,
+                      evidence và điều kiện xem lại.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              Gate/phase decision log mẫu:
+              <code
+                >date, phase/gate ID, base commit, evidence link, outcome,
+                rationale, accepted risks, scope deviations, next eligible
+                phase</code
+              >. Không đính raw history/secret chỉ để chứng minh metrics.
+            </p>
+          </section>
+          <section class="panel" id="section-29d643c1">
+            <h2>Roadmap review and source notes</h2>
+            <p>
+              Rà trước bàn giao: dependencies đều trỏ về phase đã có trước đó;
+              core không phụ thuộc AI/import/native bị defer; backup có trước
+              capture/edit; trust có trước external/AI; provider/egress decision
+              có trước remote requests; native read-only có trước authoring
+              migration; packaging sau shortcut/lifecycle; maintenance + fault
+              testing trước release. Personal ranking và related khác nhau,
+              không duplicate phase. Phase 22 proposal handoff không bắt buộc
+              Phases 20–21; Phase 23 có thể dùng fixture nếu Dev Hub chưa có
+              read contract nhưng không được claim live integration.
+            </p>
+            <p>
+              Các đề xuất là planning judgment, cần xác nhận ở phase quyết định.
+              Technical constraints đã đối chiếu nguồn chính thức:
+            </p>
+            <ul>
+              <li>
+                <a
+                  href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API"
+                  >IndexedDB</a
+                >: transactional structured storage, scope origin; không tự chia
+                data với hostname/runtime khác.
+              </li>
+              <li>
+                <a
+                  href="https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria"
+                  >Browser storage</a
+                >: quota/eviction khác nhau; local browser storage không thay
+                backup.
+              </li>
+              <li>
+                <a href="https://v2.tauri.app/security/">Tauri security</a>:
+                quyền native phải scoped, không cho renderer arbitrary
+                shell/file access.
+              </li>
+              <li>
+                <a href="https://v2.tauri.app/plugin/global-shortcut/"
+                  >Tauri global shortcut</a
+                >: là capability/plugin tương lai cần quyết định và kiểm OS
+                thật, không phải feature V0.1.
+              </li>
+              <li>
+                Git/CLI/platform sources và evidence hiện có:
+                <a href="data-format.md">data-format</a>,
+                <a href="architecture.md">architecture</a>,
+                <a href="v0.1-review.md">QA V0.1</a>.
+              </li>
+            </ul>
+            <p>
+              Provider/library/license specs phải tra lại primary docs tại phiên
+              implement tương ứng; không đóng đinh SDK, model/pricing hay Tauri
+              version trong roadmap nhiều tháng.
+            </p>
+            <p>
+              Fresh-reader check theo skill doc-coauthoring đã kiểm 8 câu hỏi và
+              dependency/gate/stop conditions. Đã bổ sung dependency Phase 9 cho
+              import và Phase 13 cho V1 hardening/release; làm rõ proposal local
+              không đòi remote AI, fixture Dev Hub không là live integration, và
+              legitimate copies khác replay/double-count. Không có cycle hoặc
+              core dependency vào nhánh AI/import/native deferred sau các sửa
+              này.
+            </p>
+          </section>
+        </div>
+      </div>
+      <footer>
+        <a href="MASTER_ROADMAP.md">Nguồn Markdown ↗</a> · Local-first developer
+        memory · Tài liệu và trạng thái được ghi theo evidence thực tế.
+      </footer>
+    </main>
+  </body>
+</html>
